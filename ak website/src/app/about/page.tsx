@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation */}
-      <Header onEnquireClick={() => setIsModalOpen(true)} />
+      <Header />
 
       {/* Main Content */}
       <main className="flex-grow">
