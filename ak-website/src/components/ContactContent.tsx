@@ -116,7 +116,19 @@ export function ContactContent() {
 
           {/* Interactive Form Card (Right Column) */}
 
-          <iframe className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80 flex flex-col justify-center min-h-[480px]" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31131.74113150527!2d79.14472230348446!3d12.748114010933149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad24da3fd889dd%3A0x4f225e48db513b55!2sKannamangalam%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1783667398885!5m2!1sen!2sin" width="600" height="450" style={{ border: 0 }} allowFullScreen loading="lazy" referrerPolicy="strict-origin-when-cross-origin"></iframe>
+          <div className="lg:col-span-7">
+            <div className="overflow-hidden rounded-3xl border border-slate-100/80 bg-white shadow-[0_4px_30px_rgba(15,23,42,0.02)] h-full min-h-[350px] lg:min-h-[560px]">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31131.74113150527!2d79.14472230348446!3d12.748114010933149!2m3!1f0!2f0!3f0!2m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bad24da3fd889dd%3A0x4f225e48db513b55!2sKannamangalam%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1783667398885!5m2!1sen!2sin"
+                className="w-full h-full"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                title="AK Battery Location"
+              />
+            </div>
+          </div>
 
 
         </div>

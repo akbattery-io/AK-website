@@ -4,6 +4,7 @@ import * as React from "react";
 import { Header } from "@/components/Header";
 import { WorkContent } from "@/components/WorkContent";
 import { EnquiryModal } from "@/components/EnquiryModal";
+import Footer from "@/components/Footer";
 
 export default function WorksPage() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -19,10 +20,7 @@ export default function WorksPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-center text-xs">
-        <p>© {new Date().getFullYear()} AK Batteries & RO Solutions. All rights reserved.</p>
-      </footer>
-
+      <Footer />
       {/* Lead capture modal */}
       <EnquiryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>

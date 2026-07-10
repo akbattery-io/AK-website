@@ -18,43 +18,43 @@ export function Hero() {
     { bg: "bg-amber-500", label: "ML", grad: "from-amber-400 to-amber-600" },
   ];
 
+  interface Partner {
+    name: string;
+    color: string;
+    src?: string;
+    width?: number;
+    height?: number;
+    logo?: React.ReactNode;
+  }
+
   // Partners data for trusted partners strip
-  const partners = [
+  const partners: Partner[] = [
     {
       name: "EXIDE",
       color: "text-[#DC2626]",
-      logo: (
-        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 120 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 5h18v4H9v6h11v4H9v6h15v4H5V5zm25 0l6 9 6-9h5l-9 12 9 13h-5l-6-9-6 9h-5l9-13-9-12h5zm20 0h5v20h-5V5zm10 0h12c5 0 9 3 9 10v0c0 7-4 10-9 10H60V5zm5 4v12h7c3 0 4-2 4-6v0c0-4-1-6-4-6h-7zm25-4h18v4H94v6h11v4H94v6h15v4H89V5z" fill="currentColor" />
-          <polygon points="113,5 119,15 113,25 107,15" fill="#DC2626" />
-        </svg>
-      ),
+      src: "/logos/1.png",
+      width: 206,
+      height: 41,
     },
     {
       name: "AMARON",
       color: "text-[#4CAF50]",
-      logo: (
-        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 130 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="5" y="22" fontFamily="system-ui, sans-serif" fontWeight="900" fontStyle="italic" fontSize="20" fill="currentColor" letterSpacing="1">AMARON</text>
-          <rect x="112" y="6" width="10" height="18" fill="#4CAF50" rx="1" />
-          <circle cx="117" cy="10" r="1.5" fill="white" />
-        </svg>
-      ),
+      src: "/logos/2.jpg",
+      width: 178,
+      height: 56,
     },
     {
       name: "LUMINOUS",
       color: "text-[#0284C7]",
-      logo: (
-        <svg className="h-4 sm:h-5 md:h-6" viewBox="0 0 150 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="0" y="21" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="19" fill="currentColor" letterSpacing="0.5">LUMINOUS</text>
-        </svg>
-      ),
+      src: "/logos/3.webp",
+      width: 148,
+      height: 35,
     },
     {
       name: "purosis",
       color: "text-[#10B981]",
       logo: (
-        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 110 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className="max-h-full max-w-full" viewBox="0 0 110 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <text x="0" y="22" fontFamily="Georgia, serif" fontStyle="italic" fontSize="20" fill="currentColor">purosis</text>
           <circle cx="85" cy="8" r="2.5" fill="#10B981" />
         </svg>
@@ -63,23 +63,16 @@ export function Hero() {
     {
       name: "Aquaguard",
       color: "text-[#0369A1]",
-      logo: (
-        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 140 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="0" y="22" fontFamily="system-ui, sans-serif" fontWeight="700" fontSize="19" fill="currentColor" letterSpacing="-0.5">Aquaguard</text>
-          <path d="M125 8c0 0 5 4 5 9s-5 8-5 8-5-3-5-8 5-9 5-9z" fill="#0369A1" />
-        </svg>
-      ),
+      src: "/logos/5.png",
+      width: 340,
+      height: 231,
     },
     {
       name: "Aqua Era",
       color: "text-[#0284C7]",
-      logo: (
-        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 120 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <text x="0" y="22" fontFamily="Georgia, serif" fontSize="18" fill="currentColor" letterSpacing="0.5">Aqua Era</text>
-          <path d="M100 20c3-2 6-2 9 0" stroke="#0284C7" strokeWidth="2" strokeLinecap="round" />
-          <path d="M102 16c2-1.5 4-1.5 6 0" stroke="#0284C7" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      ),
+      src: "/logos/4.png",
+      width: 432,
+      height: 282,
     },
   ];
 
@@ -253,10 +246,20 @@ export function Hero() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className={`flex items-center justify-center grayscale opacity-45 hover:grayscale-0 hover:opacity-100 transition-all duration-300 hover:scale-105 cursor-pointer ${partner.color}`}
+                className={`w-28 h-8 sm:w-32 sm:h-10 flex items-center justify-center  opacity-45 transition-all duration-300 hover:scale-105 cursor-pointer ${partner.color}`}
                 title={partner.name}
               >
-                {partner.logo}
+                {partner.src ? (
+                  <Image
+                    src={partner.src}
+                    alt={partner.name}
+                    width={partner.width}
+                    height={partner.height}
+                    className="max-h-full max-w-full w-auto h-auto object-contain"
+                  />
+                ) : (
+                  partner.logo
+                )}
               </motion.div>
             ))}
           </div>

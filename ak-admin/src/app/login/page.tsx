@@ -10,9 +10,7 @@ import { Shield, Mail, Lock, LogIn, AlertCircle } from "lucide-react";
 export default function LoginPage() {
   const router = useRouter();
   const { user, loading, error, setErrorMsg, clearError } = useAuth();
-  
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
   const [authLoading, setAuthLoading] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
 
@@ -22,42 +20,6 @@ export default function LoginPage() {
       router.push("/");
     }
   }, [user, loading, router]);
-
-  const handleEmailLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthLoading(true);
-    setLocalError(null);
-    clearError();
-
-    if (!email || !password) {
-      setLocalError("Please fill in all fields.");
-      setAuthLoading(false);
-      return;
-    }
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      // Double check client side (the AuthContext also handles this onAuthStateChanged)
-      if (userCredential.user.email !== "akbattery.ro@gmail.com") {
-        setLocalError("Access Denied. Only akbattery.ro@gmail.com is authorized to enter this panel.");
-      } else {
-        router.push("/");
-      }
-    } catch (err: any) {
-      console.error("Email login error:", err);
-      let errMsg = "Authentication failed. Please check your credentials.";
-      if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") {
-        errMsg = "Invalid email or password.";
-      } else if (err.code === "auth/invalid-email") {
-        errMsg = "Please enter a valid email address.";
-      } else if (err.code === "auth/too-many-requests") {
-        errMsg = "Too many login attempts. Please try again later.";
-      }
-      setLocalError(errMsg);
-    } finally {
-      setAuthLoading(false);
-    }
-  };
 
   const handleGoogleLogin = async () => {
     setAuthLoading(true);
@@ -122,70 +84,6 @@ export default function LoginPage() {
             <div>{displayedError}</div>
           </div>
         )}
-
-        <form onSubmit={handleEmailLogin} className="space-y-5">
-          <div>
-            <label className="block text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2">
-              Admin Email
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                <Mail className="w-4.5 h-4.5" />
-              </span>
-              <input
-                type="email"
-                placeholder="akbattery.ro@gmail.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-12 pl-10 pr-4 rounded-xl border border-slate-200/80 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 transition-all bg-white/50"
-                required
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2">
-              Password
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                <Lock className="w-4.5 h-4.5" />
-              </span>
-              <input
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full h-12 pl-10 pr-4 rounded-xl border border-slate-200/80 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 transition-all bg-white/50"
-                required
-              />
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={authLoading}
-            className="w-full h-12 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-[0_4px_15px_rgba(15,23,42,0.15)] flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-75 disabled:pointer-events-none"
-          >
-            {authLoading ? (
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            ) : (
-              <>
-                <LogIn className="w-4.5 h-4.5" />
-                <span>Sign In</span>
-              </>
-            )}
-          </button>
-        </form>
-
-        <div className="relative my-8">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200/60"></div>
-          </div>
-          <div className="relative flex justify-center text-xs font-bold uppercase tracking-widest text-slate-400">
-            <span className="bg-[#FAFBFD] px-4">Or sign in with</span>
-          </div>
-        </div>
 
         <button
           type="button"

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Header } from "@/components/Header";
 import { ContactContent } from "@/components/ContactContent";
+import Footer from "@/components/Footer";
 
 export default function ContactPage() {
   return (
@@ -16,9 +17,7 @@ export default function ContactPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-center text-xs">
-        <p>© {new Date().getFullYear()} AK Batteries & RO Solutions. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
