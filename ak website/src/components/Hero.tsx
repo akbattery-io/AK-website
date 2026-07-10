@@ -1,0 +1,267 @@
+"use client";
+
+import * as React from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { Sparkles, ArrowRight } from "lucide-react";
+import { Button } from "./ui/Button";
+import { Badge } from "./ui/Badge";
+
+export function Hero() {
+  const router = useRouter();
+  // Avatars data for social proof
+  const avatars = [
+    { bg: "bg-blue-500", label: "JD", grad: "from-blue-400 to-blue-600" },
+    { bg: "bg-emerald-500", label: "AS", grad: "from-emerald-400 to-emerald-600" },
+    { bg: "bg-rose-500", label: "RK", grad: "from-rose-400 to-rose-600" },
+    { bg: "bg-amber-500", label: "ML", grad: "from-amber-400 to-amber-600" },
+  ];
+
+  // Partners data for trusted partners strip
+  const partners = [
+    {
+      name: "EXIDE",
+      color: "text-[#DC2626]",
+      logo: (
+        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 120 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 5h18v4H9v6h11v4H9v6h15v4H5V5zm25 0l6 9 6-9h5l-9 12 9 13h-5l-6-9-6 9h-5l9-13-9-12h5zm20 0h5v20h-5V5zm10 0h12c5 0 9 3 9 10v0c0 7-4 10-9 10H60V5zm5 4v12h7c3 0 4-2 4-6v0c0-4-1-6-4-6h-7zm25-4h18v4H94v6h11v4H94v6h15v4H89V5z" fill="currentColor" />
+          <polygon points="113,5 119,15 113,25 107,15" fill="#DC2626" />
+        </svg>
+      ),
+    },
+    {
+      name: "AMARON",
+      color: "text-[#4CAF50]",
+      logo: (
+        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 130 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="5" y="22" fontFamily="system-ui, sans-serif" fontWeight="900" fontStyle="italic" fontSize="20" fill="currentColor" letterSpacing="1">AMARON</text>
+          <rect x="112" y="6" width="10" height="18" fill="#4CAF50" rx="1" />
+          <circle cx="117" cy="10" r="1.5" fill="white" />
+        </svg>
+      ),
+    },
+    {
+      name: "LUMINOUS",
+      color: "text-[#0284C7]",
+      logo: (
+        <svg className="h-4 sm:h-5 md:h-6" viewBox="0 0 150 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="21" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="19" fill="currentColor" letterSpacing="0.5">LUMINOUS</text>
+        </svg>
+      ),
+    },
+    {
+      name: "purosis",
+      color: "text-[#10B981]",
+      logo: (
+        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 110 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" fontFamily="Georgia, serif" fontStyle="italic" fontSize="20" fill="currentColor">purosis</text>
+          <circle cx="85" cy="8" r="2.5" fill="#10B981" />
+        </svg>
+      ),
+    },
+    {
+      name: "Aquaguard",
+      color: "text-[#0369A1]",
+      logo: (
+        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 140 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" fontFamily="system-ui, sans-serif" fontWeight="700" fontSize="19" fill="currentColor" letterSpacing="-0.5">Aquaguard</text>
+          <path d="M125 8c0 0 5 4 5 9s-5 8-5 8-5-3-5-8 5-9 5-9z" fill="#0369A1" />
+        </svg>
+      ),
+    },
+    {
+      name: "Aqua Era",
+      color: "text-[#0284C7]",
+      logo: (
+        <svg className="h-5 sm:h-6 md:h-7" viewBox="0 0 120 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="22" fontFamily="Georgia, serif" fontSize="18" fill="currentColor" letterSpacing="0.5">Aqua Era</text>
+          <path d="M100 20c3-2 6-2 9 0" stroke="#0284C7" strokeWidth="2" strokeLinecap="round" />
+          <path d="M102 16c2-1.5 4-1.5 6 0" stroke="#0284C7" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      ),
+    },
+  ];
+
+  return (
+    <section
+      id="home"
+      className="relative pt-12 pb-20 md:pt-16 md:pb-24 lg:pt-20 lg:pb-32 bg-mesh-gradient overflow-hidden"
+    >
+      {/* Decorative Background Glows */}
+      <div className="absolute top-12 left-10 w-72 h-72 bg-rose-500/10 rounded-full blur-[80px] pointer-events-none -z-10 animate-pulse" />
+      <div className="absolute top-1/4 right-10 w-72 h-72 bg-amber-500/10 rounded-full blur-[80px] pointer-events-none -z-10 animate-pulse delay-1000" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-rose-200/30 blur-[100px] rounded-full pointer-events-none -z-10" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center text-center">
+          {/* Tag Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="mb-6 inline-flex items-center gap-1.5 py-1.5 px-4 bg-white/80 border border-slate-200/50 text-slate-800 rounded-full shadow-[0_2px_15px_rgba(15,23,42,0.02)] backdrop-blur-sm hover:border-rose-300 transition-colors duration-300">
+              <Sparkles className="w-3.5 h-3.5 text-rose-500 fill-rose-500/20 animate-pulse" />
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-700">Established 2025</span>
+            </div>
+          </motion.div>
+
+          {/* Main Title Heading */}
+          <motion.h1
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-slate-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl leading-[1.1] md:leading-[1.15]"
+          >
+            AK Battery & <span className="bg-gradient-to-r from-rose-600 to-rose-500 bg-clip-text text-transparent">RO Solution</span> <br className="hidden sm:inline" /> for Every Home
+          </motion.h1>
+
+          {/* Call To Action Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0"
+          >
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => {
+                window.open("https://wa.me/918870534049?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20Battery%20and%20RO%20services.", "_blank", "noopener,noreferrer");
+              }}
+              className="group shadow-md hover:shadow-lg w-full sm:w-auto bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white border-transparent hover:shadow-[0_8px_25px_rgba(220,38,38,0.2)] active:scale-[0.98] transition-all"
+            >
+              Enquire now
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => {
+                router.push("/works");
+              }}
+              className="w-full sm:w-auto shadow-sm"
+            >
+              Our Services
+            </Button>
+          </motion.div>
+        </div>
+
+        {/* Desktop Product Showcase Layout */}
+        <div className="mt-16 md:mt-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 lg:gap-12 items-center max-w-6xl mx-auto">
+
+            {/* Battery Showcase Card (Left) */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="order-2 md:order-1 flex justify-center md:justify-end"
+            >
+              <div className="relative group bg-white rounded-3xl p-6 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80 hover:border-rose-100 hover:shadow-[0_10px_40px_rgba(225,29,72,0.06)] hover:-translate-y-2 transition-all duration-300 max-w-[320px] w-full aspect-square flex items-center justify-center">
+                {/* Floating badge */}
+                <span className="absolute top-4 left-4 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                  Power Backup
+                </span>
+                <Image
+                  src="/images/battery.png"
+                  alt="Inverter & Battery Power Backup System"
+                  width={280}
+                  height={280}
+                  priority
+                  className="object-contain w-auto h-auto max-h-[220px] group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </motion.div>
+
+            {/* Social Proof Middle Element (Center) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="order-1 md:order-2 flex flex-col items-center justify-center py-6 px-6 bg-white/80 md:bg-transparent rounded-3xl border border-slate-200/50 md:border-transparent shadow-[0_4px_30px_rgba(15,23,42,0.02)] backdrop-blur-md max-w-[280px] w-full mx-auto mb-8 md:mb-0"
+            >
+              {/* Avatar Overlap */}
+              <div className="flex -space-x-3 mb-3">
+                {avatars.map((avatar, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-10 h-10 rounded-full border-2 border-white ${avatar.bg} bg-gradient-to-tr ${avatar.grad} flex items-center justify-center text-white text-[11px] font-bold shadow-sm select-none`}
+                  >
+                    {avatar.label}
+                  </div>
+                ))}
+                <div className="w-10 h-10 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-white text-[11px] font-bold shadow-sm">
+                  +200
+                </div>
+              </div>
+
+              {/* Trust Text */}
+              <div className="text-center">
+                <span className="block text-slate-800 font-extrabold text-base leading-tight">
+                  200+ Happy Customers
+                </span>
+                <div className="flex items-center justify-center gap-0.5 mt-1.5 mb-1.5 text-amber-500">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-slate-400 text-[10px] uppercase font-bold tracking-widest block">
+                  Verified Local Reviews
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Purifier Showcase Card (Right) */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.4 }}
+              className="order-3 flex justify-center md:justify-start"
+            >
+              <div className="relative group bg-white rounded-3xl p-6 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80 hover:border-rose-100 hover:shadow-[0_10px_40px_rgba(225,29,72,0.06)] hover:-translate-y-2 transition-all duration-300 max-w-[320px] w-full aspect-square flex items-center justify-center">
+                {/* Floating badge */}
+                <span className="absolute top-4 left-4 bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                  Pure Water
+                </span>
+                <Image
+                  src="/images/purifier.png"
+                  alt="Modern RO Water Purifier System"
+                  width={280}
+                  height={280}
+                  priority
+                  className="object-contain w-auto h-auto max-h-[220px] group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Unified Trusted Partners Section at the bottom of Hero */}
+        <div className="mt-20 md:mt-28 pt-12 border-t border-slate-100/70">
+          <h2 className="text-center text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-8">
+            Our Trusted Partners
+          </h2>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6 sm:gap-x-12 md:gap-x-16 lg:gap-x-20">
+            {partners.map((partner, idx) => (
+              <motion.div
+                key={partner.name}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+                className={`flex items-center justify-center grayscale opacity-45 hover:grayscale-0 hover:opacity-100 transition-all duration-300 hover:scale-105 cursor-pointer ${partner.color}`}
+                title={partner.name}
+              >
+                {partner.logo}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

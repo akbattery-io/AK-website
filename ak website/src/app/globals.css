@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FAFBFD;
+  --foreground: #0F172A;
+  
+  /* Brand color tokens */
+  --color-brand-primary: #FAFBFD;
+  --color-brand-secondary: #FFFFFF;
+  --color-brand-accent: #DC2626; /* Crimson Red */
+  --color-brand-accent-hover: #E11D48;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  
+  --color-accent-brand: var(--color-brand-accent);
+  --color-accent-brand-hover: var(--color-brand-accent-hover);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* Custom visual utilities */
+.bg-mesh-gradient {
+  background-image: 
+    radial-gradient(at 5% 0%, rgba(220, 38, 38, 0.04) 0px, transparent 40%),
+    radial-gradient(at 50% 10%, rgba(251, 191, 36, 0.03) 0px, transparent 45%),
+    radial-gradient(at 95% 0%, rgba(220, 38, 38, 0.04) 0px, transparent 40%);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #0F172A 0%, #334155 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
