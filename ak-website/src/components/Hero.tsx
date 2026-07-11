@@ -132,27 +132,31 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0"
           >
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => {
-                window.open("https://wa.me/918870534049?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20Battery%20and%20RO%20services.", "_blank", "noopener,noreferrer");
-              }}
-              className="group shadow-md hover:shadow-lg w-full sm:w-auto bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white border-transparent hover:shadow-[0_8px_25px_rgba(220,38,38,0.2)] active:scale-[0.98] transition-all"
-            >
-              Enquire now
-              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={() => {
-                router.push("/works");
-              }}
-              className="w-full sm:w-auto shadow-sm"
-            >
-              Our Services
-            </Button>
+            <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={() => {
+                  window.open("https://wa.me/918870534049?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20Battery%20and%20RO%20services.", "_blank", "noopener,noreferrer");
+                }}
+                className="group shadow-md hover:shadow-lg w-full sm:w-auto bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white border-transparent hover:shadow-[0_8px_25px_rgba(220,38,38,0.2)] transition-all"
+              >
+                Enquire now
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={() => {
+                  router.push("/works");
+                }}
+                className="w-full sm:w-auto shadow-sm"
+              >
+                Our Services
+              </Button>
+            </motion.div>
           </motion.div>
 
           {/* Feature Marquee */}
@@ -170,23 +174,29 @@ export function Hero() {
               {/* First list of items */}
               {features.map((feature, index) => (
                 <React.Fragment key={index}>
-                  <div className="flex items-center gap-2.5 text-slate-700 font-semibold text-xs sm:text-sm tracking-wide">
-                    <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color}`}>
+                  <motion.div 
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    className="flex items-center gap-2.5 text-slate-700 hover:text-rose-600 transition-colors duration-200 font-semibold text-xs sm:text-sm tracking-wide cursor-pointer select-none"
+                  >
+                    <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color} transition-colors duration-200`}>
                       <feature.Icon className="w-3 h-3" />
                     </span>
                     <span>{feature.text}</span>
-                  </div>
+                  </motion.div>
                 </React.Fragment>
               ))}
               {/* Duplicate list for seamless loop */}
               {features.map((feature, index) => (
                 <React.Fragment key={`dup-${index}`}>
-                  <div className="flex items-center gap-2.5 text-slate-700 font-semibold text-xs sm:text-sm tracking-wide">
-                    <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color}`}>
+                  <motion.div 
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    className="flex items-center gap-2.5 text-slate-700 hover:text-rose-600 transition-colors duration-200 font-semibold text-xs sm:text-sm tracking-wide cursor-pointer select-none"
+                  >
+                    <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color} transition-colors duration-200`}>
                       <feature.Icon className="w-3 h-3" />
                     </span>
                     <span>{feature.text}</span>
-                  </div>
+                  </motion.div>
                 </React.Fragment>
               ))}
             </div>
@@ -199,9 +209,21 @@ export function Hero() {
 
             {/* Battery Showcase Card (Left) */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
+              initial={{ opacity: 0, x: -30, y: 0 }}
+              animate={{ 
+                opacity: 1, 
+                x: 0,
+                y: [0, -10, 0]
+              }}
+              transition={{ 
+                opacity: { duration: 0.7, delay: 0.4 },
+                x: { duration: 0.7, delay: 0.4 },
+                y: {
+                  repeat: Infinity,
+                  duration: 5,
+                  ease: "easeInOut"
+                }
+              }}
               className="order-2 md:order-1 flex justify-center md:justify-end"
             >
               <div className="relative group bg-white rounded-3xl p-6 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80 hover:border-rose-100 hover:shadow-[0_10px_40px_rgba(225,29,72,0.06)] hover:-translate-y-2 transition-all duration-300 max-w-[320px] w-full aspect-square flex items-center justify-center">
@@ -230,16 +252,22 @@ export function Hero() {
               {/* Avatar Overlap */}
               <div className="flex -space-x-3 mb-3">
                 {avatars.map((avatar, idx) => (
-                  <div
+                  <motion.div
                     key={idx}
-                    className={`w-10 h-10 rounded-full border-2 border-white ${avatar.bg} bg-gradient-to-tr ${avatar.grad} flex items-center justify-center text-white text-[11px] font-bold shadow-sm select-none`}
+                    whileHover={{ scale: 1.15, y: -4 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                    className={`w-10 h-10 rounded-full border-2 border-white ${avatar.bg} bg-gradient-to-tr ${avatar.grad} flex items-center justify-center text-white text-[11px] font-bold shadow-sm select-none cursor-pointer relative hover:z-10`}
                   >
                     {avatar.label}
-                  </div>
+                  </motion.div>
                 ))}
-                <div className="w-10 h-10 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-white text-[11px] font-bold shadow-sm">
+                <motion.div 
+                  whileHover={{ scale: 1.15, y: -4 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  className="w-10 h-10 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-white text-[11px] font-bold shadow-sm cursor-pointer relative hover:z-10"
+                >
                   +200
-                </div>
+                </motion.div>
               </div>
 
               {/* Trust Text */}
@@ -262,9 +290,21 @@ export function Hero() {
 
             {/* Purifier Showcase Card (Right) */}
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
+              initial={{ opacity: 0, x: 30, y: 0 }}
+              animate={{ 
+                opacity: 1, 
+                x: 0,
+                y: [0, -10, 0]
+              }}
+              transition={{ 
+                opacity: { duration: 0.7, delay: 0.4 },
+                x: { duration: 0.7, delay: 0.4 },
+                y: {
+                  repeat: Infinity,
+                  duration: 5.5,
+                  ease: "easeInOut"
+                }
+              }}
               className="order-3 flex justify-center md:justify-start"
             >
               <div className="relative group bg-white rounded-3xl p-6 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80 hover:border-rose-100 hover:shadow-[0_10px_40px_rgba(225,29,72,0.06)] hover:-translate-y-2 transition-all duration-300 max-w-[320px] w-full aspect-square flex items-center justify-center">

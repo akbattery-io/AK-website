@@ -48,5 +48,28 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const publicId = searchParams.get("publicId");
+
+    if (!publicId) {
+      return NextResponse.json({ error: "publicId is required" }, { status: 400 });
+    }
+
+    // Delete image from Cloudinary
+    const result = await cloudinary.uploader.destroy(publicId);
+
+    return NextResponse.json({ success: true, result });
+  } catch (error: any) {
+    console.error("Cloudinary delete error:", error);
+    return NextResponse.json(
+      { error: error.message || "Failed to delete image from Cloudinary" },
+      { status: 500 }
+    );
+  }
+}
+
 export const maxDuration = 60; // Allow sufficient time for large image uploads
 export const dynamic = "force-dynamic";

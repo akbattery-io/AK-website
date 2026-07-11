@@ -35,6 +35,28 @@ interface Product {
   description?: string;
 }
 
+// Helper to extract Cloudinary public ID from secure URL
+const getPublicIdFromUrl = (url: string): string | null => {
+  if (!url) return null;
+  const parts = url.split("/image/upload/");
+  if (parts.length < 2) return null;
+
+  // Take the path part after /image/upload/
+  let path = parts[1];
+
+  // Remove version segment (e.g. v12345678/) if it exists
+  const versionRegex = /^v\d+\//;
+  path = path.replace(versionRegex, "");
+
+  // Remove the file extension (e.g. .jpg, .png, etc.)
+  const lastDotIndex = path.lastIndexOf(".");
+  if (lastDotIndex !== -1) {
+    path = path.substring(0, lastDotIndex);
+  }
+
+  return path;
+};
+
 export default function DashboardPage() {
   const router = useRouter();
   const { user, loading, logout } = useAuth();
@@ -264,11 +286,34 @@ export default function DashboardPage() {
     if (!confirm("Are you sure you want to delete this product? This action cannot be undone.")) return;
 
     try {
+      // Find product in local state first to get the Cloudinary image URL
+      const productToDelete = products.find((p) => p.id === id);
+      const imageUrl = productToDelete?.image;
+
+      // 1. Delete product from Supabase
       const { error } = await supabase.from("products").delete().eq("id", id);
       if (error) throw error;
+
+      // 2. If it is a Cloudinary image URL, delete the image from Cloudinary
+      if (imageUrl && imageUrl.includes("cloudinary.com")) {
+        const publicId = getPublicIdFromUrl(imageUrl);
+        if (publicId) {
+          try {
+            const res = await fetch(`/api/upload?publicId=${encodeURIComponent(publicId)}`, {
+              method: "DELETE",
+            });
+            if (!res.ok) {
+              console.error("Failed to delete image from Cloudinary API");
+            }
+          } catch (cloudinaryErr) {
+            console.error("Error calling Cloudinary delete API:", cloudinaryErr);
+          }
+        }
+      }
+
       fetchProducts();
     } catch (err: any) {
-      console.error("Error deleting product from Supabase:", err);
+      console.error("Error deleting product:", err);
       alert(err.message || "Failed to delete product.");
     }
   };

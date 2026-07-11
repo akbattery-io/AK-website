@@ -15,7 +15,6 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AK Batteries & RO Solutions | Trusted Doorstep Sales & Service",
   description: "Established in 2025, AK Batteries & RO Solutions provides fast, reliable sales, installation, maintenance, and repair services for batteries, inverters, and RO water purifiers.",
   keywords: ["AK Batteries kannamangalam", "RO Service kannamangalam", "Inverter Battery Sales kannamangalam", "Water Purifier Repair kannamangalam", "AK Batteries established 2025", "Battery installation doorstep"],
 };
@@ -30,6 +29,7 @@ export default function RootLayout({
       lang="en"
       className={`${plusJakarta.variable} ${playfair.variable} h-full antialiased`}
     >
+      <title>AK Batteries and RO Solutions</title>
       <body className="min-h-full flex flex-col bg-[#FAFBFD] text-slate-900 font-sans selection:bg-rose-500 selection:text-white">
         {children}
       </body>
