@@ -19,6 +19,17 @@
   
   --color-accent-brand: var(--color-brand-accent);
   --color-accent-brand-hover: var(--color-brand-accent-hover);
+
+  --animate-marquee: marquee 30s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 body {
@@ -41,3 +52,21 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+
+/* Custom visual utilities */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite !important;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

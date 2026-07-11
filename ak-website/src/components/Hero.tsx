@@ -4,12 +4,21 @@ import * as React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, BadgeCheck, Wrench, UserCheck, ShieldCheck, Tag, Zap, MapPin } from "lucide-react";
 import { Button } from "./ui/Button";
 import { Badge } from "./ui/Badge";
 
 export function Hero() {
   const router = useRouter();
+  const features = [
+    { text: "Genuine Products", Icon: BadgeCheck, color: "text-blue-600 bg-blue-50 border-blue-100 shadow-[0_1px_2px_rgba(37,99,235,0.05)]" },
+    { text: "Doorstep Installation", Icon: Wrench, color: "text-amber-600 bg-amber-50 border-amber-100 shadow-[0_1px_2px_rgba(217,119,6,0.05)]" },
+    { text: "Expert Technicians", Icon: UserCheck, color: "text-purple-600 bg-purple-50 border-purple-100 shadow-[0_1px_2px_rgba(147,51,234,0.05)]" },
+    { text: "Warranty Support", Icon: ShieldCheck, color: "text-emerald-600 bg-emerald-50 border-emerald-100 shadow-[0_1px_2px_rgba(16,185,129,0.05)]" },
+    { text: "Affordable Pricing", Icon: Tag, color: "text-rose-600 bg-rose-50 border-rose-100 shadow-[0_1px_2px_rgba(225,29,72,0.05)]" },
+    { text: "Fast Response", Icon: Zap, color: "text-yellow-600 bg-yellow-50 border-yellow-100 shadow-[0_1px_2px_rgba(202,138,4,0.05)]" },
+    { text: "Trusted Local Service", Icon: MapPin, color: "text-indigo-600 bg-indigo-50 border-indigo-100 shadow-[0_1px_2px_rgba(79,70,229,0.05)]" }
+  ];
   // Avatars data for social proof
   const avatars = [
     { bg: "bg-blue-500", label: "JD", grad: "from-blue-400 to-blue-600" },
@@ -79,25 +88,19 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative pt-12 pb-20 md:pt-16 md:pb-24 lg:pt-20 lg:pb-32 bg-mesh-gradient overflow-hidden"
+      className="relative pt-12 pb-20 md:pt-16 md:pb-24 lg:pt-20 lg:pb-32 overflow-hidden"
     >
-      {/* Decorative Background Glows */}
-      <div className="absolute top-12 left-10 w-72 h-72 bg-rose-500/10 rounded-full blur-[80px] pointer-events-none -z-10 animate-pulse" />
-      <div className="absolute top-1/4 right-10 w-72 h-72 bg-amber-500/10 rounded-full blur-[80px] pointer-events-none -z-10 animate-pulse delay-1000" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-rose-200/30 blur-[100px] rounded-full pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
-          {/* Tag Badge */}
+          {/* Tag Badges */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="mb-6 flex flex-wrap justify-center gap-3"
           >
-            <div className="mb-6 inline-flex items-center gap-1.5 py-1.5 px-4 bg-white/80 border border-slate-200/50 text-slate-800 rounded-full shadow-[0_2px_15px_rgba(15,23,42,0.02)] backdrop-blur-sm hover:border-rose-300 transition-colors duration-300">
-              <Sparkles className="w-3.5 h-3.5 text-rose-500 fill-rose-500/20 animate-pulse" />
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-700">Established 2025</span>
-            </div>
+
           </motion.div>
 
           {/* Main Title Heading */}
@@ -105,17 +108,29 @@ export function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-slate-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl leading-[1.1] md:leading-[1.15]"
+            className="text-slate-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight max-w-4xl leading-[1.2] md:leading-[1.25]"
           >
             AK Battery & <span className="bg-gradient-to-r from-rose-600 to-rose-500 bg-clip-text text-transparent">RO Solution</span> <br className="hidden sm:inline" /> for Every Home
           </motion.h1>
+
+          {/* Service Areas Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-8 text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed font-medium"
+          >
+            Providing doorstep sales, installation, and repair services across{" "}
+            <span className="text-slate-900 font-bold ">Kannamangalam</span>,{" "}
+            <span className="text-slate-900 font-semibold">Vellore</span>, and surrounding areas.
+          </motion.p>
 
           {/* Call To Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-8 flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0"
+            className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0"
           >
             <Button
               variant="primary"
@@ -138,6 +153,43 @@ export function Hero() {
             >
               Our Services
             </Button>
+          </motion.div>
+
+          {/* Feature Marquee */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="w-full max-w-5xl mt-20 overflow-hidden relative border-y border-slate-200/50 py-3.5 bg-white/40 backdrop-blur-[2px]"
+          >
+            {/* Gradient masks for smooth fading edges */}
+            <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#FAFBFD] to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#FAFBFD] to-transparent z-10 pointer-events-none" />
+
+            <div className="animate-marquee flex w-max items-center gap-16 whitespace-nowrap">
+              {/* First list of items */}
+              {features.map((feature, index) => (
+                <React.Fragment key={index}>
+                  <div className="flex items-center gap-2.5 text-slate-700 font-semibold text-xs sm:text-sm tracking-wide">
+                    <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color}`}>
+                      <feature.Icon className="w-3 h-3" />
+                    </span>
+                    <span>{feature.text}</span>
+                  </div>
+                </React.Fragment>
+              ))}
+              {/* Duplicate list for seamless loop */}
+              {features.map((feature, index) => (
+                <React.Fragment key={`dup-${index}`}>
+                  <div className="flex items-center gap-2.5 text-slate-700 font-semibold text-xs sm:text-sm tracking-wide">
+                    <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color}`}>
+                      <feature.Icon className="w-3 h-3" />
+                    </span>
+                    <span>{feature.text}</span>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
           </motion.div>
         </div>
 
