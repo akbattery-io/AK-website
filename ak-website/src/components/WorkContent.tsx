@@ -13,49 +13,6 @@ export function WorkContent() {
   const [projects, setProjects] = React.useState<any[]>([]);
   const [dbLoading, setDbLoading] = React.useState(true);
 
-  const defaultProjects = [
-    {
-      image: "/images/battery.png",
-      category: "Battery Backup",
-      brandname: "Exide",
-      location: "Dwarka Sector 12, Delhi",
-      date: "June 15, 2026",
-      price: "₹14,499",
-      tagColor: "bg-amber-50 text-amber-700 border-amber-100/70",
-      description: "High-performance heavy-duty inverter battery with long backup life.",
-    },
-    {
-      image: "/images/purifier.png",
-      category: "Water Purification",
-      brandname: "FINPURE WATER PURIFIER",
-      location: "Rohini Sector 8, Delhi",
-      date: "May 28, 2026",
-      price: "₹12,999",
-      tagColor: "bg-rose-50 text-rose-700 border-rose-100/70",
-      description: "Multi-stage advanced RO + UV water purifier for pristine drinking water.",
-    },
-    {
-      image: "/images/battery.png",
-      category: "Battery Backup",
-      brandname: "Luminous",
-      location: "DLF Phase 3, Gurugram",
-      date: "April 10, 2026",
-      price: "₹18,500",
-      tagColor: "bg-amber-50 text-amber-700 border-amber-100/70",
-      description: "Smart sine wave solar inverter with high charging efficiency.",
-    },
-    {
-      image: "/images/purifier.png",
-      category: "Water Purification",
-      brandname: "AQUA ORCA",
-      location: "Sector 62, Noida",
-      date: "March 22, 2026",
-      price: "₹8,999",
-      tagColor: "bg-rose-50 text-rose-700 border-rose-100/70",
-      description: "Eco-friendly premium water purifier with active copper filter technology.",
-    },
-  ];
-
   React.useEffect(() => {
     async function loadProducts() {
       try {
@@ -74,12 +31,9 @@ export function WorkContent() {
               : "bg-rose-50 text-rose-700 border-rose-100/70"
           }));
           setProjects(conformedData);
-        } else {
-          setProjects(defaultProjects);
         }
-      } catch (err) {
-        console.error("Failed to load live products from Supabase:", err);
-        setProjects(defaultProjects);
+        } catch (err) {
+          console.error("Failed to load live products from Supabase:", err);
       } finally {
         setDbLoading(false);
       }
@@ -178,7 +132,7 @@ export function WorkContent() {
               No products found
             </h3>
             <p className="text-slate-500 text-sm max-w-xs mx-auto mb-6">
-              We couldn't find any products matching "{searchQuery}" in this category.
+              We couldn't find any products matching in this category.
             </p>
             <Button
               onClick={() => {
