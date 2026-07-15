@@ -2,10 +2,175 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Calendar, MapPin, ArrowUpRight, Tag, Search, Inbox } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Calendar, MapPin, ArrowUpRight, Tag, Search, Inbox, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/Button";
 import { supabase } from "../lib/supabase";
+
+const formatPrice = (p: string) => {
+  if (!p) return "";
+  const trimmed = p.trim();
+  if (trimmed.startsWith("₹") || trimmed.toLowerCase().startsWith("rs")) {
+    return trimmed;
+  }
+  return `₹${trimmed}`;
+};
+
+const calculateDiscount = (mrpStr?: string, sellStr?: string) => {
+  if (!mrpStr || !sellStr) return null;
+  const numMrp = parseInt(mrpStr.replace(/[^0-9]/g, ""), 10);
+  const numSell = parseInt(sellStr.replace(/[^0-9]/g, ""), 10);
+  if (isNaN(numMrp) || isNaN(numSell) || numMrp <= numSell) return null;
+  const pct = Math.round(((numMrp - numSell) / numMrp) * 100);
+  return `${pct}% OFF`;
+};
+
+function ProductCard({ project, idx }: { project: any; idx: number }) {
+  const productImages = project.images && project.images.length > 0
+    ? project.images
+    : project.image
+      ? [project.image]
+      : [];
+
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const discountBadge = calculateDiscount(project.mrp, project.selling_price || project.price);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, delay: idx * 0.1 }}
+      className="group bg-white rounded-3xl p-5 shadow-[0_4px_30px_rgba(15,23,42,0.01)] border border-slate-100/80 hover:shadow-[0_20px_50px_rgba(225,29,72,0.06)] hover:border-rose-100/70 hover:-translate-y-1.5 transition-all duration-500 flex flex-col gap-5 justify-between relative overflow-hidden"
+    >
+      {/* Product Visual Container (FIRST) */}
+      <div className="bg-slate-50/60 rounded-2xl aspect-[4/3] w-full overflow-hidden relative flex items-center justify-center p-3 border border-slate-100/30">
+        {productImages.length > 0 ? (
+          <div className="relative w-full h-full select-none">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentImageIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="relative w-full h-full"
+              >
+                <Image
+                  src={productImages[currentImageIndex]}
+                  alt={`${project.brandname} ${project.category} Product - Visual ${currentImageIndex + 1}`}
+                  fill
+                  className="object-contain transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-w-768px) 100vw, 50vw"
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Slide Arrows for navigation */}
+            {productImages.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCurrentImageIndex((prev) => (prev === 0 ? productImages.length - 1 : prev - 1));
+                  }}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/75 backdrop-blur-sm border border-white/40 hover:bg-white text-slate-800 flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 cursor-pointer focus:outline-none"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft className="w-4.5 h-4.5" />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCurrentImageIndex((prev) => (prev === productImages.length - 1 ? 0 : prev + 1));
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/75 backdrop-blur-sm border border-white/40 hover:bg-white text-slate-800 flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 cursor-pointer focus:outline-none"
+                  aria-label="Next image"
+                >
+                  <ChevronRight className="w-4.5 h-4.5" />
+                </button>
+              </>
+            )}
+
+            {/* Slide Dot Indicators */}
+            {productImages.length > 1 && (
+              <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 bg-slate-900/60 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm">
+                {productImages.map((_: string, i: number) => (
+                  <button
+                    key={i}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setCurrentImageIndex(i);
+                    }}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${currentImageIndex === i ? "bg-rose-500 w-3.5" : "bg-white/40 hover:bg-white/80 w-1.5"
+                      }`}
+                    aria-label={`Go to slide ${i + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <span className="text-xs text-slate-400 font-semibold">No Image</span>
+        )}
+      </div>
+
+      {/* Content Details (SECOND) */}
+      <div className="flex flex-col flex-grow gap-4">
+        <div className="space-y-3">
+          {/* Upper row: Category */}
+          <div>
+            <span className={`text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border select-none ${project.category === "ups inventer & batteries"
+                ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                : "bg-rose-500/10 text-rose-600 border-rose-500/20"
+              }`}>
+              {project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"}
+            </span>
+          </div>
+
+          {/* Brand header */}
+          <div className="flex items-start justify-between gap-4">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors select-all line-clamp-1">
+              {project.brandname}
+            </h3>
+            <span className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-rose-50 group-hover:text-rose-600 transition-all duration-300 select-none">
+              <ArrowUpRight className="w-4 h-4" />
+            </span>
+          </div>
+
+          {/* Product Description */}
+          {project.description && (
+            <p className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-3 select-all min-h-[54px]">
+              {project.description}
+            </p>
+          )}
+
+          {/* Price Tag with MRP, Selling Price, and Discount Badge */}
+          <div className="flex items-center gap-2.5 flex-wrap pt-1.5 select-all">
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl font-black text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors duration-300">
+                {formatPrice(project.selling_price || project.price)}
+              </span>
+            </div>
+            {project.mrp && (
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                M.R.P: <span className="line-through">{formatPrice(project.mrp)}</span>
+              </div>
+            )}
+            {discountBadge && (
+              <span className="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider shadow-sm select-none">
+                {discountBadge}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 export function WorkContent() {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -26,14 +191,14 @@ export function WorkContent() {
         if (data && data.length > 0) {
           const conformedData = data.map((item: any) => ({
             ...item,
-            tagColor: item.category === "Battery Backup"
+            tagColor: item.category === "ups inventer & batteries"
               ? "bg-amber-50 text-amber-700 border-amber-100/70"
               : "bg-rose-50 text-rose-700 border-rose-100/70"
           }));
           setProjects(conformedData);
         }
-        } catch (err) {
-          console.error("Failed to load live products from Supabase:", err);
+      } catch (err) {
+        console.error("Failed to load live products from Supabase:", err);
       } finally {
         setDbLoading(false);
       }
@@ -47,8 +212,8 @@ export function WorkContent() {
     return projects.filter((project) => {
       const matchesCategory =
         selectedCategory === "All" ||
-        (selectedCategory === "Battery Backup" && project.category === "Battery Backup") ||
-        (selectedCategory === "Water Purification" && project.category === "Water Purification");
+        (selectedCategory === "ups inventer & batteries" && project.category === "ups inventer & batteries") ||
+        (selectedCategory === "water purifier" && project.category === "water purifier");
 
       const matchesSearch = project.brandname
         .toLowerCase()
@@ -89,7 +254,7 @@ export function WorkContent() {
         <div className="max-w-5xl mx-auto mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           {/* Category Tabs */}
           <div className="flex flex-wrap gap-2.5">
-            {["All", "Battery Backup", "Water Purification"].map((cat) => (
+            {["All", "ups inventer & batteries", "water purifier"].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
@@ -98,7 +263,7 @@ export function WorkContent() {
                   : "bg-white text-slate-600 border-slate-200/50 hover:text-slate-900 hover:bg-slate-50 hover:border-slate-300"
                   }`}
               >
-                {cat === "All" ? "All Products" : cat === "Battery Backup" ? "Battery Backups" : "Water Purification"}
+                {cat === "All" ? "All Products" : cat === "ups inventer & batteries" ? "ups inventer & batteriess" : "water purifier"}
               </button>
             ))}
           </div>
@@ -148,76 +313,7 @@ export function WorkContent() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {filteredProjects.map((project, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="group bg-white rounded-3xl p-6 sm:p-8 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100 hover:shadow-[0_10px_45px_rgba(225,29,72,0.05)] hover:border-rose-100 transition-all duration-300 flex flex-col gap-6 justify-between"
-              >
-                {/* Product Visual Container (FIRST) */}
-                <div className="bg-slate-50 rounded-2xl h-44 w-full overflow-hidden relative">
-                  <Image
-                    src={project.image}
-                    alt={`${project.brandname} ${project.category} Product`}
-                    fill
-                    className="object-contain group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-w-768px) 100vw, 50vw"
-                  />
-                </div>
-
-                {/* Content Details (SECOND) */}
-                <div className="flex flex-col flex-grow justify-between">
-                  <div>
-                    {/* Upper row: Category & Date */}
-                    <div className="flex items-center justify-between mb-4 border-b border-slate-50 pb-4">
-                      <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border ${project.tagColor}`}>
-                        {project.category}
-                      </span>
-                      <div className="flex items-center gap-1 text-xs font-semibold text-slate-400">
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>{project.date}</span>
-                      </div>
-                    </div>
-
-                    {/* Brand and link arrow */}
-                    <div className="space-y-4 mb-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-xs font-extrabold text-rose-600 uppercase tracking-widest">
-                          <span>{project.brandname}</span>
-                        </div>
-                        <span className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-rose-50 group-hover:text-rose-600 transition-colors duration-300">
-                          <ArrowUpRight className="w-4 h-4" />
-                        </span>
-                      </div>
-
-                      {/* Product Description */}
-                      {project.description && (
-                        <p className="text-xs text-slate-500 font-semibold leading-relaxed line-clamp-3 my-2 border-t border-slate-50 pt-3">
-                          {project.description}
-                        </p>
-                      )}
-
-                      {/* Price Tag */}
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors duration-300 select-all">
-                          {project.price}
-                        </span>
-                        <span className="text-slate-400 text-xs font-bold uppercase tracking-wider">
-                          M.R.P.
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Location row */}
-                  <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 border-t border-slate-50 pt-4 mt-auto">
-                    <MapPin className="w-4 h-4 text-emerald-500" />
-                    <span>{project.location}</span>
-                  </div>
-                </div>
-              </motion.div>
+              <ProductCard key={idx} project={project} idx={idx} />
             ))}
           </div>
         )}

@@ -109,18 +109,22 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-slate-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight max-w-4xl leading-[1.2] md:leading-[1.25]"
+            style={{ fontFamily: "system-ui" }}
           >
-            AK Battery & <span className="bg-gradient-to-r from-rose-600 to-rose-500 bg-clip-text text-transparent">RO Solution</span> <br className="hidden sm:inline" /> for Every Home
+            AK BATTERIES <br />
+            <span className="block mt-4 text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold tracking-wider bg-gradient-to-r from-rose-600 to-rose-500 bg-clip-text text-transparent">
+              RO WATER PURIFIERS & BATTERIES
+            </span>
           </motion.h1>
 
           {/* Service Areas Description */}
           <motion.p
             initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 0.7, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-8 text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed font-medium"
           >
-            Providing doorstep sales, installation, and repair services across{" "}
+            Providing doorstep sales, installation, and services across{" "}
             <span className="text-slate-900 font-bold ">Kannamangalam</span>,{" "}
             <span className="text-slate-900 font-semibold">Vellore</span>, and surrounding areas.
           </motion.p>
@@ -174,7 +178,7 @@ export function Hero() {
               {/* First list of items */}
               {features.map((feature, index) => (
                 <React.Fragment key={index}>
-                  <motion.div 
+                  <motion.div
                     whileHover={{ scale: 1.06, y: -2 }}
                     className="flex items-center gap-2.5 text-slate-700 hover:text-rose-600 transition-colors duration-200 font-semibold text-xs sm:text-sm tracking-wide cursor-pointer select-none"
                   >
@@ -188,7 +192,7 @@ export function Hero() {
               {/* Duplicate list for seamless loop */}
               {features.map((feature, index) => (
                 <React.Fragment key={`dup-${index}`}>
-                  <motion.div 
+                  <motion.div
                     whileHover={{ scale: 1.06, y: -2 }}
                     className="flex items-center gap-2.5 text-slate-700 hover:text-rose-600 transition-colors duration-200 font-semibold text-xs sm:text-sm tracking-wide cursor-pointer select-none"
                   >
@@ -210,12 +214,12 @@ export function Hero() {
             {/* Battery Showcase Card (Left) */}
             <motion.div
               initial={{ opacity: 0, x: -30, y: 0 }}
-              animate={{ 
-                opacity: 1, 
+              animate={{
+                opacity: 1,
                 x: 0,
                 y: [0, -10, 0]
               }}
-              transition={{ 
+              transition={{
                 opacity: { duration: 0.7, delay: 0.4 },
                 x: { duration: 0.7, delay: 0.4 },
                 y: {
@@ -226,13 +230,13 @@ export function Hero() {
               }}
               className="order-2 md:order-1 flex justify-center md:justify-end"
             >
-              <div className="relative group bg-white rounded-3xl p-6 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80 hover:border-rose-100 hover:shadow-[0_10px_40px_rgba(225,29,72,0.06)] hover:-translate-y-2 transition-all duration-300 max-w-[320px] w-full aspect-square flex items-center justify-center">
+              <div className="relative group rounded-3xl p-6 ">
                 {/* Floating badge */}
                 <span className="absolute top-4 left-4 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                   Power Backup
                 </span>
                 <Image
-                  src="/images/battery.png"
+                  src="/images/battery.webp"
                   alt="Inverter & Battery Power Backup System"
                   width={280}
                   height={280}
@@ -261,7 +265,7 @@ export function Hero() {
                     {avatar.label}
                   </motion.div>
                 ))}
-                <motion.div 
+                <motion.div
                   whileHover={{ scale: 1.15, y: -4 }}
                   transition={{ type: "spring", stiffness: 300, damping: 15 }}
                   className="w-10 h-10 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-white text-[11px] font-bold shadow-sm cursor-pointer relative hover:z-10"
@@ -291,12 +295,12 @@ export function Hero() {
             {/* Purifier Showcase Card (Right) */}
             <motion.div
               initial={{ opacity: 0, x: 30, y: 0 }}
-              animate={{ 
-                opacity: 1, 
+              animate={{
+                opacity: 1,
                 x: 0,
                 y: [0, -10, 0]
               }}
-              transition={{ 
+              transition={{
                 opacity: { duration: 0.7, delay: 0.4 },
                 x: { duration: 0.7, delay: 0.4 },
                 y: {
@@ -307,13 +311,13 @@ export function Hero() {
               }}
               className="order-3 flex justify-center md:justify-start"
             >
-              <div className="relative group bg-white rounded-3xl p-6 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80 hover:border-rose-100 hover:shadow-[0_10px_40px_rgba(225,29,72,0.06)] hover:-translate-y-2 transition-all duration-300 max-w-[320px] w-full aspect-square flex items-center justify-center">
+              <div className="relative group p-6 ">
                 {/* Floating badge */}
                 <span className="absolute top-4 left-4 bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                   Pure Water
                 </span>
                 <Image
-                  src="/images/purifier.png"
+                  src="/images/purifier.webp"
                   alt="Modern RO Water Purifier System"
                   width={280}
                   height={280}

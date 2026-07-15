@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
       <title>AK Batteries and RO Solutions</title>
       <body className="min-h-full flex flex-col bg-[#FAFBFD] text-slate-900 font-sans selection:bg-rose-500 selection:text-white">
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );

@@ -29,7 +29,7 @@ export default function Footer() {
                         </h3>
                         <ul className="space-y-2 text-sm">
                             <li>
-                                <a href="#home" className="hover:text-white transition-colors">
+                                <a href="/" className="hover:text-white transition-colors">
                                     Home
                                 </a>
                             </li>
