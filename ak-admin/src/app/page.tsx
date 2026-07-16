@@ -91,7 +91,7 @@ export default function DashboardPage() {
   const [mrp, setMrp] = useState("");
   const [sellingPrice, setSellingPrice] = useState("");
   const [description, setDescription] = useState("");
-  
+
   // Multiple files upload state
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
@@ -250,7 +250,7 @@ export default function DashboardPage() {
     setMrp(product.mrp || "");
     setSellingPrice(product.selling_price || product.price || "");
     setDescription(product.description || "");
-    
+
     // Existing images can be retrieved from images array or single fallback image URL
     const imgs = product.images && product.images.length > 0
       ? product.images
@@ -440,7 +440,7 @@ export default function DashboardPage() {
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-        
+
         {/* Statistics Cards */}
         <section className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
           <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex items-center justify-between">
@@ -730,7 +730,7 @@ export default function DashboardPage() {
               <div>
                 <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Description</label>
                 <textarea
-                  placeholder="Describe the product or installation details..."
+                  placeholder="Describe should seperated by commas"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full h-20 p-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 resize-none"
@@ -739,7 +739,7 @@ export default function DashboardPage() {
 
               <div>
                 <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Images (Cloudinary)</label>
-                
+
                 {imagePreviews.length > 0 && (
                   <div className="grid grid-cols-3 gap-3 mb-4">
                     {imagePreviews.map((preview, index) => (
@@ -893,7 +893,7 @@ export default function DashboardPage() {
 
               <div>
                 <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Images (Cloudinary)</label>
-                
+
                 {(existingImageUrls.length > 0 || imagePreviews.length > 0) && (
                   <div className="grid grid-cols-4 gap-2 mb-4">
                     {/* Existing Images */}

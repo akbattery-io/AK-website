@@ -54,14 +54,30 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
-                className="relative w-full h-full"
+                className="relative w-full h-full cursor-grab active:cursor-grabbing touch-pan-y"
+                {...(productImages.length > 1
+                  ? {
+                      drag: "x",
+                      dragConstraints: { left: 0, right: 0 },
+                      dragElastic: 0.6,
+                      onDragEnd: (_e, info) => {
+                        const swipeThreshold = 50;
+                        if (info.offset.x < -swipeThreshold) {
+                          setCurrentImageIndex((prev) => (prev === productImages.length - 1 ? 0 : prev + 1));
+                        } else if (info.offset.x > swipeThreshold) {
+                          setCurrentImageIndex((prev) => (prev === 0 ? productImages.length - 1 : prev - 1));
+                        }
+                      },
+                    }
+                  : {})}
               >
                 <Image
                   src={productImages[currentImageIndex]}
                   alt={`${project.brandname} ${project.category} Product - Visual ${currentImageIndex + 1}`}
                   fill
-                  className="object-contain transition-transform duration-700 group-hover:scale-105"
+                  className="object-contain transition-transform duration-700 group-hover:scale-105 pointer-events-none"
                   sizes="(max-w-768px) 100vw, 50vw"
+                  draggable={false}
                 />
               </motion.div>
             </AnimatePresence>
@@ -119,7 +135,7 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
       </div>
 
       {/* Content Details (SECOND) */}
-      <div className="flex flex-col flex-grow gap-4">
+      <div className="flex flex-col flex-grow justify-between gap-4">
         <div className="space-y-3">
           {/* Upper row: Category */}
           <div>
@@ -143,9 +159,15 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
 
           {/* Product Description */}
           {project.description && (
-            <p className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-3 select-all min-h-[54px]">
-              {project.description}
-            </p>
+            <ul className="text-xs text-slate-500 font-medium leading-relaxed select-all min-h-[54px] list-disc pl-4 space-y-1">
+              {project.description
+                .split(",")
+                .map((item: string) => item.trim())
+                .filter(Boolean)
+                .map((item: string, index: number) => (
+                  <li key={index}>{item}</li>
+                ))}
+            </ul>
           )}
 
           {/* Price Tag with MRP, Selling Price, and Discount Badge */}
@@ -166,6 +188,29 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
               </span>
             )}
           </div>
+        </div>
+
+        {/* WhatsApp Enquiry Button */}
+        <div className="pt-2 border-t border-slate-100/60">
+          <a
+            href={`https://wa.me/918870534049?text=${encodeURIComponent(
+              `Hello, I would like to enquire about the *${project.brandname}* (${
+                project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"
+              }) priced at *${formatPrice(project.selling_price || project.price)}*.`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-2xl py-3 px-4 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all duration-300 shadow-[0_4px_12px_rgba(16,185,129,0.12)] hover:shadow-[0_8px_20px_rgba(16,185,129,0.24)] cursor-pointer select-none"
+          >
+            <svg
+              className="w-4 h-4 fill-current"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.458L0 24zm6.59-4.846c1.6.95 3.16 1.448 4.787 1.449 5.518 0 10.008-4.487 10.01-10.007.001-2.673-1.03-5.188-2.903-7.062C16.618 1.66 14.11 1.628 11.999 1.628 6.48 1.628 1.99 6.115 1.988 11.635c0 1.674.437 3.313 1.272 4.773L2.24 21.05l4.407-1.156zM17.07 14.04c-.274-.137-1.62-.8-1.87-.89-.25-.09-.43-.137-.61.137-.18.274-.69.89-.846 1.072-.156.18-.313.2-.587.06-.275-.135-1.16-.427-2.21-1.365-.817-.73-1.37-1.63-1.53-1.905-.16-.275-.016-.423.12-.56.124-.124.275-.32.413-.48.137-.16.183-.275.275-.457.09-.18.046-.34-.02-.48-.069-.137-.61-1.486-.838-2.036-.223-.53-.45-.457-.61-.465-.16-.008-.344-.01-.53-.01-.18 0-.477.067-.73.343-.25.274-.96.94-.96 2.29 0 1.35.98 2.65 1.117 2.83.137.18 1.93 2.946 4.675 4.13.654.28 1.164.448 1.56.574.657.21 1.256.18 1.73.1.527-.08 1.62-.66 1.85-1.3.23-.64.23-1.187.16-1.3-.07-.11-.253-.18-.527-.315z" />
+            </svg>
+            Enquire on WhatsApp
+          </a>
         </div>
       </div>
     </motion.div>

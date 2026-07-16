@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, PhoneCall } from "lucide-react";
 import { Button } from "./ui/Button";
@@ -22,7 +23,7 @@ export function Header() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "Works", href: "/works" },
+    { name: "Products", href: "/works" },
     { name: "About us", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
@@ -49,9 +50,16 @@ export function Header() {
           <div className="flex-shrink-0">
             <Link
               href="/"
-              className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 select-none transition-transform hover:scale-105 inline-block"
+              className="flex items-center gap-2 select-none transition-transform hover:scale-105"
             >
-              AK
+              <Image
+                src="/logo.png"
+                alt="AK Batteries Logo"
+                width={36}
+                height={36}
+                className="w-9 h-9 object-contain"
+                priority
+              />
             </Link>
           </div>
 
@@ -73,18 +81,6 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:block">
-            <Button
-              variant="primary"
-              size="md"
-              onClick={() => {
-                window.open("https://wa.me/918870534049?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20Battery%20and%20RO%20services.", "_blank", "noopener,noreferrer");
-              }}
-            >
-              Enquire now
-            </Button>
-          </div>
 
           {/* Mobile menu button */}
           <div className="flex md:hidden">

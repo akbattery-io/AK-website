@@ -2,6 +2,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { Clock, Mail, Phone, Pin } from "lucide-react";
 
 
@@ -13,9 +14,18 @@ export default function Footer() {
 
                     {/* Company */}
                     <div>
-                        <h3 className="text-xl font-bold text-white mb-4">
-                            AK Batteries & RO Solutions
-                        </h3>
+                        <div className="flex items-center gap-3 mb-4">
+                            <Image
+                                src="/logo.png"
+                                alt="AK Batteries Logo"
+                                width={36}
+                                height={36}
+                                className="w-9 h-9 object-contain bg-white rounded-full p-0.5"
+                            />
+                            <h3 className="text-xl font-bold text-white">
+                                AK Batteries & RO Solutions
+                            </h3>
+                        </div>
                         <p className="text-sm leading-6">
                             Your trusted partner for premium batteries, RO water purifiers,
                             genuine spare parts, installation, and maintenance services.

@@ -158,7 +158,7 @@ export function Hero() {
                 }}
                 className="w-full sm:w-auto shadow-sm"
               >
-                Our Services
+                View Products
               </Button>
             </motion.div>
           </motion.div>
@@ -270,14 +270,14 @@ export function Hero() {
                   transition={{ type: "spring", stiffness: 300, damping: 15 }}
                   className="w-10 h-10 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-white text-[11px] font-bold shadow-sm cursor-pointer relative hover:z-10"
                 >
-                  +200
+                  +1000
                 </motion.div>
               </div>
 
               {/* Trust Text */}
               <div className="text-center">
                 <span className="block text-slate-800 font-extrabold text-base leading-tight">
-                  200+ Happy Customers
+                  1000+ Happy Customers
                 </span>
                 <div className="flex items-center justify-center gap-0.5 mt-1.5 mb-1.5 text-amber-500">
                   {[...Array(5)].map((_, i) => (
