@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/context/AuthContext";
 import { Shield, Mail, Lock, LogIn, AlertCircle } from "lucide-react";
 
@@ -26,20 +25,17 @@ export default function LoginPage() {
     setLocalError(null);
     clearError();
 
-    const provider = new GoogleAuthProvider();
     try {
-      const result = await signInWithPopup(auth, provider);
-      if (result.user.email !== "akbattery.ro@gmail.com") {
-        setLocalError(`Access Denied. The account ${result.user.email} is not authorized.`);
-      } else {
-        router.push("/");
-      }
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/login",
+        },
+      });
+      if (error) throw error;
     } catch (err: any) {
       console.error("Google login error:", err);
-      if (err.code !== "auth/popup-closed-by-user") {
-        setLocalError(err.message || "Failed to sign in with Google.");
-      }
-    } finally {
+      setLocalError(err.message || "Failed to sign in with Google.");
       setAuthLoading(false);
     }
   };
