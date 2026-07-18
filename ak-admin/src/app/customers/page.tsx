@@ -238,7 +238,7 @@ export default function CustomersPage() {
   // Validate form inputs
   const validateForm = () => {
     if (!customerName.trim()) throw new Error("Customer Name is required");
-    
+
     const phoneTrim = phoneNumber.trim();
     if (!phoneTrim) throw new Error("Phone Number is required");
     const phoneRegex = /^[0-9\s\-+()]{10,15}$/;
@@ -264,11 +264,11 @@ export default function CustomersPage() {
     const installDate = new Date(installDateStr);
     const expiryDate = new Date(installDate);
     expiryDate.setMonth(expiryDate.getMonth() + periodMonths);
-    
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     expiryDate.setHours(0, 0, 0, 0);
-    
+
     return today > expiryDate ? "Inactive" : "Active";
   };
 
@@ -432,7 +432,7 @@ export default function CustomersPage() {
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-        
+
         {/* Title and Add Button */}
         <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
@@ -455,11 +455,10 @@ export default function CustomersPage() {
               <button
                 key={item}
                 onClick={() => setStatusFilter(item)}
-                className={`h-9 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${
-                  statusFilter === item
+                className={`h-9 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${statusFilter === item
                     ? "bg-rose-50 border-rose-200 text-rose-600 shadow-sm"
                     : "bg-white border-slate-100 text-slate-400 hover:text-slate-700"
-                }`}
+                  }`}
               >
                 {item} Status
               </button>
@@ -540,11 +539,10 @@ export default function CustomersPage() {
                         <td className="py-4 px-6 text-slate-500 font-semibold">{customer.maintenance_period} Months</td>
                         <td className="py-4 px-6">
                           <span
-                            className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
-                              customer.status === "Active"
+                            className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${customer.status === "Active"
                                 ? "bg-emerald-50 border-emerald-100 text-emerald-700"
                                 : "bg-slate-50 border-slate-200 text-slate-500"
-                            }`}
+                              }`}
                           >
                             {customer.status}
                           </span>
@@ -609,11 +607,10 @@ export default function CustomersPage() {
                         <p className="text-slate-400 text-xs font-semibold mt-0.5">{customer.product_name}</p>
                       </div>
                       <span
-                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
-                          customer.status === "Active"
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${customer.status === "Active"
                             ? "bg-emerald-50 border-emerald-100 text-emerald-700"
                             : "bg-slate-50 border-slate-200 text-slate-500"
-                        }`}
+                          }`}
                       >
                         {customer.status}
                       </span>
@@ -635,14 +632,6 @@ export default function CustomersPage() {
                       <div>
                         <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Install Date</p>
                         <p className="font-semibold text-slate-500 mt-0.5">{customer.installation_date}</p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Coordinates</p>
-                        <p className="font-semibold text-slate-500 mt-0.5">
-                          {customer.latitude && customer.longitude 
-                            ? `${customer.latitude.toFixed(4)}, ${customer.longitude.toFixed(4)}` 
-                            : "None"}
-                        </p>
                       </div>
                     </div>
 
@@ -867,15 +856,7 @@ export default function CustomersPage() {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Remarks / Notes</label>
-                <textarea
-                  placeholder="e.g. Next service due in 6 months"
-                  value={remark}
-                  onChange={(e) => setRemark(e.target.value)}
-                  className="w-full h-20 p-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 resize-none"
-                />
-              </div>
+
 
               <div className="pt-2 flex items-center justify-end gap-3.5">
                 <button
@@ -1064,15 +1045,7 @@ export default function CustomersPage() {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Remarks / Notes</label>
-                <textarea
-                  placeholder="e.g. Next service due in 6 months"
-                  value={remark}
-                  onChange={(e) => setRemark(e.target.value)}
-                  className="w-full h-20 p-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 resize-none"
-                />
-              </div>
+
 
               <div className="pt-2 flex items-center justify-end gap-3.5">
                 <button
@@ -1156,11 +1129,10 @@ export default function CustomersPage() {
                   <div>
                     <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Contract Status</span>
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 mt-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
-                        selectedCustomer.status === "Active"
+                      className={`inline-flex items-center px-2.5 py-0.5 mt-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${selectedCustomer.status === "Active"
                           ? "bg-emerald-50 border-emerald-100 text-emerald-700"
                           : "bg-slate-50 border-slate-200 text-slate-500"
-                      }`}
+                        }`}
                     >
                       {selectedCustomer.status}
                     </span>

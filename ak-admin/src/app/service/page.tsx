@@ -53,6 +53,26 @@ const getWhatsAppLink = (phone: string) => {
   return `https://wa.me/${withCountryCode}`;
 };
 
+const roTasks = [
+  "Water flow checked",
+  "TDS checked",
+  "Filters cleaned/replaced",
+  "Tank clean",
+  "Leak checked",
+  "Pump working",
+  "Output water quality verified"
+];
+
+const batteryTasks = [
+  "Battery Water Level Checked",
+  "Distilled Water Added",
+  "Terminal Cleaned",
+  "Voltage Tested",
+  "Charging Status Verified",
+  "Backup Time Tested",
+  "Wiring Inspected"
+];
+
 export default function ServicePage() {
   const router = useRouter();
   const { user, loading, logout } = useAuth();
@@ -82,7 +102,14 @@ export default function ServicePage() {
   // Modals open states
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+
+  // Service Completion Modal States
+  const [detectedCategory, setDetectedCategory] = useState<"RO" | "Battery">("RO");
+  const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
+  const [otherText, setOtherText] = useState("");
+  const [isOtherSelected, setIsOtherSelected] = useState(false);
 
   // Form field states for Edit Modal
   const [customerName, setCustomerName] = useState("");
@@ -349,6 +376,70 @@ export default function ServicePage() {
     }
   };
 
+  // Complete Service Modal Handlers
+  const openCompleteServiceModal = (customer: Customer) => {
+    setSelectedCustomer(customer);
+    const prodName = (customer.product_name || "").toLowerCase();
+    const isBattery =
+      prodName.includes("battery") ||
+      prodName.includes("inverter") ||
+      prodName.includes("ups") ||
+      prodName.includes("exide") ||
+      prodName.includes("luminous") ||
+      prodName.includes("amaron");
+    
+    setDetectedCategory(isBattery ? "Battery" : "RO");
+    setSelectedTasks([]);
+    setOtherText("");
+    setIsOtherSelected(false);
+    setIsCompleteModalOpen(true);
+  };
+
+  const handleCompleteServiceSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedCustomer) return;
+    setFormSubmitting(true);
+    setFormError(null);
+
+    try {
+      const todayStr = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+      
+      let tasks = [...selectedTasks];
+      if (isOtherSelected && otherText.trim()) {
+        tasks.push(`Other: ${otherText.trim()}`);
+      }
+
+      if (tasks.length === 0) {
+        throw new Error("Please select at least one service task completed.");
+      }
+
+      const serviceLog = `${todayStr} / Work done: ${tasks.join(", ")}.`;
+      
+      let finalRemark = serviceLog;
+      if (selectedCustomer.remark && selectedCustomer.remark.trim()) {
+        finalRemark = `${selectedCustomer.remark.trim()}\n---\n${serviceLog}`;
+      }
+
+      const { error } = await supabase
+        .from("customers")
+        .update({
+          installation_date: todayStr,
+          remark: finalRemark,
+        })
+        .eq("id", selectedCustomer.id);
+
+      if (error) throw error;
+
+      setIsCompleteModalOpen(false);
+      fetchDueCustomers();
+    } catch (err: any) {
+      console.error("Error completing service record:", err);
+      alert(err.message || "Failed to record service completion.");
+    } finally {
+      setFormSubmitting(false);
+    }
+  };
+
   // Render loading state for the page auth check
   if (loading || (user && !isAdminEmail(user.email))) {
     return (
@@ -526,6 +617,14 @@ export default function ServicePage() {
                         </td>
                         <td className="py-3 px-6 text-right">
                           <div className="inline-flex items-center gap-1.5">
+                            <button
+                              onClick={() => openCompleteServiceModal(customer)}
+                              title="Attend & Complete Maintenance"
+                              className="h-9 px-3 bg-rose-600 hover:bg-rose-500 text-white rounded-lg flex items-center justify-center gap-1 text-[11px] font-bold uppercase tracking-wider transition-all shadow-sm shadow-rose-50 mr-1"
+                            >
+                              <Wrench className="w-3 h-3" />
+                              <span>Attend</span>
+                            </button>
                             <a
                               href={`tel:${customer.phone_number}`}
                               title="Call Customer"
@@ -611,6 +710,13 @@ export default function ServicePage() {
                     </div>
 
                     <div className="flex items-center justify-end gap-2.5">
+                      <button
+                        onClick={() => openCompleteServiceModal(customer)}
+                        className="h-9 px-3 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
+                      >
+                        <Wrench className="w-3.5 h-3.5" />
+                        <span>Attend</span>
+                      </button>
                       <a
                         href={`tel:${customer.phone_number}`}
                         className="h-9 px-3 border border-emerald-100 hover:border-emerald-250 bg-emerald-50/20 text-emerald-700 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5"
@@ -834,15 +940,7 @@ export default function ServicePage() {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Remarks / Notes</label>
-                <textarea
-                  placeholder="e.g. Next service due in 6 months"
-                  value={remark}
-                  onChange={(e) => setRemark(e.target.value)}
-                  className="w-full h-20 p-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 resize-none"
-                />
-              </div>
+
 
               <div className="pt-2 flex items-center justify-end gap-3.5">
                 <button
@@ -973,6 +1071,158 @@ export default function ServicePage() {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= COMPLETE SERVICE CHECKLIST MODAL ================= */}
+      {isCompleteModalOpen && selectedCustomer && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-md w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+            <button
+              onClick={() => setIsCompleteModalOpen(false)}
+              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="mb-6">
+              <h2 className="font-serif text-xl font-black text-slate-900 tracking-tight">Record Maintenance</h2>
+              <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Select completed service checklists</p>
+              <div className="mt-3 bg-slate-50 border border-slate-100/50 rounded-xl p-3 text-xs space-y-1">
+                <div>
+                  <span className="text-slate-400 font-extrabold uppercase text-[9px] tracking-wider block">Customer</span>
+                  <span className="text-slate-800 font-bold">{selectedCustomer.customer_name}</span>
+                </div>
+                <div>
+                  <span className="text-slate-400 font-extrabold uppercase text-[9px] tracking-wider block">Product Registered</span>
+                  <span className="text-slate-650 font-semibold">{selectedCustomer.product_name}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Category Toggle Tabs */}
+            <div className="grid grid-cols-2 gap-2 p-1 bg-slate-50 border border-slate-150 rounded-xl mb-5">
+              <button
+                type="button"
+                onClick={() => {
+                  setDetectedCategory("RO");
+                  setSelectedTasks([]);
+                  setIsOtherSelected(false);
+                }}
+                className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
+                  detectedCategory === "RO"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-400 hover:text-slate-700"
+                }`}
+              >
+                Water Purifier (RO)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDetectedCategory("Battery");
+                  setSelectedTasks([]);
+                  setIsOtherSelected(false);
+                }}
+                className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
+                  detectedCategory === "Battery"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-400 hover:text-slate-700"
+                }`}
+              >
+                Battery / Inverter
+              </button>
+            </div>
+
+            <form onSubmit={handleCompleteServiceSubmit} className="space-y-5">
+              <div className="space-y-2.5 max-h-[40vh] overflow-y-auto pr-1">
+                {(detectedCategory === "RO" ? roTasks : batteryTasks).map((task) => {
+                  const isChecked = selectedTasks.includes(task);
+                  return (
+                    <label
+                      key={task}
+                      className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all ${
+                        isChecked
+                          ? "bg-emerald-50/50 border-emerald-200 text-emerald-950 font-semibold"
+                          : "bg-white border-slate-100 hover:bg-slate-50/50 text-slate-650"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => {
+                          if (isChecked) {
+                            setSelectedTasks(prev => prev.filter(t => t !== task));
+                          } else {
+                            setSelectedTasks(prev => [...prev, task]);
+                          }
+                        }}
+                        className="w-4 h-4 rounded text-emerald-600 border-slate-205 focus:ring-emerald-500/20 focus:ring-offset-0"
+                      />
+                      <span className="text-xs">{task}</span>
+                    </label>
+                  );
+                })}
+
+                {/* Other Checklist Item */}
+                <label
+                  className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all ${
+                    isOtherSelected
+                      ? "bg-emerald-50/50 border-emerald-200 text-emerald-955 font-semibold"
+                      : "bg-white border-slate-100 hover:bg-slate-50/50 text-slate-650"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={isOtherSelected}
+                    onChange={() => setIsOtherSelected(prev => !prev)}
+                    className="w-4 h-4 rounded text-emerald-600 border-slate-205 focus:ring-emerald-500/20 focus:ring-offset-0"
+                  />
+                  <span className="text-xs">Other</span>
+                </label>
+
+                {/* If Other is checked, show text field */}
+                {isOtherSelected && (
+                  <div className="pt-1.5 animate-in slide-in-from-top-1 duration-200">
+                    <input
+                      type="text"
+                      placeholder="Specify custom service details..."
+                      value={otherText}
+                      onChange={(e) => setOtherText(e.target.value)}
+                      className="w-full h-10 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800"
+                      required
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="pt-2.5 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsCompleteModalOpen(false)}
+                  className="h-11 px-5 border border-slate-200 text-slate-650 hover:bg-slate-50 rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={formSubmitting}
+                  className="h-11 px-6 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-emerald-100 flex items-center justify-center gap-2"
+                >
+                  {formSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Submitting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Submit Completion</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
