@@ -22,6 +22,18 @@ const AuthContext = createContext<AuthContextType>({
   setErrorMsg: () => {},
 });
 
+// Allowed admin emails list helpers
+export const getAdminEmails = (): string[] => {
+  const envEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS;
+  if (!envEmails) return ["akbattery.ro@gmail.com"];
+  return envEmails.split(",").map((e) => e.trim().toLowerCase());
+};
+
+export const isAdminEmail = (email?: string): boolean => {
+  if (!email) return false;
+  return getAdminEmails().includes(email.toLowerCase());
+};
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,9 +49,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         
         const currentUser = session?.user || null;
         if (currentUser) {
-          if (currentUser.email !== "akbattery.ro@gmail.com") {
+          if (!isAdminEmail(currentUser.email)) {
             setError(
-              `Access Denied. The email "${currentUser.email}" is not authorized. Only akbattery.ro@gmail.com can log in.`
+              `Access Denied. The email "${currentUser.email}" is not authorized. Authorized admins: ${getAdminEmails().join(", ")}.`
             );
             await supabase.auth.signOut();
             setUser(null);
@@ -65,9 +77,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(true);
       const currentUser = session?.user || null;
       if (currentUser) {
-        if (currentUser.email !== "akbattery.ro@gmail.com") {
+        if (!isAdminEmail(currentUser.email)) {
           setError(
-            `Access Denied. The email "${currentUser.email}" is not authorized. Only akbattery.ro@gmail.com can log in.`
+            `Access Denied. The email "${currentUser.email}" is not authorized. Authorized admins: ${getAdminEmails().join(", ")}.`
           );
           try {
             await supabase.auth.signOut();
