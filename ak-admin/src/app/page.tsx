@@ -1,25 +1,22 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth, isAdminEmail } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase";
+import Header from "../components/Header";
 import {
-  LogOut,
   Package,
   Users,
   Wrench,
   Home,
-  ChevronRight,
-  AlertTriangle,
-  CheckCircle,
-  Database
+  ChevronRight
 } from "lucide-react";
 
 export default function Dashboard() {
   const router = useRouter();
-  const { user, loading, logout } = useAuth();
+  const { user, loading } = useAuth();
 
   // Statistics states
   const [statsLoading, setStatsLoading] = useState(true);
@@ -117,10 +114,7 @@ export default function Dashboard() {
     }
   }, [user]);
 
-  const handleLogout = async () => {
-    await logout();
-    router.push("/login");
-  };
+
 
   if (loading || (user && !isAdminEmail(user.email))) {
     return (
@@ -136,57 +130,11 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-mesh-gradient pb-24">
       {/* Header Bar */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-100/80 sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-white font-black shadow-md shadow-rose-100">
-                AK
-              </div>
-              <div>
-                <h1 className="font-serif text-lg font-black text-slate-900 tracking-tight leading-none">
-                  AK Admin
-                </h1>
-                <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider mt-0.5">
-                  Overview Dashboard
-                </p>
-              </div>
-            </div>
-            <nav className="hidden lg:flex items-center gap-4 border-l border-slate-200 pl-5 h-8">
-              <Link href="/" className="text-xs font-bold uppercase tracking-wider text-rose-600 border-b-2 border-rose-600 pb-1">
-                Dashboard
-              </Link>
-              <Link href="/products" className="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-slate-950 transition-colors">
-                Products
-              </Link>
-              <Link href="/customers" className="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-slate-950 transition-colors">
-                Customers
-              </Link>
-              <Link href="/service" className="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-slate-950 transition-colors">
-                Service
-              </Link>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex flex-col items-end">
-              <span className="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Authorized Admin</span>
-              <span className="text-xs font-semibold text-slate-950">{user?.email}</span>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="px-4 h-10 border border-slate-200/80 hover:border-red-100 hover:bg-red-55 text-slate-650 hover:text-red-600 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
-            >
-              <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Log Out</span>
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-        
+
         {/* Title */}
         <section className="mb-10 text-center sm:text-left">
           <h2 className="text-3xl font-black text-slate-900 font-serif tracking-tight">Admin Console Dashboard</h2>
@@ -201,7 +149,7 @@ export default function Dashboard() {
 
         {/* Dashboard Grid */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
+
           {/* Products Summary Card */}
           <div className="bg-white rounded-3xl border border-slate-100 p-8 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-slate-200/50 transition-all duration-300 relative overflow-hidden group min-h-[250px]">
             <div className="absolute top-0 right-0 w-24 h-24 bg-rose-50/50 rounded-bl-full flex items-center justify-center text-rose-500 pointer-events-none group-hover:scale-105 transition-transform duration-300">
@@ -211,7 +159,7 @@ export default function Dashboard() {
               <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Inventory Status</span>
               <h3 className="text-xl font-bold font-serif text-slate-900 mt-2">Products Catalog</h3>
               <p className="text-xs text-slate-400 mt-1 max-w-[200px]">Publish, update, and manage inverters, batteries, and water purifiers.</p>
-              
+
               <div className="mt-6 flex items-baseline gap-2">
                 {statsLoading ? (
                   <div className="w-16 h-8 bg-slate-100 animate-pulse rounded-lg"></div>
@@ -238,29 +186,92 @@ export default function Dashboard() {
             <div>
               <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">AMC Registers</span>
               <h3 className="text-xl font-bold font-serif text-slate-900 mt-2">Customer Profiles</h3>
-              <p className="text-xs text-slate-400 mt-1 max-w-[200px]">Register and track client details, location coordinates, and periods.</p>
-              
-              <div className="mt-6 flex items-baseline gap-2">
-                {statsLoading ? (
-                  <div className="w-16 h-8 bg-slate-100 animate-pulse rounded-lg"></div>
-                ) : (
-                  <span className="text-4xl font-black text-slate-900 select-all">{totalCustomers}</span>
-                )}
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wide">Registered</span>
-              </div>
 
-              {/* Status Breakdowns */}
-              {!statsLoading && (
-                <div className="mt-3 flex gap-4 text-[10.5px] font-bold uppercase tracking-wider text-slate-500">
-                  <span className="text-emerald-700 flex items-center gap-1">
-                    <CheckCircle className="w-3.5 h-3.5" />
-                    {activeCustomers} Active
-                  </span>
-                  <span className="text-slate-400 flex items-center gap-1">
-                    <AlertTriangle className="w-3.5 h-3.5" />
-                    {inactiveCustomers} Inactive
-                  </span>
+              {statsLoading ? (
+                <div className="mt-6 flex items-center gap-6 h-[110px]">
+                  <div className="w-[110px] h-[110px] rounded-full border-4 border-slate-100 border-t-slate-350 animate-spin shrink-0"></div>
+                  <div className="flex-1 space-y-2">
+                    <div className="h-3.5 bg-slate-100 rounded animate-pulse w-3/4"></div>
+                    <div className="h-3.5 bg-slate-100 rounded animate-pulse w-1/2"></div>
+                  </div>
                 </div>
+              ) : (
+                (() => {
+                  const chartTotal = activeCustomers + inactiveCustomers;
+                  const activePercent = chartTotal > 0 ? (activeCustomers / chartTotal) * 100 : 0;
+                  const inactivePercent = chartTotal > 0 ? (inactiveCustomers / chartTotal) * 100 : 0;
+                  const r = 40;
+                  const circumference = 2 * Math.PI * r;
+                  const activeOffset = chartTotal > 0 ? circumference - (activeCustomers / chartTotal) * circumference : circumference;
+
+                  return (
+                    <div className="mt-6 flex items-center gap-6">
+                      {/* Donut Chart SVG */}
+                      <div className="relative w-[110px] h-[110px] shrink-0">
+                        <svg
+                          width="110"
+                          height="110"
+                          viewBox="0 0 110 110"
+                          style={{ transform: "rotate(-90deg)" }}
+                          className="w-full h-full"
+                        >
+                          {/* Background (Inactive / Total base) */}
+                          <circle
+                            cx="55"
+                            cy="55"
+                            r={r}
+                            fill="transparent"
+                            stroke="#e2e8f0"
+                            strokeWidth="10"
+                          />
+                          {/* Active Segment */}
+                          <circle
+                            cx="55"
+                            cy="55"
+                            r={r}
+                            fill="transparent"
+                            stroke="#10b981"
+                            strokeWidth="10"
+                            strokeDasharray={circumference}
+                            strokeDashoffset={activeOffset}
+                            strokeLinecap="round"
+                            style={{ transition: "stroke-dashoffset 0.5s ease" }}
+                          />
+                        </svg>
+                        {/* Center Text */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                          <span className="text-2xl font-black text-slate-900 leading-none">{totalCustomers}</span>
+                          <span className="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 mt-0.5">Total</span>
+                        </div>
+                      </div>
+
+                      {/* Legend */}
+                      <div className="flex flex-col gap-2 flex-1 min-w-0">
+                        <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Status</span>
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between text-xs font-bold">
+                            <div className="flex items-center gap-1.5 min-w-0">
+                              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
+                              <span className="text-slate-500 truncate">Active</span>
+                            </div>
+                            <span className="text-slate-800 ml-2">
+                              {activeCustomers} <span className="text-[10px] text-slate-400 font-medium">({activePercent.toFixed(0)}%)</span>
+                            </span>
+                          </div>
+                          <div className="flex items-center justify-between text-xs font-bold">
+                            <div className="flex items-center gap-1.5 min-w-0">
+                              <span className="w-2.5 h-2.5 rounded-full bg-slate-300 shrink-0"></span>
+                              <span className="text-slate-500 truncate">Inactive</span>
+                            </div>
+                            <span className="text-slate-800 ml-2">
+                              {inactiveCustomers} <span className="text-[10px] text-slate-400 font-medium">({inactivePercent.toFixed(0)}%)</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()
               )}
             </div>
             <Link
@@ -281,7 +292,7 @@ export default function Dashboard() {
               <span className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Maintenance Schedule</span>
               <h3 className="text-xl font-bold font-serif text-slate-900 mt-2">Service Directory</h3>
               <p className="text-xs text-slate-400 mt-1 max-w-[200px]">Identify inactive profiles or track upcoming contracts due for service.</p>
-              
+
               <div className="mt-6 flex items-baseline gap-2">
                 {statsLoading ? (
                   <div className="w-16 h-8 bg-slate-100 animate-pulse rounded-lg"></div>

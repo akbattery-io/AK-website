@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 
@@ -11,6 +11,8 @@ interface AuthContextType {
   logout: () => Promise<void>;
   clearError: () => void;
   setErrorMsg: (msg: string | null) => void;
+  inactiveCount: number;
+  refetchInactiveCount: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -20,6 +22,8 @@ const AuthContext = createContext<AuthContextType>({
   logout: async () => {},
   clearError: () => {},
   setErrorMsg: () => {},
+  inactiveCount: 0,
+  refetchInactiveCount: async () => {},
 });
 
 // Allowed admin emails list helpers
@@ -38,6 +42,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [inactiveCount, setInactiveCount] = useState(0);
+
+  const fetchInactiveCount = useCallback(async () => {
+    if (!user) {
+      setInactiveCount(0);
+      return;
+    }
+    try {
+      const { count, error: countErr } = await supabase
+        .from("customers")
+        .select("*", { count: "exact", head: true })
+        .eq("status", "Inactive");
+      if (!countErr && count !== null) {
+        setInactiveCount(count);
+      }
+    } catch (e) {
+      console.error("Error fetching inactive customer count", e);
+    }
+  }, [user]);
 
   useEffect(() => {
     // Check active session immediately on mount
@@ -102,6 +125,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      fetchInactiveCount();
+    } else {
+      setInactiveCount(0);
+    }
+  }, [user, fetchInactiveCount]);
+
   const logout = async () => {
     setLoading(true);
     try {
@@ -119,7 +150,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const setErrorMsg = (msg: string | null) => setError(msg);
 
   return (
-    <AuthContext.Provider value={{ user, loading, error, logout, clearError, setErrorMsg }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        error,
+        logout,
+        clearError,
+        setErrorMsg,
+        inactiveCount,
+        refetchInactiveCount: fetchInactiveCount,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

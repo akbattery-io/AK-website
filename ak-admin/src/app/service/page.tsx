@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth, isAdminEmail } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase";
+import Header from "../../components/Header";
 import {
-  LogOut,
   Search,
   Edit,
   Trash2,
@@ -75,7 +75,7 @@ const batteryTasks = [
 
 export default function ServicePage() {
   const router = useRouter();
-  const { user, loading, logout } = useAuth();
+  const { user, loading, refetchInactiveCount } = useAuth();
 
   // Redirect if not logged in
   useEffect(() => {
@@ -97,7 +97,7 @@ export default function ServicePage() {
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const pageSize = 8;
+  const [pageSize, setPageSize] = useState(10);
 
   // Modals open states
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -209,19 +209,16 @@ export default function ServicePage() {
 
   useEffect(() => {
     fetchDueCustomers();
-  }, [user, debouncedSearchQuery, serviceFilter]);
+  }, [user, debouncedSearchQuery, serviceFilter, pageSize]);
 
   // Compute display slice for current page
   const displayedCustomers = useMemo(() => {
     const from = (currentPage - 1) * pageSize;
     const to = from + pageSize;
     return allDueCustomers.slice(from, to);
-  }, [allDueCustomers, currentPage]);
+  }, [allDueCustomers, currentPage, pageSize]);
 
-  const handleLogout = async () => {
-    await logout();
-    router.push("/login");
-  };
+
 
   const openEditModal = (customer: Customer) => {
     setFormError(null);
@@ -353,6 +350,7 @@ export default function ServicePage() {
 
       setIsEditModalOpen(false);
       fetchDueCustomers();
+      refetchInactiveCount();
     } catch (err: any) {
       console.error("Error updating customer:", err);
       setFormError(err.message || "Failed to update customer details.");
@@ -432,6 +430,7 @@ export default function ServicePage() {
 
       setIsCompleteModalOpen(false);
       fetchDueCustomers();
+      refetchInactiveCount();
     } catch (err: any) {
       console.error("Error completing service record:", err);
       alert(err.message || "Failed to record service completion.");
@@ -455,53 +454,7 @@ export default function ServicePage() {
   return (
     <div className="min-h-screen bg-mesh-gradient pb-24">
       {/* Header Bar */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-100/80 sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-white font-black shadow-md shadow-rose-100">
-                AK
-              </div>
-              <div>
-                <h1 className="font-serif text-lg font-black text-slate-900 tracking-tight leading-none">
-                  AK Admin
-                </h1>
-                <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider mt-0.5">
-                  AMC Service Management
-                </p>
-              </div>
-            </div>
-            <nav className="hidden lg:flex items-center gap-4 border-l border-slate-200 pl-5 h-8">
-              <Link href="/" className="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-slate-950 transition-colors">
-                Dashboard
-              </Link>
-              <Link href="/products" className="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-slate-955 transition-colors">
-                Products
-              </Link>
-              <Link href="/customers" className="text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-slate-950 transition-colors">
-                Customers
-              </Link>
-              <Link href="/service" className="text-xs font-bold uppercase tracking-wider text-rose-600 border-b-2 border-rose-600 pb-1">
-                Service
-              </Link>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex flex-col items-end">
-              <span className="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Authorized Admin</span>
-              <span className="text-xs font-semibold text-slate-950">{user?.email}</span>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="px-4 h-10 border border-slate-200/80 hover:border-red-100 hover:bg-red-50 text-slate-600 hover:text-red-600 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
-            >
-              <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Log Out</span>
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
@@ -758,27 +711,46 @@ export default function ServicePage() {
               </div>
 
               {/* Pagination Controls */}
-              {totalPages > 1 && (
-                <div className="px-6 py-4.5 bg-slate-50/50 border-t border-slate-100 flex items-center justify-between gap-4 text-slate-500">
-                  <button
-                    disabled={currentPage === 1}
-                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                    className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+              <div className="px-6 py-4.5 bg-slate-50/50 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
+                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                  <span>Show</span>
+                  <select
+                    value={pageSize}
+                    onChange={(e) => {
+                      setPageSize(Number(e.target.value));
+                      setCurrentPage(1);
+                    }}
+                    className="h-9 px-3 border border-slate-200 rounded-xl bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500"
                   >
-                    Previous
-                  </button>
-                  <span className="text-xs font-semibold">
-                    Page {currentPage} of {totalPages}
-                  </span>
-                  <button
-                    disabled={currentPage === totalPages}
-                    onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                    className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
-                  >
-                    Next
-                  </button>
+                    <option value={10}>10</option>
+                    <option value={30}>30</option>
+                    <option value={50}>50</option>
+                  </select>
+                  <span>Entries</span>
                 </div>
-              )}
+
+                {totalPages > 1 && (
+                  <div className="flex items-center gap-4">
+                    <button
+                      disabled={currentPage === 1}
+                      onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                      className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+                    >
+                      Previous
+                    </button>
+                    <span className="text-xs font-semibold">
+                      Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                      disabled={currentPage === totalPages}
+                      onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                      className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </div>
             </>
           )}
         </section>
