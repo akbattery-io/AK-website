@@ -59,23 +59,22 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-            <div className="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-white font-black shadow-md shadow-rose-100">
-              AK
-            </div>
+            <img
+              src="/logo.png"
+              alt="AK Admin Logo"
+              className="w-10 h-10 object-contain rounded-xl"
+            />
             <div>
               <h1 className="font-serif text-lg font-black text-slate-900 tracking-tight leading-none">
-                AK Admin
+                Admin Pannel
               </h1>
-              <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-wider mt-0.5">
-                {subtitle}
-              </p>
             </div>
           </Link>
           <nav className="hidden lg:flex items-center gap-4 border-l border-slate-200 pl-5 h-8">
             <Link
               href="/"
               className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "dashboard"
-                ? "text-rose-600 border-b-2 border-rose-600 pb-1"
+                ? "text-rose-600  border-rose-600"
                 : "text-slate-400 hover:text-slate-950"
                 }`}
             >
@@ -84,7 +83,7 @@ export default function Header() {
             <Link
               href="/products"
               className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "products"
-                ? "text-rose-600 border-b-2 border-rose-600 pb-1"
+                ? "text-rose-600  border-rose-600"
                 : "text-slate-400 hover:text-slate-955"
                 }`}
             >
@@ -93,7 +92,7 @@ export default function Header() {
             <Link
               href="/customers"
               className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "customers"
-                ? "text-rose-600 border-b-2 border-rose-600 pb-1"
+                ? "text-rose-600  border-rose-600"
                 : "text-slate-400 hover:text-slate-955"
                 }`}
             >
@@ -102,7 +101,7 @@ export default function Header() {
             <Link
               href="/service"
               className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "service"
-                ? "text-rose-600 border-b-2 border-rose-600 pb-1"
+                ? "text-rose-600  border-rose-600"
                 : "text-slate-400 hover:text-slate-955"
                 }`}
             >

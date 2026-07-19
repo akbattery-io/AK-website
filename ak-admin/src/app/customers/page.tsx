@@ -91,11 +91,11 @@ export default function CustomersPage() {
   const [gettingLocation, setGettingLocation] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
 
-  // Search input debounce logic (400ms)
+  // Search input debounce logic (600ms)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
-    }, 400);
+    }, 600);
 
     return () => {
       clearTimeout(handler);
@@ -389,8 +389,7 @@ export default function CustomersPage() {
         {/* Title and Add Button */}
         <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h2 className="text-2xl font-black text-slate-900 font-serif tracking-tight">AMC Customer Registrations</h2>
-            <p className="text-slate-500 text-xs mt-1">Manage and track service contracts, installation dates, and locations.</p>
+            <h2 className="text-2xl font-black text-slate-900 font-serif tracking-tight">Customer Registrations</h2>
           </div>
           <button
             onClick={openAddModal}
@@ -674,27 +673,27 @@ export default function CustomersPage() {
 
       {/* ================= ADD CUSTOMER MODAL ================= */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsAddModalOpen(false)}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="mb-6">
-              <h2 className="font-serif text-2xl font-black text-slate-900 tracking-tight">Add New AMC Customer</h2>
+            <div className="mb-4 sm:mb-6 shrink-0">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Add New AMC Customer</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Register customer service record</p>
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed">
+              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleAddSubmit} className="space-y-5">
+            <form onSubmit={handleAddSubmit} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
               <div>
                 <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Customer Name *</label>
                 <input
@@ -863,27 +862,26 @@ export default function CustomersPage() {
 
       {/* ================= EDIT CUSTOMER MODAL ================= */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-955/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsEditModalOpen(false)}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
-
-            <div className="mb-6">
-              <h2 className="font-serif text-2xl font-black text-slate-900 tracking-tight">Edit Customer Details</h2>
+            <div className="mb-4 sm:mb-6 shrink-0">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Edit Customer Details</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Modify registered AMC credentials</p>
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed">
+              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleEditSubmit} className="space-y-5">
+            <form onSubmit={handleEditSubmit} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
               <div>
                 <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Customer Name *</label>
                 <input
@@ -1052,21 +1050,21 @@ export default function CustomersPage() {
 
       {/* ================= VIEW DETAILS MODAL ================= */}
       {isViewModalOpen && selectedCustomer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-955/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsViewModalOpen(false)}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="mb-6">
-              <h2 className="font-serif text-2xl font-black text-slate-900 tracking-tight">AMC Customer Details</h2>
+            <div className="mb-4 sm:mb-6 shrink-0">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">AMC Customer Details</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Full service registry profile</p>
             </div>
 
-            <div className="space-y-5 text-sm">
+            <div className="space-y-4 sm:space-y-5 text-sm overflow-y-auto flex-1 pr-1">
               <div className="bg-slate-50/50 p-5 border border-slate-100 rounded-2xl space-y-4">
                 <div>
                   <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Customer Name</span>
@@ -1098,28 +1096,10 @@ export default function CustomersPage() {
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 pt-2 border-t border-slate-50">
-                  <div>
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Contract Status</span>
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 mt-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${selectedCustomer.status === "Active"
-                        ? "bg-emerald-50 border-emerald-100 text-emerald-700"
-                        : "bg-slate-50 border-slate-200 text-slate-500"
-                        }`}
-                    >
-                      {selectedCustomer.status}
-                    </span>
-                  </div>
+
                   <div>
                     <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Maintenance</span>
                     <span className="text-slate-700 font-semibold mt-0.5 block">{selectedCustomer.maintenance_period} Months</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Coordinates</span>
-                    <span className="text-slate-650 font-medium mt-0.5 block">
-                      {selectedCustomer.latitude && selectedCustomer.longitude
-                        ? `${selectedCustomer.latitude}, ${selectedCustomer.longitude}`
-                        : "None"}
-                    </span>
                   </div>
                 </div>
               </div>

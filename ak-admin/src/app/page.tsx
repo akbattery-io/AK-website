@@ -137,8 +137,7 @@ export default function Dashboard() {
 
         {/* Title */}
         <section className="mb-10 text-center sm:text-left">
-          <h2 className="text-3xl font-black text-slate-900 font-serif tracking-tight">Admin Console Dashboard</h2>
-          <p className="text-slate-500 text-xs mt-1">Quick statistics and management panels for AK Batteries business directories.</p>
+          <h2 className="text-3xl font-black text-slate-900 font-serif tracking-tight">Dashboard</h2>
         </section>
 
         {dbError && (

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { AuthProvider } from "../context/AuthContext";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const playfair = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
@@ -18,6 +18,11 @@ const plusJakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "AK Batteries & RO Solutions | Admin Panel",
   description: "Secure administrative dashboard for managing products, prices, and locations.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

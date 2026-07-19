@@ -84,7 +84,19 @@ export default function ProductsPage() {
 
   // Search & Filter
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
+
+  // Search input debounce logic (600ms)
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 600);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchQuery]);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,7 +105,7 @@ export default function ProductsPage() {
   // Reset page when search query or category changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, categoryFilter]);
+  }, [debouncedSearchQuery, categoryFilter]);
 
   // Modals state
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -386,10 +398,10 @@ export default function ProductsPage() {
         categoryFilter === "All" || p.category === categoryFilter;
       const matchesSearch = p.brandname
         .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+        .includes(debouncedSearchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [products, categoryFilter, searchQuery]);
+  }, [products, categoryFilter, debouncedSearchQuery]);
 
   const totalPages = useMemo(() => {
     return Math.ceil(filteredProducts.length / pageSize) || 1;
@@ -487,7 +499,7 @@ export default function ProductsPage() {
               </span>
               <input
                 type="text"
-                placeholder="Search by brand name or location..."
+                placeholder="Search by brand name"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-805 transition-all bg-white"
@@ -683,31 +695,28 @@ export default function ProductsPage() {
             </div>
           )}
         </section>
-      </main>
-
-      {/* ================= ADD PRODUCT MODAL ================= */}
+      </main>      {/* ================= ADD PRODUCT MODAL ================= */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-955/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsAddModalOpen(false)}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-950 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-950 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
-
-            <div className="mb-6">
-              <h2 className="font-serif text-2xl font-black text-slate-900 tracking-tight">Add New Product</h2>
+            <div className="mb-4 sm:mb-6 shrink-0">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Add New Product</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Publish to public catalog</p>
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed">
+              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleAddProduct} className="space-y-5">
+            <form onSubmit={handleAddProduct} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Category</label>
@@ -838,30 +847,30 @@ export default function ProductsPage() {
 
       {/* ================= EDIT PRODUCT MODAL ================= */}
       {isEditModalOpen && selectedProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => {
                 setIsEditModalOpen(false);
                 setSelectedProduct(null);
               }}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-905 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-955 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="mb-6">
-              <h2 className="font-serif text-2xl font-black text-slate-900 tracking-tight">Edit Product Details</h2>
+            <div className="mb-4 sm:mb-6 shrink-0">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Edit Product Details</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Update database record</p>
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed">
+              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleEditProduct} className="space-y-5">
+            <form onSubmit={handleEditProduct} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Category</label>

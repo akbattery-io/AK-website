@@ -129,11 +129,11 @@ export default function ServicePage() {
   const [gettingLocation, setGettingLocation] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
 
-  // Search input debounce logic (400ms)
+  // Search input debounce logic (600ms)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
-    }, 400);
+    }, 600);
 
     return () => {
       clearTimeout(handler);
@@ -385,7 +385,7 @@ export default function ServicePage() {
       prodName.includes("exide") ||
       prodName.includes("luminous") ||
       prodName.includes("amaron");
-    
+
     setDetectedCategory(isBattery ? "Battery" : "RO");
     setSelectedTasks([]);
     setOtherText("");
@@ -401,7 +401,7 @@ export default function ServicePage() {
 
     try {
       const todayStr = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
-      
+
       let tasks = [...selectedTasks];
       if (isOtherSelected && otherText.trim()) {
         tasks.push(`Other: ${otherText.trim()}`);
@@ -412,7 +412,7 @@ export default function ServicePage() {
       }
 
       const serviceLog = `${todayStr} / Work done: ${tasks.join(", ")}.`;
-      
+
       let finalRemark = serviceLog;
       if (selectedCustomer.remark && selectedCustomer.remark.trim()) {
         finalRemark = `${selectedCustomer.remark.trim()}\n---\n${serviceLog}`;
@@ -462,8 +462,7 @@ export default function ServicePage() {
         {/* Title */}
         <section className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h2 className="text-2xl font-black text-slate-900 font-serif tracking-tight">AMC Service Directory</h2>
-            <p className="text-slate-500 text-xs mt-1">Manage all inactive registrations or focus on urgent service actions.</p>
+            <h2 className="text-2xl font-black text-slate-900 font-serif tracking-tight">Service Directory</h2>
           </div>
         </section>
 
@@ -754,31 +753,29 @@ export default function ServicePage() {
             </>
           )}
         </section>
-      </main>
-
-      {/* ================= EDIT CUSTOMER MODAL ================= */}
+      </main>      {/* ================= EDIT CUSTOMER MODAL ================= */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-955/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsEditModalOpen(false)}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-950 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-950 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="mb-6">
-              <h2 className="font-serif text-2xl font-black text-slate-900 tracking-tight">Edit Customer Details</h2>
+            <div className="mb-4 sm:mb-6 shrink-0">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Edit Customer Details</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Modify registered AMC credentials</p>
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed">
+              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleEditSubmit} className="space-y-5">
+            <form onSubmit={handleEditSubmit} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
               <div>
                 <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Customer Name *</label>
                 <input
@@ -947,21 +944,21 @@ export default function ServicePage() {
 
       {/* ================= VIEW DETAILS MODAL ================= */}
       {isViewModalOpen && selectedCustomer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsViewModalOpen(false)}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="mb-6">
-              <h2 className="font-serif text-2xl font-black text-slate-900 tracking-tight">AMC Customer Details</h2>
+            <div className="mb-4 sm:mb-6 shrink-0">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">AMC Customer Details</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Full service registry profile</p>
             </div>
 
-            <div className="space-y-5 text-sm">
+            <div className="space-y-4 sm:space-y-5 text-sm overflow-y-auto flex-1 pr-1">
               <div className="bg-slate-50/50 p-5 border border-slate-100 rounded-2xl space-y-4">
                 <div>
                   <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Customer Name</span>
@@ -994,22 +991,8 @@ export default function ServicePage() {
 
                 <div className="grid grid-cols-3 gap-4 pt-2 border-t border-slate-50">
                   <div>
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Contract Status</span>
-                    <span className="inline-flex items-center px-2.5 py-0.5 mt-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border bg-slate-50 border-slate-200 text-slate-500">
-                      {selectedCustomer.status}
-                    </span>
-                  </div>
-                  <div>
                     <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Maintenance</span>
                     <span className="text-slate-700 font-semibold mt-0.5 block">{selectedCustomer.maintenance_period} Months</span>
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Coordinates</span>
-                    <span className="text-slate-650 font-medium mt-0.5 block">
-                      {selectedCustomer.latitude && selectedCustomer.longitude
-                        ? `${selectedCustomer.latitude}, ${selectedCustomer.longitude}`
-                        : "None"}
-                    </span>
                   </div>
                 </div>
               </div>
@@ -1049,17 +1032,17 @@ export default function ServicePage() {
 
       {/* ================= COMPLETE SERVICE CHECKLIST MODAL ================= */}
       {isCompleteModalOpen && selectedCustomer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-md w-full p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-3xl border border-slate-100 max-w-md w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsCompleteModalOpen(false)}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="mb-6">
-              <h2 className="font-serif text-xl font-black text-slate-900 tracking-tight">Record Maintenance</h2>
+            <div className="mb-4 sm:mb-6 shrink-0">
+              <h2 className="font-serif text-lg sm:text-xl font-black text-slate-900 tracking-tight">Record Maintenance</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Select completed service checklists</p>
               <div className="mt-3 bg-slate-50 border border-slate-100/50 rounded-xl p-3 text-xs space-y-1">
                 <div>
@@ -1074,7 +1057,7 @@ export default function ServicePage() {
             </div>
 
             {/* Category Toggle Tabs */}
-            <div className="grid grid-cols-2 gap-2 p-1 bg-slate-50 border border-slate-150 rounded-xl mb-5">
+            <div className="grid grid-cols-2 gap-2 p-1 bg-slate-50 border border-slate-150 rounded-xl mb-5 shrink-0">
               <button
                 type="button"
                 onClick={() => {
@@ -1082,11 +1065,10 @@ export default function ServicePage() {
                   setSelectedTasks([]);
                   setIsOtherSelected(false);
                 }}
-                className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                  detectedCategory === "RO"
-                    ? "bg-white text-slate-900 shadow-sm"
-                    : "text-slate-400 hover:text-slate-700"
-                }`}
+                className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${detectedCategory === "RO"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-400 hover:text-slate-700"
+                  }`}
               >
                 Water Purifier (RO)
               </button>
@@ -1097,28 +1079,26 @@ export default function ServicePage() {
                   setSelectedTasks([]);
                   setIsOtherSelected(false);
                 }}
-                className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                  detectedCategory === "Battery"
-                    ? "bg-white text-slate-900 shadow-sm"
-                    : "text-slate-400 hover:text-slate-700"
-                }`}
+                className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${detectedCategory === "Battery"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-400 hover:text-slate-700"
+                  }`}
               >
                 Battery / Inverter
               </button>
             </div>
 
-            <form onSubmit={handleCompleteServiceSubmit} className="space-y-5">
+            <form onSubmit={handleCompleteServiceSubmit} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
               <div className="space-y-2.5 max-h-[40vh] overflow-y-auto pr-1">
                 {(detectedCategory === "RO" ? roTasks : batteryTasks).map((task) => {
                   const isChecked = selectedTasks.includes(task);
                   return (
                     <label
                       key={task}
-                      className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all ${
-                        isChecked
-                          ? "bg-emerald-50/50 border-emerald-200 text-emerald-950 font-semibold"
-                          : "bg-white border-slate-100 hover:bg-slate-50/50 text-slate-650"
-                      }`}
+                      className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all ${isChecked
+                        ? "bg-emerald-50/50 border-emerald-200 text-emerald-950 font-semibold"
+                        : "bg-white border-slate-100 hover:bg-slate-50/50 text-slate-650"
+                        }`}
                     >
                       <input
                         type="checkbox"
@@ -1139,11 +1119,10 @@ export default function ServicePage() {
 
                 {/* Other Checklist Item */}
                 <label
-                  className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all ${
-                    isOtherSelected
-                      ? "bg-emerald-50/50 border-emerald-200 text-emerald-955 font-semibold"
-                      : "bg-white border-slate-100 hover:bg-slate-50/50 text-slate-650"
-                  }`}
+                  className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer select-none transition-all ${isOtherSelected
+                    ? "bg-emerald-50/50 border-emerald-200 text-emerald-955 font-semibold"
+                    : "bg-white border-slate-100 hover:bg-slate-50/50 text-slate-650"
+                    }`}
                 >
                   <input
                     type="checkbox"
