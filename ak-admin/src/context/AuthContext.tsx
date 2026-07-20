@@ -3,6 +3,12 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
+import dynamic from "next/dynamic";
+
+const ToastContainer = dynamic(
+  () => import("react-toastify").then((mod) => mod.ToastContainer),
+  { ssr: false }
+);
 
 interface AuthContextType {
   user: User | null;
@@ -163,6 +169,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       {children}
+      <ToastContainer />
     </AuthContext.Provider>
   );
 };

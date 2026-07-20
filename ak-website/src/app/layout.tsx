@@ -20,9 +20,9 @@ export const metadata: Metadata = {
   description: "Established in 2025, AK Batteries & RO Solutions provides fast, reliable sales, installation, maintenance, and repair services for batteries, inverters, and RO water purifiers.",
   keywords: ["AK Batteries kannamangalam", "RO Service kannamangalam", "Inverter Battery Sales kannamangalam", "Water Purifier Repair kannamangalam", "AK Batteries established 2025", "Battery installation doorstep"],
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
   },
 };
 

@@ -54,7 +54,7 @@ export function Header() {
               className="flex items-center gap-2 select-none transition-transform hover:scale-105"
             >
               <Image
-                src="/logo.png"
+                src="/logo.svg"
                 alt="AK Batteries Logo"
                 width={36}
                 height={36}

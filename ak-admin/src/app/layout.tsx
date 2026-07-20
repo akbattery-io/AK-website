@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import { AuthProvider } from "../context/AuthContext";
-import dynamic from "next/dynamic";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-
-const ToastContainer = dynamic(
-  () => import("react-toastify").then((mod) => mod.ToastContainer),
-  { ssr: false }
-);
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -26,9 +20,9 @@ export const metadata: Metadata = {
   title: "AK Batteries & RO Solutions | Admin Panel",
   description: "Secure administrative dashboard for managing products, prices, and locations.",
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
+    apple: "/logo.svg",
   },
 };
 
@@ -47,7 +41,6 @@ export default function RootLayout({
         <AuthProvider>
           {children}
         </AuthProvider>
-        <ToastContainer />
       </body>
     </html>
   );

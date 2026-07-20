@@ -14,7 +14,7 @@ export default function Footer() {
                     <div>
                         <div className="flex items-center gap-3 mb-4">
                             <Image
-                                src="/logo.png"
+                                src="/logo.svg"
                                 alt="AK Batteries Logo"
                                 width={36}
                                 height={36}
