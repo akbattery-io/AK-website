@@ -91,7 +91,7 @@ export function Header() {
                       <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
                     </button>
                     {/* Dropdown Menu */}
-                    <div className="absolute left-1/2 -translate-x-1/2 top-full mt-0.5 hidden group-hover:block bg-white border border-slate-100 rounded-2xl shadow-xl py-2 w-48 z-50 animate-in fade-in slide-in-from-top-1 duration-200">
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full mt-0.5 hidden group-hover:block bg-white border border-slate-100 rounded-md shadow-xl py-2 w-48 z-50 animate-in fade-in slide-in-from-top-1 duration-200">
                       {item.dropdown.map((sub) => (
                         <Link
                           key={sub.name}
@@ -163,7 +163,7 @@ export function Header() {
                       key={sub.name}
                       href={sub.href}
                       onClick={handleNavClick}
-                      className={`block px-6 py-2 rounded-xl text-sm font-semibold transition-colors duration-200 ${pathname === sub.href
+                      className={`block px-6 py-2 rounded-md text-sm font-semibold transition-colors duration-200 ${pathname === sub.href
                         ? "text-rose-600 bg-rose-50 font-bold"
                         : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                         }`}
@@ -179,7 +179,7 @@ export function Header() {
                 key={item.name}
                 href={item.href}
                 onClick={handleNavClick}
-                className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors duration-200 ${activeItem === item.name
+                className={`block px-4 py-2.5 rounded-md text-base font-semibold transition-colors duration-200 ${activeItem === item.name
                   ? "text-rose-600 bg-rose-50 font-bold"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                   }`}

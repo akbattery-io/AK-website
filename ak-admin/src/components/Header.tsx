@@ -64,7 +64,7 @@ export default function Header() {
               alt="AK Admin Logo"
               width={40}
               height={40}
-              className="w-10 h-10 object-contain rounded-xl"
+              className="w-10 h-10 object-contain rounded-md"
               priority
             />
             <div>
@@ -121,7 +121,7 @@ export default function Header() {
             title={`${inactiveCount} inactive customer accounts needing service`}
           >
             <div
-              className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-300 ${inactiveCount > 0
+              className={`w-10 h-10 rounded-md border flex items-center justify-center transition-all duration-300 ${inactiveCount > 0
                 ? "bg-rose-50 border-rose-100 text-rose-600 shadow-md shadow-rose-100/50 cursor-pointer"
                 : "bg-white border-slate-200/80 text-slate-400 cursor-pointer"
                 }`}
@@ -137,7 +137,7 @@ export default function Header() {
 
           <button
             onClick={handleLogout}
-            className="px-4 h-10 border border-slate-200/80 hover:border-red-100 hover:bg-red-55 text-slate-655 hover:text-red-600 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
+            className="px-4 h-10 border border-slate-200/80 hover:border-red-100 hover:bg-red-55 text-slate-655 hover:text-red-600 rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center gap-2"
           >
             <LogOut className="w-4 h-4" />
             <span className="hidden sm:inline">Log Out</span>

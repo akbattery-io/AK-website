@@ -66,10 +66,10 @@ export function AboutContent() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="grid grid-cols-2 gap-4 sm:gap-6 bg-white rounded-3xl p-6 sm:p-8 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80"
+            className="grid grid-cols-2 gap-4 sm:gap-6 bg-white rounded-md p-6 sm:p-8 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80"
           >
             {stats.map((stat, idx) => (
-              <div key={idx} className="bg-slate-50 rounded-2xl p-4 sm:p-6 border border-slate-100 flex flex-col justify-center">
+              <div key={idx} className="bg-slate-50 rounded-md p-4 sm:p-6 border border-slate-100 flex flex-col justify-center">
                 <span className="block text-rose-600 font-extrabold text-3xl sm:text-4xl tracking-tight mb-1 select-none">
                   {stat.value}
                 </span>
@@ -100,9 +100,9 @@ export function AboutContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="bg-white rounded-3xl p-6 shadow-[0_4px_30px_rgba(15,23,42,0.01)] border border-slate-100/80 hover:shadow-[0_8px_30px_rgba(225,29,72,0.04)] hover:border-rose-100 transition-all duration-300 flex gap-4 sm:gap-6"
+                className="bg-white rounded-md p-6 shadow-[0_4px_30px_rgba(15,23,42,0.01)] border border-slate-100/80 hover:shadow-[0_8px_30px_rgba(225,29,72,0.04)] hover:border-rose-100 transition-all duration-300 flex gap-4 sm:gap-6"
               >
-                <div className="w-12 h-12 rounded-2xl bg-rose-50 flex items-center justify-center flex-shrink-0 border border-rose-100/50">
+                <div className="w-12 h-12 rounded-md bg-rose-50 flex items-center justify-center flex-shrink-0 border border-rose-100/50">
                   {pillar.icon}
                 </div>
                 <div>

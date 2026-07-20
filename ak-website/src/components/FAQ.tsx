@@ -75,7 +75,7 @@ export function FAQ() {
             return (
               <div
                 key={index}
-                className="bg-white border border-slate-200/50 rounded-2xl overflow-hidden shadow-[0_2px_15px_rgba(15,23,42,0.01)] hover:shadow-[0_8px_25px_rgba(15,23,42,0.02)] transition-shadow duration-300"
+                className="bg-white border border-slate-200/50 rounded-md overflow-hidden shadow-[0_2px_15px_rgba(15,23,42,0.01)] hover:shadow-[0_8px_25px_rgba(15,23,42,0.02)] transition-shadow duration-300"
               >
                 <button
                   onClick={() => toggleFAQ(index)}
@@ -88,11 +88,10 @@ export function FAQ() {
                   <motion.span
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className={`flex items-center justify-center w-8 h-8 rounded-full border shrink-0 ${
-                      isOpen
+                    className={`flex items-center justify-center w-8 h-8 rounded-full border shrink-0 ${isOpen
                         ? "bg-rose-50 border-rose-100 text-rose-600"
                         : "bg-slate-50 border-slate-200/60 text-slate-400"
-                    }`}
+                      }`}
                   >
                     <ChevronDown className="w-4 h-4" />
                   </motion.span>

@@ -3,11 +3,9 @@
 :root {
   --background: #FAFBFD;
   --foreground: #0F172A;
-  
-  /* Brand color tokens */
   --color-brand-primary: #FAFBFD;
   --color-brand-secondary: #FFFFFF;
-  --color-brand-accent: #DC2626; /* Crimson Red */
+  --color-brand-accent: #DC2626;
   --color-brand-accent-hover: #E11D48;
 }
 

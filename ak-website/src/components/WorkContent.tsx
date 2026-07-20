@@ -40,10 +40,10 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5, delay: idx * 0.1 }}
-      className="group bg-white rounded-3xl p-5 shadow-[0_4px_30px_rgba(15,23,42,0.01)] border border-slate-100/80 hover:shadow-[0_20px_50px_rgba(225,29,72,0.06)] hover:border-rose-100/70 hover:-translate-y-1.5 transition-all duration-500 flex flex-col gap-5 justify-between relative overflow-hidden"
+      className="group bg-white rounded-md p-5 shadow-[0_4px_30px_rgba(15,23,42,0.01)] border border-slate-100/80 hover:shadow-[0_20px_50px_rgba(225,29,72,0.06)] hover:border-rose-100/70 hover:-translate-y-1.5 transition-all duration-500 flex flex-col gap-5 justify-between relative overflow-hidden"
     >
       {/* Product Visual Container (FIRST) */}
-      <div className="bg-slate-50/60 rounded-2xl aspect-[4/3] w-full overflow-hidden relative flex items-center justify-center p-3 border border-slate-100/30">
+      <div className="bg-slate-50/60 rounded-md aspect-[4/3] w-full overflow-hidden relative flex items-center justify-center p-3 border border-slate-100/30">
         {productImages.length > 0 ? (
           <div className="relative w-full h-full select-none">
             <AnimatePresence mode="wait">
@@ -56,18 +56,18 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                 className="relative w-full h-full cursor-grab active:cursor-grabbing touch-pan-y"
                 {...(productImages.length > 1
                   ? {
-                      drag: "x",
-                      dragConstraints: { left: 0, right: 0 },
-                      dragElastic: 0.6,
-                      onDragEnd: (_e, info) => {
-                        const swipeThreshold = 50;
-                        if (info.offset.x < -swipeThreshold) {
-                          setCurrentImageIndex((prev) => (prev === productImages.length - 1 ? 0 : prev + 1));
-                        } else if (info.offset.x > swipeThreshold) {
-                          setCurrentImageIndex((prev) => (prev === 0 ? productImages.length - 1 : prev - 1));
-                        }
-                      },
-                    }
+                    drag: "x",
+                    dragConstraints: { left: 0, right: 0 },
+                    dragElastic: 0.6,
+                    onDragEnd: (_e, info) => {
+                      const swipeThreshold = 50;
+                      if (info.offset.x < -swipeThreshold) {
+                        setCurrentImageIndex((prev) => (prev === productImages.length - 1 ? 0 : prev + 1));
+                      } else if (info.offset.x > swipeThreshold) {
+                        setCurrentImageIndex((prev) => (prev === 0 ? productImages.length - 1 : prev - 1));
+                      }
+                    },
+                  }
                   : {})}
               >
                 <Image
@@ -139,8 +139,8 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
           {/* Upper row: Category */}
           <div>
             <span className={`text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border select-none ${project.category === "ups inventer & batteries"
-                ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
-                : "bg-rose-500/10 text-rose-600 border-rose-500/20"
+              ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
+              : "bg-rose-500/10 text-rose-600 border-rose-500/20"
               }`}>
               {project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"}
             </span>
@@ -193,13 +193,12 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
         <div className="pt-2 border-t border-slate-100/60">
           <a
             href={`https://wa.me/918870534049?text=${encodeURIComponent(
-              `Hello, I would like to enquire about the *${project.brandname}* (${
-                project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"
+              `Hello, I would like to enquire about the *${project.brandname}* (${project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"
               }) priced at *${formatPrice(project.selling_price || project.price)}*.`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-2xl py-3 px-4 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all duration-300 shadow-[0_4px_12px_rgba(16,185,129,0.12)] hover:shadow-[0_8px_20px_rgba(16,185,129,0.24)] cursor-pointer select-none"
+            className="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-md py-3 px-4 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all duration-300 shadow-[0_4px_12px_rgba(16,185,129,0.12)] hover:shadow-[0_8px_20px_rgba(16,185,129,0.24)] cursor-pointer select-none"
           >
             <svg
               className="w-4 h-4 fill-current"
@@ -224,7 +223,7 @@ interface WorkContentProps {
 export function WorkContent({ initialProducts = [], showFilters = false }: WorkContentProps) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
-  
+
   const searchInputRef = React.useRef<HTMLInputElement>(null);
   const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
@@ -329,7 +328,7 @@ export function WorkContent({ initialProducts = [], showFilters = false }: WorkC
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-16 bg-white rounded-3xl border border-slate-100 shadow-[0_4px_30px_rgba(15,23,42,0.01)] max-w-lg mx-auto"
+            className="text-center py-16 bg-white rounded-md border border-slate-100 shadow-[0_4px_30px_rgba(15,23,42,0.01)] max-w-lg mx-auto"
           >
             <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-slate-50 border border-slate-100 text-slate-400 mb-4">
               <Inbox className="w-6 h-6" />

@@ -444,52 +444,43 @@ export default function ProductsPage() {
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
 
-        {/* Statistics Cards */}
-        <section className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-          <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex items-center justify-between">
-            <div>
-              <p className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">Total Products</p>
-              <h3 className="text-3xl font-black text-slate-900 mt-1">{statistics.total}</h3>
-            </div>
-            <div className="w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center text-slate-700">
-              <Database className="w-6 h-6" />
-            </div>
+        {/* Title Section */}
+        <section className="mb-6">
+          <h2 className="text-2xl font-black text-slate-900 font-serif tracking-tight">Products Catalog</h2>
+          <p className="text-xs text-slate-500 mt-1">Publish and manage items in the inventory database, including pricing and product category information.</p>
+        </section>
+
+        {/* Simplified Statistics Cards */}
+        <section className="grid grid-cols-3 gap-4 mb-6">
+          <div className="bg-white rounded-md p-4 border border-slate-100 shadow-sm flex flex-col justify-center">
+            <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Total Products</span>
+            <span className="text-xl font-bold text-slate-900 mt-0.5">{statistics.total}</span>
           </div>
-          <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex items-center justify-between">
-            <div>
-              <p className="text-xs font-extrabold text-amber-600 uppercase tracking-widest">UPS Inverters & Batteries</p>
-              <h3 className="text-3xl font-black text-slate-900 mt-1">{statistics.batteries}</h3>
-            </div>
-            <div className="w-12 h-12 bg-amber-50 border border-amber-100 text-amber-700 rounded-xl flex items-center justify-center">
-              <LayoutGrid className="w-6 h-6" />
-            </div>
+          <div className="bg-white rounded-md p-4 border border-slate-100 shadow-sm flex flex-col justify-center">
+            <span className="text-[10px] font-extrabold text-amber-600 uppercase tracking-widest">UPS Inverters</span>
+            <span className="text-xl font-bold text-slate-900 mt-0.5">{statistics.batteries}</span>
           </div>
-          <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex items-center justify-between">
-            <div>
-              <p className="text-xs font-extrabold text-rose-600 uppercase tracking-widest">Water Purifiers</p>
-              <h3 className="text-3xl font-black text-slate-900 mt-1">{statistics.purifiers}</h3>
-            </div>
-            <div className="w-12 h-12 bg-rose-50 border border-rose-100 text-rose-700 rounded-xl flex items-center justify-center">
-              <ListFilter className="w-6 h-6" />
-            </div>
+          <div className="bg-white rounded-md p-4 border border-slate-100 shadow-sm flex flex-col justify-center">
+            <span className="text-[10px] font-extrabold text-rose-600 uppercase tracking-widest">Water Purifiers</span>
+            <span className="text-xl font-bold text-slate-900 mt-0.5">{statistics.purifiers}</span>
           </div>
         </section>
 
         {/* Filter and Control Bar */}
-        <section className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-2">
-            {["All", "ups inventer & batteries", "water purifier"].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCategoryFilter(cat)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${categoryFilter === cat
-                  ? "bg-slate-900 text-white border-transparent"
-                  : "bg-slate-50 text-slate-650 border-slate-200/50 hover:bg-slate-100 hover:text-slate-900"
-                  }`}
-              >
-                {cat === "All" ? "All Products" : cat === "ups inventer & batteries" ? "UPS Inverters & Batteries" : "Water Purifiers"}
-              </button>
-            ))}
+        <section className="bg-white rounded-md p-5 border border-slate-100 shadow-sm mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="relative w-full md:w-auto">
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="w-full md:w-64 h-11 pl-4 pr-10 rounded-md border border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 appearance-none cursor-pointer"
+            >
+              <option value="All">All Products ({statistics.total})</option>
+              <option value="ups inventer & batteries">UPS Inverters ({statistics.batteries})</option>
+              <option value="water purifier">Water Purifiers ({statistics.purifiers})</option>
+            </select>
+            <span className="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none text-slate-400">
+              <ListFilter className="w-4 h-4" />
+            </span>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 w-full md:max-w-xl">
@@ -503,32 +494,21 @@ export default function ProductsPage() {
                 placeholder="Search by brand name"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-805 transition-all bg-white"
+                className="w-full h-11 pl-10 pr-4 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-805 transition-all bg-white"
               />
             </div>
-
-            <button
-              onClick={() => {
-                resetForm();
-                setIsAddModalOpen(true);
-              }}
-              className="h-11 px-5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-md shadow-rose-200"
-            >
-              <Plus className="w-4.5 h-4.5" />
-              <span>Add Product</span>
-            </button>
           </div>
         </section>
 
         {/* Database Error State */}
         {dbError && (
-          <div className="mb-6 p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-2xl text-xs font-semibold leading-relaxed">
+          <div className="mb-6 p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-md text-xs font-semibold leading-relaxed">
             {dbError}
           </div>
         )}
 
         {/* Catalog Table */}
-        <section className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+        <section className="bg-white rounded-md border border-slate-100 shadow-sm overflow-hidden">
           {productsLoading ? (
             <div className="p-16 flex flex-col items-center justify-center gap-3">
               <div className="w-8 h-8 border-3 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
@@ -550,7 +530,7 @@ export default function ProductsPage() {
                   setSearchQuery("");
                   setCategoryFilter("All");
                 }}
-                className="px-4 py-2 border border-slate-200/80 hover:bg-slate-50 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-600 transition-all"
+                className="px-4 py-2 border border-slate-200/80 hover:bg-slate-50 rounded-md text-xs font-bold uppercase tracking-wider text-slate-600 transition-all"
               >
                 Clear Filters
               </button>
@@ -579,7 +559,7 @@ export default function ProductsPage() {
                     return (
                       <tr key={product.id} className="hover:bg-slate-50/30 transition-colors group">
                         <td className="py-4 px-6">
-                          <div className="bg-slate-50 border border-slate-100/50 rounded-2xl h-18 w-24 overflow-hidden shrink-0 relative flex items-center justify-center bg-white p-1">
+                          <div className="bg-slate-50 border border-slate-100/50 rounded-md h-18 w-24 overflow-hidden shrink-0 relative flex items-center justify-center bg-white p-1">
                             {productImages[0] ? (
                               <Image
                                 src={productImages[0]}
@@ -632,14 +612,14 @@ export default function ProductsPage() {
                           <div className="flex items-center justify-end gap-2.5">
                             <button
                               onClick={() => openEditModal(product)}
-                              className="w-9 h-9 border border-slate-200/80 hover:bg-slate-50 text-slate-500 hover:text-slate-900 rounded-xl transition-all flex items-center justify-center"
+                              className="w-9 h-9 border border-slate-200/80 hover:bg-slate-50 text-slate-500 hover:text-slate-900 rounded-md transition-all flex items-center justify-center"
                               title="Edit details"
                             >
                               <Edit className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => handleDeleteProduct(product.id)}
-                              className="w-9 h-9 border border-slate-200/80 hover:bg-red-50 text-slate-500 hover:text-red-650 rounded-xl transition-all flex items-center justify-center"
+                              className="w-9 h-9 border border-slate-200/80 hover:bg-red-50 text-slate-500 hover:text-red-650 rounded-md transition-all flex items-center justify-center"
                               title="Delete product"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -665,7 +645,7 @@ export default function ProductsPage() {
                     setPageSize(Number(e.target.value));
                     setCurrentPage(1);
                   }}
-                  className="h-9 px-3 border border-slate-200 rounded-xl bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500"
+                  className="h-9 px-3 border border-slate-200 rounded-md bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500"
                 >
                   <option value={10}>10</option>
                   <option value={30}>30</option>
@@ -679,7 +659,7 @@ export default function ProductsPage() {
                   <button
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                    className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+                    className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-xs font-bold uppercase tracking-wider transition-all"
                   >
                     Previous
                   </button>
@@ -689,7 +669,7 @@ export default function ProductsPage() {
                   <button
                     disabled={currentPage === totalPages}
                     onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                    className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+                    className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-xs font-bold uppercase tracking-wider transition-all"
                   >
                     Next
                   </button>
@@ -701,7 +681,7 @@ export default function ProductsPage() {
       </main>      {/* ================= ADD PRODUCT MODAL ================= */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-955/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
+          <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsAddModalOpen(false)}
               className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-950 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
@@ -714,121 +694,121 @@ export default function ProductsPage() {
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed shrink-0">
+              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-md text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
-            )}
-
-            <form onSubmit={handleAddProduct} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Category</label>
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
-                  >
-                    <option value="ups inventer & batteries">UPS Inverter & Batteries</option>
-                    <option value="water purifier">Water Purifier</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Brand Partner</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Exide, Luminous"
-                    value={brandName}
-                    onChange={(e) => setBrandName(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">M.R.P. (Original Price)</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. ₹14499"
-                    value={mrp}
-                    onChange={(e) => setMrp(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Selling Price</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. ₹12999"
-                    value={sellingPrice}
-                    onChange={(e) => setSellingPrice(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Description</label>
-                <textarea
-                  placeholder="Describe should seperated by commas"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full h-20 p-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Images (Cloudinary)</label>
-
-                {imagePreviews.length > 0 && (
-                  <div className="grid grid-cols-3 gap-3 mb-4">
-                    {imagePreviews.map((preview, index) => (
-                      <div key={index} className="relative group rounded-xl overflow-hidden h-24 border border-slate-100 flex items-center justify-center p-2 bg-white">
-                        <img src={preview} alt={`Preview ${index + 1}`} className="object-contain max-h-full max-w-full" />
-                        <button
-                          type="button"
-                          onClick={() => removePendingImage(index)}
-                          className="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-bold"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    ))}
+            )}            <form onSubmit={handleAddProduct} className="flex flex-col flex-1 overflow-hidden">
+              <div className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1 pb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Category</label>
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
+                    >
+                      <option value="ups inventer & batteries">UPS Inverter & Batteries</option>
+                      <option value="water purifier">Water Purifier</option>
+                    </select>
                   </div>
-                )}
 
-                <div className="border-2 border-dashed border-slate-200/80 rounded-2xl p-6 text-center hover:border-rose-300 transition-colors flex flex-col items-center bg-slate-50/50 relative">
-                  <Upload className="w-8 h-8 text-slate-400 mb-2.5 pointer-events-none" />
-                  <p className="text-xs text-slate-500 font-semibold mb-1">Click to select files</p>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Multiple images supported</p>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleFileChange}
-                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                    id="fileUpload"
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Brand Partner</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Exide, Luminous"
+                      value={brandName}
+                      onChange={(e) => setBrandName(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">M.R.P. (Original Price)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. ₹14499"
+                      value={mrp}
+                      onChange={(e) => setMrp(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Selling Price</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. ₹12999"
+                      value={sellingPrice}
+                      onChange={(e) => setSellingPrice(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Description</label>
+                  <textarea
+                    placeholder="Describe should seperated by commas"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="w-full h-20 p-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-805 resize-none"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Images (Cloudinary)</label>
+
+                  {imagePreviews.length > 0 && (
+                    <div className="grid grid-cols-3 gap-3 mb-4">
+                      {imagePreviews.map((preview, index) => (
+                        <div key={index} className="relative group rounded-md overflow-hidden h-24 border border-slate-100 flex items-center justify-center p-2 bg-white">
+                          <img src={preview} alt={`Preview ${index + 1}`} className="object-contain max-h-full max-w-full" />
+                          <button
+                            type="button"
+                            onClick={() => removePendingImage(index)}
+                            className="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs font-bold"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="border-2 border-dashed border-slate-200/80 rounded-md p-6 text-center hover:border-rose-300 transition-colors flex flex-col items-center bg-slate-50/50 relative">
+                    <Upload className="w-8 h-8 text-slate-400 mb-2.5 pointer-events-none" />
+                    <p className="text-xs text-slate-500 font-semibold mb-1">Click to select files</p>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Multiple images supported</p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleFileChange}
+                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                      id="fileUpload"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-3.5">
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3.5 shrink-0 bg-white">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="h-11 px-5 border border-slate-200 text-slate-655 hover:bg-slate-50 rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+                  className="h-11 px-5 border border-slate-200 text-slate-655 hover:bg-slate-50 rounded-md text-xs font-bold uppercase tracking-wider transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={formSubmitting}
-                  className="h-11 px-6 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-rose-200 flex items-center justify-center gap-2"
+                  className="h-11 px-6 bg-rose-600 hover:bg-rose-500 text-white rounded-md text-xs font-bold uppercase tracking-wider transition-all shadow-md shadow-rose-200 flex items-center justify-center gap-2"
                 >
                   {formSubmitting ? (
                     <>
@@ -851,7 +831,7 @@ export default function ProductsPage() {
       {/* ================= EDIT PRODUCT MODAL ================= */}
       {isEditModalOpen && selectedProduct && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-3xl border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
+          <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => {
                 setIsEditModalOpen(false);
@@ -868,139 +848,141 @@ export default function ProductsPage() {
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-2xl text-xs font-semibold leading-relaxed shrink-0">
+              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-md text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleEditProduct} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Category</label>
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
-                  >
-                    <option value="ups inventer & batteries">UPS Inverter & Batteries</option>
-                    <option value="water purifier">Water Purifier</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Brand Partner</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Exide, Luminous"
-                    value={brandName}
-                    onChange={(e) => setBrandName(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">M.R.P. (Original Price)</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. ₹14,499"
-                    value={mrp}
-                    onChange={(e) => setMrp(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-805"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Selling Price</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. ₹12,999"
-                    value={sellingPrice}
-                    onChange={(e) => setSellingPrice(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Description</label>
-                <textarea
-                  placeholder="Describe the product or installation details..."
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full h-20 p-3.5 rounded-xl border border-slate-200/80 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-805 resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Images (Cloudinary)</label>
-
-                {(existingImageUrls.length > 0 || imagePreviews.length > 0) && (
-                  <div className="grid grid-cols-4 gap-2 mb-4">
-                    {/* Existing Images */}
-                    {existingImageUrls.map((url, index) => (
-                      <div key={`existing-${index}`} className="relative group rounded-xl overflow-hidden h-20 border border-slate-100 flex items-center justify-center p-2 bg-white">
-                        <img src={url} alt={`Saved Visual ${index + 1}`} className="object-contain max-h-full max-w-full" />
-                        <button
-                          type="button"
-                          onClick={() => removeExistingImage(index)}
-                          className="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold"
-                        >
-                          Delete
-                        </button>
-                        <span className="absolute top-0.5 left-0.5 bg-emerald-500 text-white text-[8px] font-extrabold px-1 rounded">Saved</span>
-                      </div>
-                    ))}
-                    {/* Newly Selected Previews */}
-                    {imagePreviews.map((preview, index) => (
-                      <div key={`new-${index}`} className="relative group rounded-xl overflow-hidden h-20 border border-slate-100 flex items-center justify-center p-2 bg-white">
-                        <img src={preview} alt={`New Preview ${index + 1}`} className="object-contain max-h-full max-w-full" />
-                        <button
-                          type="button"
-                          onClick={() => removePendingImage(index)}
-                          className="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold"
-                        >
-                          Remove
-                        </button>
-                        <span className="absolute top-0.5 left-0.5 bg-blue-500 text-white text-[8px] font-extrabold px-1 rounded">New</span>
-                      </div>
-                    ))}
+            <form onSubmit={handleEditProduct} className="flex flex-col flex-1 overflow-hidden">
+              <div className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1 pb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Category</label>
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
+                    >
+                      <option value="ups inventer & batteries">UPS Inverter & Batteries</option>
+                      <option value="water purifier">Water Purifier</option>
+                    </select>
                   </div>
-                )}
 
-                <div className="border-2 border-dashed border-slate-200/80 rounded-2xl p-6 text-center hover:border-rose-300 transition-colors flex flex-col items-center bg-slate-50/50 relative">
-                  <Upload className="w-8 h-8 text-slate-400 mb-2.5 pointer-events-none" />
-                  <p className="text-xs text-slate-500 font-semibold mb-1">Click to select files</p>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleFileChange}
-                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                    id="editFileUpload"
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Brand Partner</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Exide, Luminous"
+                      value={brandName}
+                      onChange={(e) => setBrandName(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">M.R.P. (Original Price)</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. ₹14,499"
+                      value={mrp}
+                      onChange={(e) => setMrp(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-805"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Selling Price</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. ₹12,999"
+                      value={sellingPrice}
+                      onChange={(e) => setSellingPrice(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Description</label>
+                  <textarea
+                    placeholder="Describe the product or installation details..."
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="w-full h-20 p-3.5 rounded-md border border-slate-200/80 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-805 resize-none"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Images (Cloudinary)</label>
+
+                  {(existingImageUrls.length > 0 || imagePreviews.length > 0) && (
+                    <div className="grid grid-cols-4 gap-2 mb-4">
+                      {/* Existing Images */}
+                      {existingImageUrls.map((url, index) => (
+                        <div key={`existing-${index}`} className="relative group rounded-md overflow-hidden h-20 border border-slate-100 flex items-center justify-center p-2 bg-white">
+                          <img src={url} alt={`Saved Visual ${index + 1}`} className="object-contain max-h-full max-w-full" />
+                          <button
+                            type="button"
+                            onClick={() => removeExistingImage(index)}
+                            className="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold"
+                          >
+                            Delete
+                          </button>
+                          <span className="absolute top-0.5 left-0.5 bg-emerald-500 text-white text-[8px] font-extrabold px-1 rounded">Saved</span>
+                        </div>
+                      ))}
+                      {/* Newly Selected Previews */}
+                      {imagePreviews.map((preview, index) => (
+                        <div key={`new-${index}`} className="relative group rounded-md overflow-hidden h-20 border border-slate-100 flex items-center justify-center p-2 bg-white">
+                          <img src={preview} alt={`New Preview ${index + 1}`} className="object-contain max-h-full max-w-full" />
+                          <button
+                            type="button"
+                            onClick={() => removePendingImage(index)}
+                            className="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold"
+                          >
+                            Remove
+                          </button>
+                          <span className="absolute top-0.5 left-0.5 bg-blue-500 text-white text-[8px] font-extrabold px-1 rounded">New</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="border-2 border-dashed border-slate-200/80 rounded-md p-6 text-center hover:border-rose-300 transition-colors flex flex-col items-center bg-slate-50/50 relative">
+                    <Upload className="w-8 h-8 text-slate-400 mb-2.5 pointer-events-none" />
+                    <p className="text-xs text-slate-500 font-semibold mb-1">Click to select files</p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleFileChange}
+                      className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                      id="editFileUpload"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-3.5">
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3.5 shrink-0 bg-white">
                 <button
                   type="button"
                   onClick={() => {
                     setIsEditModalOpen(false);
                     setSelectedProduct(null);
                   }}
-                  className="h-11 px-5 border border-slate-200 text-slate-650 hover:bg-slate-50 rounded-xl text-xs font-bold uppercase tracking-wider transition-all"
+                  className="h-11 px-5 border border-slate-200 text-slate-655 hover:bg-slate-50 rounded-md text-xs font-bold uppercase tracking-wider transition-all"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={formSubmitting}
-                  className="h-11 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
+                  className="h-11 px-6 bg-slate-900 hover:bg-slate-800 text-white rounded-md text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2"
                 >
                   {formSubmitting ? (
                     <>
@@ -1021,7 +1003,7 @@ export default function ProductsPage() {
 
       {/* Mobile Bottom Navigation Bar (Instagram style) */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-200/80 h-16 shadow-lg z-50 px-6 flex items-center justify-around pb-safe">
-        <Link href="/" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-950 transition-colors">
+        <Link href="/" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-955 transition-colors">
           <Home className="w-5 h-5 text-slate-400" />
           <span className="text-[10px] font-extrabold uppercase tracking-wider">Dashboard</span>
         </Link>
@@ -1038,6 +1020,19 @@ export default function ProductsPage() {
           <span className="text-[10px] font-extrabold uppercase tracking-wider">Service</span>
         </Link>
       </div>
+
+      {/* Floating Add Product Button */}
+      <button
+        onClick={() => {
+          resetForm();
+          setIsAddModalOpen(true);
+        }}
+        className="fixed bottom-20 right-6 lg:bottom-8 lg:right-8 z-[60] h-14 w-14 lg:h-14 lg:w-auto lg:px-6 bg-rose-600 hover:bg-rose-500 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-rose-500/30 hover:scale-105"
+        title="Add new product"
+      >
+        <Plus className="w-5 h-5 shrink-0" />
+        <span className="hidden lg:inline">Add Product</span>
+      </button>
     </div>
   );
 }

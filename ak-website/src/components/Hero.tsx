@@ -233,7 +233,7 @@ export function Hero() {
               }}
               className="order-2 md:order-1 flex justify-center md:justify-end"
             >
-              <div className="relative group rounded-3xl p-6 ">
+              <div className="relative group rounded-md p-6 ">
                 {/* Floating badge */}
                 <span className="absolute top-4 left-4 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                   Power Backup
@@ -254,7 +254,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="order-1 md:order-2 flex flex-col items-center justify-center py-6 px-6 bg-white/80 md:bg-transparent rounded-3xl border border-slate-200/50 md:border-transparent shadow-[0_4px_30px_rgba(15,23,42,0.02)] backdrop-blur-md max-w-[280px] w-full mx-auto mb-8 md:mb-0"
+              className="order-1 md:order-2 flex flex-col items-center justify-center py-6 px-6 bg-white/80 md:bg-transparent rounded-md border border-slate-200/50 md:border-transparent shadow-[0_4px_30px_rgba(15,23,42,0.02)] backdrop-blur-md max-w-[280px] w-full mx-auto mb-8 md:mb-0"
             >
               {/* Avatar Overlap */}
               <div className="flex -space-x-3 mb-3">

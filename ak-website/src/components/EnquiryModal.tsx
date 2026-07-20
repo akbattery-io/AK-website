@@ -66,7 +66,7 @@ export function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5, bounce: 0.15 }}
-            className="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 overflow-hidden z-10"
+            className="relative w-full max-w-md bg-white rounded-md p-6 sm:p-8 shadow-2xl border border-slate-100 overflow-hidden z-10"
           >
             {/* Close Button */}
             <button
@@ -100,7 +100,7 @@ export function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
                       value={formData.name}
                       onChange={handleInputChange}
                       placeholder="John Doe"
-                      className="w-full h-11 px-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 transition-all"
+                      className="w-full h-11 px-4 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 transition-all"
                     />
                   </div>
 
@@ -117,7 +117,7 @@ export function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
                       value={formData.phone}
                       onChange={handleInputChange}
                       placeholder="+91 98765 43210"
-                      className="w-full h-11 px-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 transition-all"
+                      className="w-full h-11 px-4 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 transition-all"
                     />
                   </div>
 
@@ -131,7 +131,7 @@ export function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
                       name="service"
                       value={formData.service}
                       onChange={handleInputChange}
-                      className="w-full h-11 px-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 bg-white transition-all"
+                      className="w-full h-11 px-4 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 bg-white transition-all"
                     >
                       <option value="Battery Backup">Inverter & Battery Purchase/Service</option>
                       <option value="RO Purifier">RO Water Purifier Purchase/Service</option>
@@ -151,7 +151,7 @@ export function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
                       value={formData.message}
                       onChange={handleInputChange}
                       placeholder="Describe your requirement..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 resize-none transition-all"
+                      className="w-full px-4 py-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 resize-none transition-all"
                     />
                   </div>
 
@@ -193,7 +193,7 @@ export function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
                   Enquiry Submitted!
                 </h3>
                 <p className="text-slate-500 text-sm max-w-sm mx-auto mb-6">
-                  Thank you, <span className="font-bold text-slate-800">{formData.name}</span>. 
+                  Thank you, <span className="font-bold text-slate-800">{formData.name}</span>.
                   Our executive will call you on <span className="font-bold text-slate-800">{formData.phone}</span> within 2 hours.
                 </p>
                 <Button

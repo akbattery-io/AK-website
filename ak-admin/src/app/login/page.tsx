@@ -60,9 +60,9 @@ export default function LoginPage() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-500/5 rounded-full blur-3xl -z-10 animate-pulse"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl -z-10 animate-pulse delay-700"></div>
 
-      <div className="max-w-md w-full bg-white/70 backdrop-blur-xl border border-slate-100/80 rounded-3xl p-8 sm:p-10 shadow-[0_10px_50px_rgba(15,23,42,0.04)] hover:shadow-[0_20px_60px_rgba(220,38,38,0.06)] transition-all duration-500">
+      <div className="max-w-md w-full bg-white/70 backdrop-blur-xl border border-slate-100/80 rounded-md p-8 sm:p-10 shadow-[0_10px_50px_rgba(15,23,42,0.04)] hover:shadow-[0_20px_60px_rgba(220,38,38,0.06)] transition-all duration-500">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl mb-4 shadow-sm shadow-rose-100">
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-rose-50 border border-rose-100 text-rose-600 rounded-md mb-4 shadow-sm shadow-rose-100">
             <Shield className="w-7 h-7" />
           </div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight font-serif">
@@ -75,7 +75,7 @@ export default function LoginPage() {
 
         {/* Display Error Message */}
         {displayedError && (
-          <div className="mb-6 flex items-start gap-3 bg-red-50/80 backdrop-blur-sm border border-red-100 text-red-700 rounded-2xl p-4 text-xs font-semibold leading-relaxed animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="mb-6 flex items-start gap-3 bg-red-50/80 backdrop-blur-sm border border-red-100 text-red-700 rounded-md p-4 text-xs font-semibold leading-relaxed animate-in fade-in slide-in-from-top-2 duration-300">
             <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
             <div>{displayedError}</div>
           </div>
@@ -85,7 +85,7 @@ export default function LoginPage() {
           type="button"
           onClick={handleGoogleLogin}
           disabled={authLoading}
-          className="w-full h-12 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-slate-300 text-slate-700 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-75"
+          className="w-full h-12 bg-white hover:bg-slate-50 border border-slate-200/80 hover:border-slate-300 text-slate-700 rounded-md text-sm font-bold transition-all duration-300 flex items-center justify-center gap-3 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-75"
         >
           {/* Google Icon SVG */}
           <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
