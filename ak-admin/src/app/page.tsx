@@ -72,7 +72,7 @@ export default function Dashboard() {
       custData.forEach((customer) => {
         if (customer.status === "Active") {
           activeCount++;
-          
+
           const installDate = new Date(customer.installation_date);
           const expiryDate = new Date(installDate);
           expiryDate.setMonth(expiryDate.getMonth() + customer.maintenance_period);
@@ -141,7 +141,7 @@ export default function Dashboard() {
 
           {/* Products Summary Card */}
           <div className="bg-white rounded-3xl border border-slate-100 p-8 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-slate-200/50 transition-all duration-300 relative overflow-hidden group min-h-[250px]">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-rose-50/50 rounded-bl-full flex items-center justify-center text-rose-500 pointer-events-none group-hover:scale-105 transition-transform duration-300">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-rose-500/20 rounded-bl-full flex items-center justify-center text-rose-500 pointer-events-none group-hover:scale-105 transition-transform duration-300">
               <Package className="w-8 h-8 opacity-80" />
             </div>
             <div>
@@ -169,7 +169,7 @@ export default function Dashboard() {
 
           {/* Customers Summary Card */}
           <div className="bg-white rounded-3xl border border-slate-100 p-8 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-slate-200/50 transition-all duration-300 relative overflow-hidden group min-h-[250px]">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50/50 rounded-bl-full flex items-center justify-center text-blue-500 pointer-events-none group-hover:scale-105 transition-transform duration-300">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-blue-400/50 rounded-bl-full flex items-center justify-center text-blue-500 pointer-events-none group-hover:scale-105 transition-transform duration-300">
               <Users className="w-8 h-8 opacity-80" />
             </div>
             <div>
@@ -274,7 +274,7 @@ export default function Dashboard() {
 
           {/* Service Summary Card */}
           <div className="bg-white rounded-3xl border border-slate-100 p-8 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-slate-200/50 transition-all duration-300 relative overflow-hidden group min-h-[250px]">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-50/50 rounded-bl-full flex items-center justify-center text-amber-655 pointer-events-none group-hover:scale-105 transition-transform duration-300">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-400/50 rounded-bl-full flex items-center justify-center text-amber-655 pointer-events-none group-hover:scale-105 transition-transform duration-300">
               <Wrench className="w-8 h-8 opacity-80" />
             </div>
             <div>

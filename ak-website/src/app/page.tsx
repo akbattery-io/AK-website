@@ -14,8 +14,6 @@ export default function Home() {
       <main className="flex-grow">
         {/* Hero Section */}
         <Hero />
-        {/* FAQ Section */}
-        <FAQ />
       </main>
 
       <Footer />

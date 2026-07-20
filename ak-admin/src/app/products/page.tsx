@@ -751,7 +751,7 @@ export default function ProductsPage() {
                   <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">M.R.P. (Original Price)</label>
                   <input
                     type="text"
-                    placeholder="e.g. ₹14,499"
+                    placeholder="e.g. ₹14499"
                     value={mrp}
                     onChange={(e) => setMrp(e.target.value)}
                     className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
@@ -763,7 +763,7 @@ export default function ProductsPage() {
                   <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Selling Price</label>
                   <input
                     type="text"
-                    placeholder="e.g. ₹12,999"
+                    placeholder="e.g. ₹12999"
                     value={sellingPrice}
                     onChange={(e) => setSellingPrice(e.target.value)}
                     className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"

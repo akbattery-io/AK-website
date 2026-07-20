@@ -4,7 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight, BadgeCheck, Wrench, UserCheck, ShieldCheck, Tag, Zap, MapPin } from "lucide-react";
+import { Sparkles, ArrowRight, BadgeCheck, Wrench, UserCheck, ShieldCheck, Tag, Zap, MapPin, ShoppingCart } from "lucide-react";
 import { Button } from "./ui/Button";
 import { Badge } from "./ui/Badge";
 
@@ -93,14 +93,28 @@ export function Hero() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center text-center">
-          {/* Tag Badges */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6 flex flex-wrap justify-center gap-3"
-          >
 
+
+          {/* Social Proof Group */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="mb-8 flex items-center justify-center px-4"
+          >
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
+              {/* Tag 1: Services */}
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-50/60 border border-rose-100/50 shadow-[0_2px_10px_rgba(225,29,72,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-rose-600">
+                <Wrench className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                <span>1000+ Services Completed</span>
+              </div>
+
+              {/* Tag 2: Installations */}
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-50/80 border border-slate-200/60 shadow-[0_2px_10px_rgba(15,23,42,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-slate-600">
+                <BadgeCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                <span>5-6 Installations Daily</span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Main Title Heading */}
@@ -134,33 +148,22 @@ export function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-10 flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-4 sm:px-0"
+            className="mt-8 flex flex-row justify-center gap-3 w-full sm:w-auto px-4 sm:px-0"
           >
-            <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+            <motion.div whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }} className="flex-1 sm:flex-initial">
               <Button
                 variant="primary"
-                size="lg"
+                size="md"
                 onClick={() => {
                   window.open("https://wa.me/918870534049?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20Battery%20and%20RO%20services.", "_blank", "noopener,noreferrer");
                 }}
-                className="group shadow-md hover:shadow-lg w-full sm:w-auto bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white border-transparent hover:shadow-[0_8px_25px_rgba(220,38,38,0.2)] transition-all"
+                className="group shadow-sm hover:shadow-md w-full sm:w-auto bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white border-transparent transition-all text-xs sm:text-sm h-11"
               >
-                Enquire now
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                Place Order
+                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
               </Button>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
-              <Button
-                variant="secondary"
-                size="lg"
-                onClick={() => {
-                  router.push("/works");
-                }}
-                className="w-full sm:w-auto shadow-sm"
-              >
-                View Products
-              </Button>
-            </motion.div>
+
           </motion.div>
 
           {/* Feature Marquee */}
@@ -330,7 +333,7 @@ export function Hero() {
         </div>
 
         {/* Unified Trusted Partners Section at the bottom of Hero */}
-        <div className="mt-20 md:mt-28 pt-12 border-t border-slate-100/70">
+        {/* <div className="mt-20 md:mt-28 pt-12 border-t border-slate-100/70">
           <h2 className="text-center text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-8">
             Our Trusted Partners
           </h2>
@@ -342,7 +345,7 @@ export function Hero() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className={`w-28 h-8 sm:w-32 sm:h-10 flex items-center justify-center  opacity-45 transition-all duration-300 hover:scale-105 cursor-pointer ${partner.color}`}
+                className="h-7 sm:h-9 flex items-center justify-center grayscale opacity-45 hover:opacity-90 hover:grayscale-0 transition-all duration-500 cursor-pointer select-none"
                 title={partner.name}
               >
                 {partner.src ? (
@@ -351,15 +354,17 @@ export function Hero() {
                     alt={partner.name}
                     width={partner.width}
                     height={partner.height}
-                    className="max-h-full max-w-full w-auto h-auto object-contain"
+                    className="max-h-full max-w-[120px] w-auto h-auto object-contain"
                   />
                 ) : (
-                  partner.logo
+                  <div className="h-6 sm:h-7 text-slate-500 hover:text-rose-600 transition-colors flex items-center justify-center">
+                    {partner.logo}
+                  </div>
                 )}
               </motion.div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

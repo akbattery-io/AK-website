@@ -1059,40 +1059,25 @@ export default function ServicePage() {
               </div>
             </div>
 
-            {/* Category Toggle Tabs */}
-            <div className="grid grid-cols-2 gap-2 p-1 bg-slate-50 border border-slate-150 rounded-xl mb-5 shrink-0">
-              <button
-                type="button"
-                onClick={() => {
-                  setDetectedCategory("RO");
+            {/* Category Dropdown Select */}
+            <div className="mb-5 shrink-0">
+              <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-2">Select Product Category</label>
+              <select
+                value={detectedCategory}
+                onChange={(e) => {
+                  setDetectedCategory(e.target.value as "RO" | "Battery");
                   setSelectedTasks([]);
                   setIsOtherSelected(false);
                 }}
-                className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${detectedCategory === "RO"
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-400 hover:text-slate-700"
-                  }`}
+                className="w-full h-11 px-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white font-semibold cursor-pointer"
               >
-                Water Purifier (RO)
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setDetectedCategory("Battery");
-                  setSelectedTasks([]);
-                  setIsOtherSelected(false);
-                }}
-                className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${detectedCategory === "Battery"
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-400 hover:text-slate-700"
-                  }`}
-              >
-                Battery / Inverter
-              </button>
+                <option value="RO">Water Purifier (RO)</option>
+                <option value="Battery">Battery / Inverter</option>
+              </select>
             </div>
 
-            <form onSubmit={handleCompleteServiceSubmit} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
-              <div className="space-y-2.5 max-h-[40vh] overflow-y-auto pr-1">
+            <form onSubmit={handleCompleteServiceSubmit} className="flex flex-col flex-1 overflow-hidden">
+              <div className="flex-1 overflow-y-auto pr-1 mb-5 space-y-2.5 max-h-[40vh]">
                 {(detectedCategory === "RO" ? roTasks : batteryTasks).map((task) => {
                   const isChecked = selectedTasks.includes(task);
                   return (
@@ -1151,7 +1136,7 @@ export default function ServicePage() {
                 )}
               </div>
 
-              <div className="pt-2.5 flex items-center justify-end gap-3">
+              <div className="pt-4 border-t border-slate-100 flex items-center justify-end gap-3 shrink-0">
                 <button
                   type="button"
                   onClick={() => setIsCompleteModalOpen(false)}

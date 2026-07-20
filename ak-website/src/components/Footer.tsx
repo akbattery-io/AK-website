@@ -1,6 +1,7 @@
 
 import * as React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Clock, Mail, Phone, Pin } from "lucide-react";
 
 
@@ -37,26 +38,30 @@ export default function Footer() {
                         </h3>
                         <ul className="space-y-2 text-sm">
                             <li>
-                                <a href="/" className="hover:text-white transition-colors">
+                                <Link href="/" className="hover:text-white transition-colors">
                                     Home
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="/works" className="hover:text-white transition-colors">
-                                    Works
-                                </a>
+                                <Link href="/works" className="hover:text-white transition-colors">
+                                    Products
+                                </Link>
                             </li>
                             <li>
-                                <a href="/about" className="hover:text-white transition-colors">
+                                <Link href="/about" className="hover:text-white transition-colors">
                                     About Us
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="/contact" className="hover:text-white transition-colors">
-                                    Contact
-                                </a>
+                                <Link href="/faq" className="hover:text-white transition-colors">
+                                    FAQ
+                                </Link>
                             </li>
-
+                            <li>
+                                <Link href="/contact" className="hover:text-white transition-colors">
+                                    Contact
+                                </Link>
+                            </li>
                         </ul>
                     </div>
 

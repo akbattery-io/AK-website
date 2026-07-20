@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, PhoneCall } from "lucide-react";
+import { Menu, X, PhoneCall, ChevronDown } from "lucide-react";
 import { Button } from "./ui/Button";
 import { EnquiryModal } from "./EnquiryModal";
 
@@ -24,13 +24,25 @@ export function Header() {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "Products", href: "/works" },
+    {
+      name: "Products",
+      href: "/works",
+      dropdown: [
+        { name: "RO Purifiers", href: "/water-purifier" },
+        { name: "Batteries & Inverters", href: "/batteries-inverters" },
+      ],
+    },
     { name: "About us", href: "/about" },
+    { name: "FAQ", href: "/faq" },
     { name: "Contact", href: "/contact" },
   ];
 
   const activeItem = React.useMemo(() => {
-    const current = navItems.find((item) => item.href === pathname);
+    const current = navItems.find(
+      (item) =>
+        item.href === pathname ||
+        (item.dropdown && item.dropdown.some((sub) => sub.href === pathname))
+    );
     return current ? current.name : "Home";
   }, [pathname]);
 
@@ -65,21 +77,50 @@ export function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-1 lg:space-x-2">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={handleNavClick}
-                className={`relative px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-300 ${activeItem === item.name
-                  ? "text-rose-600 bg-rose-50/50"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                  }`}
-              >
-                {item.name}
-
-              </Link>
-            ))}
+          <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+            {navItems.map((item) => {
+              if (item.dropdown) {
+                const isDropdownActive = item.dropdown.some((sub) => sub.href === pathname);
+                return (
+                  <div key={item.name} className="relative group flex items-center h-full py-4">
+                    <button
+                      className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-300 flex items-center gap-1 text-slate-600 hover:text-rose-600 hover:bg-slate-50 focus:outline-none ${isDropdownActive ? "text-rose-600 bg-rose-50/50" : ""
+                        }`}
+                    >
+                      <span>{item.name}</span>
+                      <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
+                    </button>
+                    {/* Dropdown Menu */}
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full mt-0.5 hidden group-hover:block bg-white border border-slate-100 rounded-2xl shadow-xl py-2 w-48 z-50 animate-in fade-in slide-in-from-top-1 duration-200">
+                      {item.dropdown.map((sub) => (
+                        <Link
+                          key={sub.name}
+                          href={sub.href}
+                          onClick={handleNavClick}
+                          className={`block px-4 py-2.5 text-xs font-bold transition-colors uppercase tracking-wider ${pathname === sub.href ? "text-rose-600 bg-rose-50/20" : "text-slate-600 hover:text-rose-600 hover:bg-slate-50"
+                            }`}
+                        >
+                          {sub.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={handleNavClick}
+                  className={`relative px-4 py-2 text-sm font-semibold rounded-full transition-colors duration-300 ${activeItem === item.name
+                    ? "text-rose-600 bg-rose-50/50"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                    }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </nav>
 
 
@@ -105,37 +146,65 @@ export function Header() {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-b border-slate-100 ${isOpen ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-b border-slate-100 ${isOpen ? "max-h-[450px] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
           }`}
         id="mobile-menu"
       >
         <div className="px-4 pt-2 pb-6 space-y-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={handleNavClick}
-              className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors duration-200 ${activeItem === item.name
-                ? "text-rose-600 bg-rose-50 font-bold"
-                : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
-                }`}
-            >
-              {item.name}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            if (item.dropdown) {
+              return (
+                <div key={item.name} className="space-y-1">
+                  <div className="px-4 pt-2 pb-1 text-xs font-bold text-slate-400 uppercase tracking-widest select-none">
+                    {item.name}
+                  </div>
+                  {item.dropdown.map((sub) => (
+                    <Link
+                      key={sub.name}
+                      href={sub.href}
+                      onClick={handleNavClick}
+                      className={`block px-6 py-2 rounded-xl text-sm font-semibold transition-colors duration-200 ${pathname === sub.href
+                        ? "text-rose-600 bg-rose-50 font-bold"
+                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                        }`}
+                    >
+                      {sub.name}
+                    </Link>
+                  ))}
+                </div>
+              );
+            }
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={handleNavClick}
+                className={`block px-4 py-2.5 rounded-xl text-base font-semibold transition-colors duration-200 ${activeItem === item.name
+                  ? "text-rose-600 bg-rose-50 font-bold"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
           <div className="pt-4 border-t border-slate-100 px-4">
             <Button
               variant="primary"
               size="md"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => {
+                setIsOpen(false);
+                setIsModalOpen(true);
+              }}
               className="w-full justify-center shadow-sm"
             >
               <PhoneCall className="w-4 h-4 mr-2" />
-              Enquire now
+              Place Order
             </Button>
           </div>
         </div>
       </div>
+
       <EnquiryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </header>
   );

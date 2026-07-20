@@ -6,19 +6,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, ArrowUpRight, Tag, Search, Inbox, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/Button";
 
-const formatPrice = (p: string) => {
-  if (!p) return "";
-  const trimmed = p.trim();
-  if (trimmed.startsWith("₹") || trimmed.toLowerCase().startsWith("rs")) {
-    return trimmed;
+const formatPrice = (p: string | number) => {
+  if (p === undefined || p === null || p === "") return "";
+  const str = String(p).trim();
+  if (str.startsWith("₹") || str.toLowerCase().startsWith("rs")) {
+    return str;
   }
-  return `₹${trimmed}`;
+  return `₹${str}`;
 };
 
-const calculateDiscount = (mrpStr?: string, sellStr?: string) => {
-  if (!mrpStr || !sellStr) return null;
-  const numMrp = parseInt(mrpStr.replace(/[^0-9]/g, ""), 10);
-  const numSell = parseInt(sellStr.replace(/[^0-9]/g, ""), 10);
+const calculateDiscount = (mrpVal?: string | number, sellVal?: string | number) => {
+  if (mrpVal === undefined || mrpVal === null || sellVal === undefined || sellVal === null) return null;
+  const numMrp = parseInt(String(mrpVal).replace(/[^0-9]/g, ""), 10);
+  const numSell = parseInt(String(sellVal).replace(/[^0-9]/g, ""), 10);
   if (isNaN(numMrp) || isNaN(numSell) || numMrp <= numSell) return null;
   const pct = Math.round(((numMrp - numSell) / numMrp) * 100);
   return `${pct}% OFF`;
@@ -218,11 +218,32 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
 
 interface WorkContentProps {
   initialProducts: any[];
+  showFilters?: boolean;
 }
 
-export function WorkContent({ initialProducts = [] }: WorkContentProps) {
+export function WorkContent({ initialProducts = [], showFilters = false }: WorkContentProps) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
+  
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
+  const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleSearchChange = (value: string) => {
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+    debounceTimeoutRef.current = setTimeout(() => {
+      setSearchQuery(value);
+    }, 400);
+  };
+
+  React.useEffect(() => {
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const conformedInitial = React.useMemo(() => {
     return initialProducts.map((item: any) => ({
@@ -266,37 +287,42 @@ export function WorkContent({ initialProducts = [] }: WorkContentProps) {
         </div>
 
         {/* Filters Panel */}
-        <div className="max-w-5xl mx-auto mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          {/* Category Tabs */}
-          <div className="flex flex-wrap gap-2.5">
-            {["All", "ups inventer & batteries", "water purifier"].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${selectedCategory === cat
-                  ? "bg-slate-900 text-white border-transparent shadow-[0_4px_15px_rgba(15,23,42,0.15)]"
-                  : "bg-white text-slate-600 border-slate-200/50 hover:text-slate-900 hover:bg-slate-50 hover:border-slate-300"
-                  }`}
-              >
-                {cat === "All" ? "All Products" : cat === "ups inventer & batteries" ? "ups inventer & batteriess" : "water purifier"}
-              </button>
-            ))}
-          </div>
+        {initialProducts.length > 0 && (
+          <div className="max-w-5xl mx-auto mb-12 flex flex-col md:flex-row md:items-center justify-between gap-6 px-4 sm:px-0">
+            {/* Left Side: Search Box */}
+            <div className="relative max-w-sm w-full">
+              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                <Search className="h-4 w-4 text-slate-400" />
+              </span>
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Search by brand name (e.g. Exide)..."
+                defaultValue=""
+                onChange={(e) => handleSearchChange(e.target.value)}
+                className="w-full h-11 pl-10 pr-4 rounded-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 transition-all bg-white shadow-[0_2px_10px_rgba(15,23,42,0.01)]"
+              />
+            </div>
 
-          {/* Search Box */}
-          <div className="relative max-w-sm w-full">
-            <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-              <Search className="h-4 w-4 text-slate-400" />
-            </span>
-            <input
-              type="text"
-              placeholder="Search by brand name (e.g. Exide)..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-11 pl-10 pr-4 rounded-full border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 text-sm text-slate-800 transition-all bg-white shadow-[0_2px_10px_rgba(15,23,42,0.01)]"
-            />
+            {/* Category Tabs (if showFilters enabled) */}
+            {showFilters && (
+              <div className="flex flex-wrap gap-2.5">
+                {["All", "ups inventer & batteries", "water purifier"].map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 border ${selectedCategory === cat
+                      ? "bg-slate-900 text-white border-transparent shadow-[0_4px_15px_rgba(15,23,42,0.15)]"
+                      : "bg-white text-slate-600 border-slate-200/50 hover:text-slate-900 hover:bg-slate-50 hover:border-slate-300"
+                      }`}
+                  >
+                    {cat === "All" ? "All Products" : cat === "ups inventer & batteries" ? "ups inventer & batteriess" : "water purifier"}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-        </div>
+        )}
 
         {/* Catalog Output Grid or Empty State */}
         {filteredProjects.length === 0 ? (
@@ -316,6 +342,9 @@ export function WorkContent({ initialProducts = [] }: WorkContentProps) {
             </p>
             <Button
               onClick={() => {
+                if (searchInputRef.current) {
+                  searchInputRef.current.value = "";
+                }
                 setSearchQuery("");
                 setSelectedCategory("All");
               }}
