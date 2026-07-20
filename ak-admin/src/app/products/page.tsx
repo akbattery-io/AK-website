@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth, isAdminEmail } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase";
+import Image from "next/image";
 import Header from "../../components/Header";
 import { toast } from "react-toastify";
 import {
@@ -580,10 +581,12 @@ export default function ProductsPage() {
                         <td className="py-4 px-6">
                           <div className="bg-slate-50 border border-slate-100/50 rounded-2xl h-18 w-24 overflow-hidden shrink-0 relative flex items-center justify-center bg-white p-1">
                             {productImages[0] ? (
-                              <img
+                              <Image
                                 src={productImages[0]}
                                 alt={product.brandname}
-                                className="object-contain max-h-full max-w-full group-hover:scale-105 transition-transform duration-300"
+                                fill
+                                sizes="96px"
+                                className="object-contain p-1 group-hover:scale-105 transition-transform duration-300"
                               />
                             ) : (
                               <span className="text-[10px] text-slate-400">No Image</span>

@@ -85,7 +85,7 @@ export default function ServicePage() {
   }, [user, loading, router]);
 
   // Customers data states
-  const [allDueCustomers, setAllDueCustomers] = useState<Customer[]>([]);
+  const [allCustomers, setAllCustomers] = useState<Customer[]>([]);
   const [customersLoading, setCustomersLoading] = useState(true);
   const [dbError, setDbError] = useState<string | null>(null);
 
@@ -96,7 +96,6 @@ export default function ServicePage() {
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
   // Modals open states
@@ -150,7 +149,7 @@ export default function ServicePage() {
     setCurrentPage(1);
   }, [serviceFilter]);
 
-  // Fetch customers directly from the customers table and filter on client side
+  // Fetch customers directly from the customers table on load/refresh
   const fetchDueCustomers = async () => {
     if (!user) return;
     setCustomersLoading(true);
@@ -164,41 +163,7 @@ export default function ServicePage() {
         .order("installation_date", { ascending: true }); // Sort by installation date oldest first
 
       if (error) throw error;
-
-      // Define date range: expired or expiring in the next 3 days
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      const threeDaysFromNow = new Date(today);
-      threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
-
-      const filtered = (data || []).filter((customer) => {
-        // 1. Check Search Match (if search has at least 3 characters)
-        if (debouncedSearchQuery.trim().length >= 3) {
-          const cleanSearch = debouncedSearchQuery.trim().toLowerCase();
-          const matchName = customer.customer_name.toLowerCase().includes(cleanSearch);
-          const matchPhone = customer.phone_number.toLowerCase().includes(cleanSearch);
-          const matchPlace = customer.place.toLowerCase().includes(cleanSearch);
-          if (!matchName && !matchPhone && !matchPlace) return false;
-        }
-
-        // 2. Check Expiry Date Range
-        const installDate = new Date(customer.installation_date);
-        const expiryDate = new Date(installDate);
-        expiryDate.setMonth(expiryDate.getMonth() + customer.maintenance_period);
-        expiryDate.setHours(0, 0, 0, 0);
-
-        if (serviceFilter === "urgent") {
-          // Only show Active customers due to expire within the next 3 days
-          return expiryDate >= today && expiryDate <= threeDaysFromNow;
-        }
-
-        // Under 'all' filter, return only those who have already expired (Inactive)
-        return customer.status === "Inactive" || expiryDate < today;
-      });
-
-      setAllDueCustomers(filtered);
-      setTotalPages(Math.ceil(filtered.length / pageSize) || 1);
+      setAllCustomers(data || []);
     } catch (err: any) {
       console.error("Error fetching due services from Supabase:", err);
       setDbError(err.message || "Failed to load service due directory.");
@@ -209,14 +174,52 @@ export default function ServicePage() {
 
   useEffect(() => {
     fetchDueCustomers();
-  }, [user, debouncedSearchQuery, serviceFilter, pageSize]);
+  }, [user]);
+
+  // Compute filtered list locally to avoid database waterfalls on search/filter changes
+  const filteredCustomers = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const threeDaysFromNow = new Date(today);
+    threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
+
+    return allCustomers.filter((customer) => {
+      // 1. Check Search Match (if search has at least 3 characters)
+      if (debouncedSearchQuery.trim().length >= 3) {
+        const cleanSearch = debouncedSearchQuery.trim().toLowerCase();
+        const matchName = customer.customer_name.toLowerCase().includes(cleanSearch);
+        const matchPhone = customer.phone_number.toLowerCase().includes(cleanSearch);
+        const matchPlace = customer.place.toLowerCase().includes(cleanSearch);
+        if (!matchName && !matchPhone && !matchPlace) return false;
+      }
+
+      // 2. Check Expiry Date Range
+      const installDate = new Date(customer.installation_date);
+      const expiryDate = new Date(installDate);
+      expiryDate.setMonth(expiryDate.getMonth() + customer.maintenance_period);
+      expiryDate.setHours(0, 0, 0, 0);
+
+      if (serviceFilter === "urgent") {
+        // Only show Active customers due to expire within the next 3 days
+        return customer.status === "Active" && expiryDate >= today && expiryDate <= threeDaysFromNow;
+      }
+
+      // Under 'all' filter, return only those who have already expired (Inactive)
+      return customer.status === "Inactive" || expiryDate < today;
+    });
+  }, [allCustomers, debouncedSearchQuery, serviceFilter]);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredCustomers.length / pageSize) || 1;
+  }, [filteredCustomers, pageSize]);
 
   // Compute display slice for current page
   const displayedCustomers = useMemo(() => {
     const from = (currentPage - 1) * pageSize;
     const to = from + pageSize;
-    return allDueCustomers.slice(from, to);
-  }, [allDueCustomers, currentPage, pageSize]);
+    return filteredCustomers.slice(from, to);
+  }, [filteredCustomers, currentPage, pageSize]);
 
 
 

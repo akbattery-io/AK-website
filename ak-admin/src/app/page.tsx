@@ -40,45 +40,28 @@ export default function Dashboard() {
     setDbError(null);
 
     try {
-      // 1. Fetch total products count
-      const { count: prodCount, error: prodErr } = await supabase
-        .from("products")
-        .select("*", { count: "exact", head: true });
+      // Execute database queries concurrently to eliminate network round-trip waterfalls
+      const [productsRes, customersRes] = await Promise.all([
+        supabase
+          .from("products")
+          .select("*", { count: "exact", head: true }),
+        supabase
+          .from("customers")
+          .select("installation_date, maintenance_period, status")
+      ]);
 
-      if (prodErr) throw prodErr;
-      setTotalProducts(prodCount || 0);
+      if (productsRes.error) throw productsRes.error;
+      if (customersRes.error) throw customersRes.error;
 
-      // 2. Fetch total customers count
-      const { count: custCount, error: custErr } = await supabase
-        .from("customers")
-        .select("*", { count: "exact", head: true });
+      setTotalProducts(productsRes.count || 0);
 
-      if (custErr) throw custErr;
-      setTotalCustomers(custCount || 0);
+      const custData = customersRes.data || [];
+      const totalCust = custData.length;
 
-      // 3. Fetch active & inactive breakdown
-      const { count: activeCount, error: activeErr } = await supabase
-        .from("customers")
-        .select("*", { count: "exact", head: true })
-        .eq("status", "Active");
-
-      if (activeErr) throw activeErr;
-      setActiveCustomers(activeCount || 0);
-
-      const { count: inactiveCount, error: inactiveErr } = await supabase
-        .from("customers")
-        .select("*", { count: "exact", head: true })
-        .eq("status", "Inactive");
-
-      if (inactiveErr) throw inactiveErr;
-      setInactiveCustomers(inactiveCount || 0);
-
-      // 4. Fetch all customers to calculate urgent upcoming expiries (due in <= 3 days)
-      const { data: custData, error: dataErr } = await supabase
-        .from("customers")
-        .select("installation_date, maintenance_period, status");
-
-      if (dataErr) throw dataErr;
+      // Compute status breakdown and upcoming services locally in a single pass
+      let activeCount = 0;
+      let inactiveCount = 0;
+      let urgentCount = 0;
 
       const today = new Date();
       today.setHours(0, 0, 0, 0);
@@ -86,19 +69,26 @@ export default function Dashboard() {
       const threeDaysFromNow = new Date(today);
       threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
 
-      let urgentCount = 0;
-      (custData || []).forEach((customer) => {
-        if (customer.status !== "Active") return;
-        const installDate = new Date(customer.installation_date);
-        const expiryDate = new Date(installDate);
-        expiryDate.setMonth(expiryDate.getMonth() + customer.maintenance_period);
-        expiryDate.setHours(0, 0, 0, 0);
+      custData.forEach((customer) => {
+        if (customer.status === "Active") {
+          activeCount++;
+          
+          const installDate = new Date(customer.installation_date);
+          const expiryDate = new Date(installDate);
+          expiryDate.setMonth(expiryDate.getMonth() + customer.maintenance_period);
+          expiryDate.setHours(0, 0, 0, 0);
 
-        if (expiryDate >= today && expiryDate <= threeDaysFromNow) {
-          urgentCount++;
+          if (expiryDate >= today && expiryDate <= threeDaysFromNow) {
+            urgentCount++;
+          }
+        } else {
+          inactiveCount++;
         }
       });
 
+      setTotalCustomers(totalCust);
+      setActiveCustomers(activeCount);
+      setInactiveCustomers(inactiveCount);
       setUrgentServices(urgentCount);
     } catch (err: any) {
       console.error("Error fetching stats from Supabase:", err);

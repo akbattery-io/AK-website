@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, ArrowUpRight, Tag, Search, Inbox, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/Button";
-import { supabase } from "../lib/supabase";
 
 const formatPrice = (p: string) => {
   if (!p) return "";
@@ -76,7 +75,7 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                   alt={`${project.brandname} ${project.category} Product - Visual ${currentImageIndex + 1}`}
                   fill
                   className="object-contain transition-transform duration-700 group-hover:scale-105 pointer-events-none"
-                  sizes="(max-w-768px) 100vw, 50vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   draggable={false}
                 />
               </motion.div>
@@ -217,44 +216,26 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
   );
 }
 
-export function WorkContent() {
+interface WorkContentProps {
+  initialProducts: any[];
+}
+
+export function WorkContent({ initialProducts = [] }: WorkContentProps) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
-  const [projects, setProjects] = React.useState<any[]>([]);
-  const [dbLoading, setDbLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    async function loadProducts() {
-      try {
-        const { data, error } = await supabase
-          .from("products")
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (error) throw error;
-
-        if (data && data.length > 0) {
-          const conformedData = data.map((item: any) => ({
-            ...item,
-            tagColor: item.category === "ups inventer & batteries"
-              ? "bg-amber-50 text-amber-700 border-amber-100/70"
-              : "bg-rose-50 text-rose-700 border-rose-100/70"
-          }));
-          setProjects(conformedData);
-        }
-      } catch (err) {
-        console.error("Failed to load live products from Supabase:", err);
-      } finally {
-        setDbLoading(false);
-      }
-    }
-
-    loadProducts();
-  }, []);
+  const conformedInitial = React.useMemo(() => {
+    return initialProducts.map((item: any) => ({
+      ...item,
+      tagColor: item.category === "ups inventer & batteries"
+        ? "bg-amber-50 text-amber-700 border-amber-100/70"
+        : "bg-rose-50 text-rose-700 border-rose-100/70"
+    }));
+  }, [initialProducts]);
 
   // Memoized filter logic
   const filteredProjects = React.useMemo(() => {
-    return projects.filter((project) => {
+    return conformedInitial.filter((project) => {
       const matchesCategory =
         selectedCategory === "All" ||
         (selectedCategory === "ups inventer & batteries" && project.category === "ups inventer & batteries") ||
@@ -266,18 +247,7 @@ export function WorkContent() {
 
       return matchesCategory && matchesSearch;
     });
-  }, [projects, searchQuery, selectedCategory]);
-
-  if (dbLoading) {
-    return (
-      <div className="py-16 sm:py-24 bg-mesh-gradient min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-3 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-slate-400 text-xs font-semibold animate-pulse">Loading catalog...</p>
-        </div>
-      </div>
-    );
-  }
+  }, [conformedInitial, searchQuery, selectedCategory]);
 
   return (
     <div className="py-16 sm:py-24 bg-mesh-gradient min-h-screen">

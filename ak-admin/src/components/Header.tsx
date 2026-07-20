@@ -2,11 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 import { LogOut, Bell } from "lucide-react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 export default function Header() {
   const router = useRouter();
@@ -59,10 +59,13 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-            <img
+            <Image
               src="/logo.png"
               alt="AK Admin Logo"
+              width={40}
+              height={40}
               className="w-10 h-10 object-contain rounded-xl"
+              priority
             />
             <div>
               <h1 className="font-serif text-lg font-black text-slate-900 tracking-tight leading-none">
@@ -141,7 +144,6 @@ export default function Header() {
           </button>
         </div>
       </div>
-      <ToastContainer />
     </header>
   );
 }

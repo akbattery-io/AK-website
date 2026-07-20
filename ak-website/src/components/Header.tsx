@@ -6,11 +6,12 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, PhoneCall } from "lucide-react";
 import { Button } from "./ui/Button";
-
+import { EnquiryModal } from "./EnquiryModal";
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const pathname = usePathname();
 
   React.useEffect(() => {
@@ -126,6 +127,7 @@ export function Header() {
             <Button
               variant="primary"
               size="md"
+              onClick={() => setIsModalOpen(true)}
               className="w-full justify-center shadow-sm"
             >
               <PhoneCall className="w-4 h-4 mr-2" />
@@ -134,6 +136,7 @@ export function Header() {
           </div>
         </div>
       </div>
+      <EnquiryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </header>
   );
 }
