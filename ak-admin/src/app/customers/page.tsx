@@ -514,7 +514,7 @@ export default function CustomersPage() {
                             <span
                               className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
                                 isInactive
-                                  ? "bg-slate-100 border-slate-200 text-slate-500"
+                                  ? "bg-rose-50 border-rose-100 text-rose-700"
                                   : "bg-emerald-50 border-emerald-100 text-emerald-700"
                               }`}
                             >
@@ -595,7 +595,7 @@ export default function CustomersPage() {
                         <span
                           className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
                             isInactive
-                              ? "bg-slate-100 border-slate-200 text-slate-500"
+                              ? "bg-rose-50 border-rose-100 text-rose-700"
                               : "bg-emerald-50 border-emerald-100 text-emerald-700"
                           }`}
                         >

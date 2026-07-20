@@ -576,7 +576,13 @@ export default function ServicePage() {
                         <td className="py-4 px-6 text-slate-500 font-semibold">{formatInstallationDate(customer.installation_date)}</td>
                         <td className="py-4 px-6 text-slate-500 font-semibold">{customer.maintenance_period} Months</td>
                         <td className="py-4 px-6">
-                          <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border bg-slate-50 border-slate-200 text-slate-500">
+                          <span
+                            className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
+                              customer.status === "Active"
+                                ? "bg-emerald-50 border-emerald-100 text-emerald-700"
+                                : "bg-rose-50 border-rose-100 text-rose-700"
+                            }`}
+                          >
                             {customer.status}
                           </span>
                         </td>
@@ -642,7 +648,13 @@ export default function ServicePage() {
                         <h4 className="text-sm font-bold text-slate-900">{customer.customer_name}</h4>
                         <p className="text-slate-400 text-xs font-semibold mt-0.5">{customer.product_name}</p>
                       </div>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide border bg-slate-50 border-slate-200 text-slate-500">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
+                          customer.status === "Active"
+                            ? "bg-emerald-50 border-emerald-100 text-emerald-700"
+                            : "bg-rose-50 border-rose-100 text-rose-700"
+                        }`}
+                      >
                         {customer.status}
                       </span>
                     </div>
