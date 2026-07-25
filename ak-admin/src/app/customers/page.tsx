@@ -718,8 +718,8 @@ export default function CustomersPage() {
 
       {/* ================= ADD CUSTOMER MODAL ================= */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 pb-20 sm:pb-6 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsAddModalOpen(false)}
               className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
@@ -727,153 +727,154 @@ export default function CustomersPage() {
               <X className="w-4 h-4" />
             </button>
 
-            <div className="mb-4 sm:mb-6 shrink-0">
+            <div className="mb-3 sm:mb-4 shrink-0">
               <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Add New AMC Customer</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Register customer service record</p>
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-md text-xs font-semibold leading-relaxed shrink-0">
+              <div className="mb-4 p-3 bg-red-50 border border-red-100 text-red-700 rounded-md text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleAddSubmit} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Customer Name *</label>
-                <input
-                  type="text"
-                  placeholder="e.g. John Doe"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleAddSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+              <div className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1 pb-4">
                 <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Phone Number *</label>
-                  <input
-                    type="tel"
-                    placeholder="e.g. 9876543210"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Place / Location Name *</label>
+                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Customer Name *</label>
                   <input
                     type="text"
-                    placeholder="e.g. Rohini, Sector 5"
-                    value={place}
-                    onChange={(e) => setPlace(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Name *</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Exide 150AH + Luminous UPS"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
+                    placeholder="e.g. John Doe"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
                     className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
                     required
                   />
                 </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Phone Number *</label>
+                    <input
+                      type="tel"
+                      placeholder="e.g. 9876543210"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Place / Location Name *</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Rohini, Sector 5"
+                      value={place}
+                      onChange={(e) => setPlace(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Name *</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Exide 150AH + Luminous UPS"
+                      value={productName}
+                      onChange={(e) => setProductName(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Installation Date *</label>
+                    <input
+                      type="date"
+                      value={installationDate}
+                      onChange={(e) => setInstallationDate(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Coordinates Section */}
+                <div className="bg-slate-50/50 p-4 border border-slate-100 rounded-md space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="block text-xs font-extrabold text-slate-650 uppercase tracking-wider">Coordinates (Location)</span>
+                    <button
+                      type="button"
+                      onClick={handleGetLocation}
+                      disabled={gettingLocation}
+                      className="h-8 px-3.5 bg-rose-50 hover:bg-rose-100/80 text-rose-600 rounded-md text-[10px] font-extrabold uppercase tracking-wider transition-all flex items-center gap-1.5 disabled:opacity-50"
+                    >
+                      {gettingLocation ? (
+                        <>
+                          <div className="w-3 h-3 border-2 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
+                          <span>Acquiring...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Navigation className="w-3 h-3" />
+                          <span>Get Current Location</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {locationError && (
+                    <div className="p-3 bg-amber-50 border border-amber-100 text-amber-700 rounded-md text-[11px] font-semibold leading-relaxed flex items-start gap-2">
+                      <span>⚠️</span>
+                      <span>{locationError}</span>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Latitude</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 13.0827"
+                        value={latitude}
+                        onChange={(e) => setLatitude(e.target.value)}
+                        className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Longitude</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 80.2707"
+                        value={longitude}
+                        onChange={(e) => setLongitude(e.target.value)}
+                        className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Installation Date *</label>
-                  <input
-                    type="date"
-                    value={installationDate}
-                    onChange={(e) => setInstallationDate(e.target.value)}
+                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Maintenance Period (Months) *</label>
+                  <select
+                    value={maintenancePeriod}
+                    onChange={(e) => setMaintenancePeriod(Number(e.target.value) as 3 | 6 | 9 | 12)}
                     className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Coordinates Section */}
-              <div className="bg-slate-50/50 p-4 border border-slate-100 rounded-md space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="block text-xs font-extrabold text-slate-650 uppercase tracking-wider">Coordinates (Location)</span>
-                  <button
-                    type="button"
-                    onClick={handleGetLocation}
-                    disabled={gettingLocation}
-                    className="h-8 px-3.5 bg-rose-50 hover:bg-rose-100/80 text-rose-600 rounded-md text-[10px] font-extrabold uppercase tracking-wider transition-all flex items-center gap-1.5 disabled:opacity-50"
                   >
-                    {gettingLocation ? (
-                      <>
-                        <div className="w-3 h-3 border-2 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
-                        <span>Acquiring...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Navigation className="w-3 h-3" />
-                        <span>Get Current Location</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                {locationError && (
-                  <div className="p-3 bg-amber-50 border border-amber-100 text-amber-700 rounded-md text-[11px] font-semibold leading-relaxed flex items-start gap-2">
-                    <span>⚠️</span>
-                    <span>{locationError}</span>
-                  </div>
-                )}
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Latitude</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. 13.0827"
-                      value={latitude}
-                      onChange={(e) => setLatitude(e.target.value)}
-                      className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Longitude</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. 80.2707"
-                      value={longitude}
-                      onChange={(e) => setLongitude(e.target.value)}
-                      className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
-                    />
-                  </div>
+                    <option value={3}>3 Months</option>
+                    <option value={6}>6 Months</option>
+                    <option value={9}>9 Months</option>
+                    <option value={12}>12 Months</option>
+                  </select>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Maintenance Period (Months) *</label>
-                <select
-                  value={maintenancePeriod}
-                  onChange={(e) => setMaintenancePeriod(Number(e.target.value) as 3 | 6 | 9 | 12)}
-                  className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
-                >
-                  <option value={3}>3 Months</option>
-                  <option value={6}>6 Months</option>
-                  <option value={9}>9 Months</option>
-                  <option value={12}>12 Months</option>
-                </select>
-              </div>
-
-
-
-              <div className="pt-2 flex items-center justify-end gap-3.5">
+              {/* Fixed Action Footer */}
+              <div className="pt-3 border-t border-slate-100 bg-white flex items-center justify-end gap-3.5 shrink-0 z-10">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
@@ -906,161 +907,162 @@ export default function CustomersPage() {
 
       {/* ================= EDIT CUSTOMER MODAL ================= */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-955/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 pb-20 sm:pb-6 bg-slate-955/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsEditModalOpen(false)}
               className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
-            <div className="mb-4 sm:mb-6 shrink-0">
+            <div className="mb-3 sm:mb-4 shrink-0">
               <h2 className="font-serif text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Edit Customer Details</h2>
               <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">Modify registered AMC credentials</p>
             </div>
 
             {formError && (
-              <div className="mb-5 p-4 bg-red-50 border border-red-100 text-red-700 rounded-md text-xs font-semibold leading-relaxed shrink-0">
+              <div className="mb-4 p-3 bg-red-50 border border-red-100 text-red-700 rounded-md text-xs font-semibold leading-relaxed shrink-0">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleEditSubmit} className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1">
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Customer Name *</label>
-                <input
-                  type="text"
-                  placeholder="e.g. John Doe"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                  required
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleEditSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+              <div className="space-y-4 sm:space-y-5 overflow-y-auto flex-1 pr-1 pb-4">
                 <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Phone Number *</label>
-                  <input
-                    type="tel"
-                    placeholder="e.g. 9876543210"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Place / Location Name *</label>
+                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Customer Name *</label>
                   <input
                     type="text"
-                    placeholder="e.g. Rohini, Sector 5"
-                    value={place}
-                    onChange={(e) => setPlace(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Name *</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Exide 150AH + Luminous UPS"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
+                    placeholder="e.g. John Doe"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
                     className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
                     required
                   />
                 </div>
 
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Phone Number *</label>
+                    <input
+                      type="tel"
+                      placeholder="e.g. 9876543210"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Place / Location Name *</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Rohini, Sector 5"
+                      value={place}
+                      onChange={(e) => setPlace(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Product Name *</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. Exide 150AH + Luminous UPS"
+                      value={productName}
+                      onChange={(e) => setProductName(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Installation Date *</label>
+                    <input
+                      type="date"
+                      value={installationDate}
+                      onChange={(e) => setInstallationDate(e.target.value)}
+                      className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Coordinates Section */}
+                <div className="bg-slate-50/50 p-4 border border-slate-100 rounded-md space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="block text-xs font-extrabold text-slate-650 uppercase tracking-wider">Coordinates (Location)</span>
+                    <button
+                      type="button"
+                      onClick={handleGetLocation}
+                      disabled={gettingLocation}
+                      className="h-8 px-3.5 bg-rose-50 hover:bg-rose-100/80 text-rose-600 rounded-md text-[10px] font-extrabold uppercase tracking-wider transition-all flex items-center gap-1.5 disabled:opacity-50"
+                    >
+                      {gettingLocation ? (
+                        <>
+                          <div className="w-3 h-3 border-2 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
+                          <span>Acquiring...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Navigation className="w-3 h-3" />
+                          <span>Get Current Location</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {locationError && (
+                    <div className="p-3 bg-amber-50 border border-amber-100 text-amber-700 rounded-md text-[11px] font-semibold leading-relaxed flex items-start gap-2">
+                      <span>⚠️</span>
+                      <span>{locationError}</span>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Latitude</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 13.0827"
+                        value={latitude}
+                        onChange={(e) => setLatitude(e.target.value)}
+                        className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Longitude</label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 80.2707"
+                        value={longitude}
+                        onChange={(e) => setLongitude(e.target.value)}
+                        className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div>
-                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Installation Date *</label>
-                  <input
-                    type="date"
-                    value={installationDate}
-                    onChange={(e) => setInstallationDate(e.target.value)}
+                  <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Maintenance Period (Months) *</label>
+                  <select
+                    value={maintenancePeriod}
+                    onChange={(e) => setMaintenancePeriod(Number(e.target.value) as 3 | 6 | 9 | 12)}
                     className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Coordinates Section */}
-              <div className="bg-slate-50/50 p-4 border border-slate-100 rounded-md space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="block text-xs font-extrabold text-slate-650 uppercase tracking-wider">Coordinates (Location)</span>
-                  <button
-                    type="button"
-                    onClick={handleGetLocation}
-                    disabled={gettingLocation}
-                    className="h-8 px-3.5 bg-rose-50 hover:bg-rose-100/80 text-rose-600 rounded-md text-[10px] font-extrabold uppercase tracking-wider transition-all flex items-center gap-1.5 disabled:opacity-50"
                   >
-                    {gettingLocation ? (
-                      <>
-                        <div className="w-3 h-3 border-2 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
-                        <span>Acquiring...</span>
-                      </>
-                    ) : (
-                      <>
-                        <Navigation className="w-3 h-3" />
-                        <span>Get Current Location</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-
-                {locationError && (
-                  <div className="p-3 bg-amber-50 border border-amber-100 text-amber-700 rounded-md text-[11px] font-semibold leading-relaxed flex items-start gap-2">
-                    <span>⚠️</span>
-                    <span>{locationError}</span>
-                  </div>
-                )}
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Latitude</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. 13.0827"
-                      value={latitude}
-                      onChange={(e) => setLatitude(e.target.value)}
-                      className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Longitude</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. 80.2707"
-                      value={longitude}
-                      onChange={(e) => setLongitude(e.target.value)}
-                      className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
-                    />
-                  </div>
+                    <option value={3}>3 Months</option>
+                    <option value={6}>6 Months</option>
+                    <option value={9}>9 Months</option>
+                    <option value={12}>12 Months</option>
+                  </select>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Maintenance Period (Months) *</label>
-                <select
-                  value={maintenancePeriod}
-                  onChange={(e) => setMaintenancePeriod(Number(e.target.value) as 3 | 6 | 9 | 12)}
-                  className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800 bg-white"
-                >
-                  <option value={3}>3 Months</option>
-                  <option value={6}>6 Months</option>
-                  <option value={9}>9 Months</option>
-                  <option value={12}>12 Months</option>
-                </select>
-              </div>
-
-
-
-              <div className="pt-2 flex items-center justify-end gap-3.5">
+              {/* Fixed Action Footer */}
+              <div className="pt-3 border-t border-slate-100 bg-white flex items-center justify-end gap-3.5 shrink-0 z-10">
                 <button
                   type="button"
                   onClick={() => setIsEditModalOpen(false)}

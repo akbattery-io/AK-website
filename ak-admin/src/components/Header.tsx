@@ -40,7 +40,7 @@ export default function Header() {
   };
 
   // Determine active tab based on current route
-  let activeTab = "dashboard";
+  let activeTab = "home";
 
   if (pathname === "/products") {
     activeTab = "products";
@@ -76,12 +76,12 @@ export default function Header() {
             <nav className="hidden lg:flex items-center gap-4 border-l border-slate-200 pl-5 h-8">
               <Link
                 href="/"
-                className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "dashboard"
+                className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "home"
                     ? "text-rose-600 border-rose-600"
                     : "text-slate-400 hover:text-slate-950"
                   }`}
               >
-                Dashboard
+                Home
               </Link>
               <Link
                 href="/products"
@@ -159,11 +159,11 @@ export default function Header() {
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/80 h-16 shadow-lg z-50 px-2 flex items-center justify-around pb-safe">
         <Link
           href="/"
-          className={`flex flex-col items-center gap-1 transition-colors ${activeTab === "dashboard" ? "text-rose-600 font-black" : "text-slate-400 hover:text-slate-900"
+          className={`flex flex-col items-center gap-1 transition-colors ${activeTab === "home" ? "text-rose-600 font-black" : "text-slate-400 hover:text-slate-900"
             }`}
         >
-          <Home className={`w-5 h-5 ${activeTab === "dashboard" ? "text-rose-600" : "text-slate-400"}`} />
-          <span className="text-[9px] font-extrabold uppercase tracking-wider">Dashboard</span>
+          <Home className={`w-5 h-5 ${activeTab === "home" ? "text-rose-600" : "text-slate-400"}`} />
+          <span className="text-[9px] font-extrabold uppercase tracking-wider">Home</span>
         </Link>
 
         <Link

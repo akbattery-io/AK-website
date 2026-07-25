@@ -126,7 +126,7 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
 
         {/* Title */}
-        <section className="mb-8 text-center sm:text-left">
+        <section className="mb-8 sm:text-left">
           <h2 className="text-3xl font-black text-slate-900 font-serif tracking-tight">Dashboard</h2>
           <p className="text-sm text-slate-500 mt-1 font-medium">Quick overview of inventory, customer directory, and upcoming service schedules.</p>
         </section>
