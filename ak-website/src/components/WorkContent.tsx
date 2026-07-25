@@ -32,7 +32,7 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
       : [];
 
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-  const discountBadge = calculateDiscount(project.mrp, project.selling_price || project.price);
+  const discountBadge = calculateDiscount(project.mrp, project.price);
 
   return (
     <motion.div
@@ -169,11 +169,11 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
             </ul>
           )}
 
-          {/* Price Tag with MRP, Selling Price, and Discount Badge */}
+          {/* Price Tag with MRP, Price, and Discount Badge */}
           <div className="flex items-center gap-2.5 flex-wrap pt-1.5 select-all">
             <div className="flex items-baseline gap-1">
               <span className="text-3xl font-black text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors duration-300">
-                {formatPrice(project.selling_price || project.price)}
+                {formatPrice(project.price)}
               </span>
             </div>
             {project.mrp && (
@@ -194,7 +194,7 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
           <a
             href={`https://wa.me/918870534049?text=${encodeURIComponent(
               `Hello, I would like to enquire about the *${project.brandname}* (${project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"
-              }) priced at *${formatPrice(project.selling_price || project.price)}*.`
+              }) priced at *${formatPrice(project.price)}*.`
             )}`}
             target="_blank"
             rel="noopener noreferrer"

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useAuth, isAdminEmail } from "@/context/AuthContext";
 import { supabase } from "@/lib/supabase";
 import Header from "../../components/Header";
+import { parseCoordinates } from "@/types/customerMap";
 import {
   Plus,
   Search,
@@ -30,8 +31,9 @@ interface Customer {
   customer_name: string;
   phone_number: string;
   place: string;
-  latitude: number | null;
-  longitude: number | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  location?: any;
   installation_date: string;
   product_name: string;
   status: "Active" | "Inactive";
@@ -198,8 +200,8 @@ export default function CustomersPage() {
     setPlace(customer.place);
     setProductName(customer.product_name);
     setInstallationDate(customer.installation_date);
-    setLatitude(customer.latitude !== null ? customer.latitude.toString() : "");
-    setLongitude(customer.longitude !== null ? customer.longitude.toString() : "");
+    setLatitude(customer.latitude !== null && customer.latitude !== undefined ? customer.latitude.toString() : "");
+    setLongitude(customer.longitude !== null && customer.longitude !== undefined ? customer.longitude.toString() : "");
     setMaintenancePeriod((customer.maintenance_period as 3 | 6 | 9 | 12) || 3);
     setRemark(customer.remark || "");
     setIsEditModalOpen(true);
@@ -544,7 +546,7 @@ export default function CustomersPage() {
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
-                              {customer.latitude && customer.longitude ? (
+                              {customer.latitude !== null && customer.latitude !== undefined && customer.longitude !== null && customer.longitude !== undefined ? (
                                 <a
                                   href={`https://www.google.com/maps?q=${customer.latitude},${customer.longitude}`}
                                   target="_blank"
@@ -832,13 +834,25 @@ export default function CustomersPage() {
                 )}
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white border border-slate-200/80 rounded-md p-3 flex flex-col">
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Latitude</span>
-                    <span className="text-sm font-semibold text-slate-700 mt-0.5">{latitude || "Not Acquired"}</span>
+                  <div>
+                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Latitude</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 13.0827"
+                      value={latitude}
+                      onChange={(e) => setLatitude(e.target.value)}
+                      className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
+                    />
                   </div>
-                  <div className="bg-white border border-slate-200/80 rounded-md p-3 flex flex-col">
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Longitude</span>
-                    <span className="text-sm font-semibold text-slate-700 mt-0.5">{longitude || "Not Acquired"}</span>
+                  <div>
+                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Longitude</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 80.2707"
+                      value={longitude}
+                      onChange={(e) => setLongitude(e.target.value)}
+                      className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
+                    />
                   </div>
                 </div>
               </div>
@@ -1007,13 +1021,25 @@ export default function CustomersPage() {
                 )}
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white border border-slate-200/80 rounded-md p-3 flex flex-col">
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Latitude</span>
-                    <span className="text-sm font-semibold text-slate-700 mt-0.5">{latitude || "Not Acquired"}</span>
+                  <div>
+                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Latitude</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 13.0827"
+                      value={latitude}
+                      onChange={(e) => setLatitude(e.target.value)}
+                      className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
+                    />
                   </div>
-                  <div className="bg-white border border-slate-200/80 rounded-md p-3 flex flex-col">
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Longitude</span>
-                    <span className="text-sm font-semibold text-slate-700 mt-0.5">{longitude || "Not Acquired"}</span>
+                  <div>
+                    <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Longitude</label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 80.2707"
+                      value={longitude}
+                      onChange={(e) => setLongitude(e.target.value)}
+                      className="w-full h-10 px-3 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-xs text-slate-800 bg-white"
+                    />
                   </div>
                 </div>
               </div>
@@ -1154,25 +1180,7 @@ export default function CustomersPage() {
         </div>
       )}
 
-      {/* Mobile Bottom Navigation Bar (Instagram style) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-200/80 h-16 shadow-lg z-50 px-6 flex items-center justify-around pb-safe">
-        <Link href="/" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-950 transition-colors">
-          <Home className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Dashboard</span>
-        </Link>
-        <Link href="/products" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-950 transition-colors">
-          <Package className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Products</span>
-        </Link>
-        <Link href="/customers" className="flex flex-col items-center gap-1 text-rose-600">
-          <Users className="w-5 h-5 text-rose-600" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Customers</span>
-        </Link>
-        <Link href="/service" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-950 transition-colors">
-          <Wrench className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Service</span>
-        </Link>
-      </div>
+
 
       {/* Floating Add Customer Button */}
       <button

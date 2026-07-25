@@ -39,9 +39,8 @@ interface Product {
   brandname: string;
   location?: string; // legacy support (optional since column is removed)
   date?: string; // legacy support (optional since column is removed)
-  price: string; // legacy support (populated with selling_price)
+  price: string;
   mrp?: string;
-  selling_price?: string;
   description?: string;
 }
 
@@ -117,7 +116,7 @@ export default function ProductsPage() {
   const [brandName, setBrandName] = useState("");
   const [category, setCategory] = useState("ups inventer & batteries");
   const [mrp, setMrp] = useState("");
-  const [sellingPrice, setSellingPrice] = useState("");
+  const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
 
   // Multiple files upload state
@@ -159,7 +158,7 @@ export default function ProductsPage() {
     setBrandName("");
     setCategory("ups inventer & batteries");
     setMrp("");
-    setSellingPrice("");
+    setPrice("");
     setDescription("");
     setImageFiles([]);
     setImagePreviews([]);
@@ -218,7 +217,7 @@ export default function ProductsPage() {
     setFormSubmitting(true);
     setFormError(null);
 
-    if (!brandName || !mrp || !sellingPrice) {
+    if (!brandName || !mrp || !price) {
       setFormError("All fields (except description) are required.");
       setFormSubmitting(false);
       return;
@@ -241,9 +240,8 @@ export default function ProductsPage() {
         {
           brandname: brandName,
           category,
-          price: sellingPrice, // legacy support (populated with selling price)
+          price,
           mrp,
-          selling_price: sellingPrice,
           image: uploadedUrls[0] || "", // legacy support (first image URL)
           images: uploadedUrls,
           description,
@@ -272,7 +270,7 @@ export default function ProductsPage() {
     setBrandName(product.brandname);
     setCategory(product.category);
     setMrp(product.mrp || "");
-    setSellingPrice(product.selling_price || product.price || "");
+    setPrice(product.price || "");
     setDescription(product.description || "");
 
     // Existing images can be retrieved from images array or single fallback image URL
@@ -295,7 +293,7 @@ export default function ProductsPage() {
     setFormSubmitting(true);
     setFormError(null);
 
-    if (!brandName || !mrp || !sellingPrice) {
+    if (!brandName || !mrp || !price) {
       setFormError("All fields (except description) are required.");
       setFormSubmitting(false);
       return;
@@ -322,9 +320,8 @@ export default function ProductsPage() {
         .update({
           brandname: brandName,
           category,
-          price: sellingPrice, // legacy support (populated with selling price)
+          price,
           mrp,
-          selling_price: sellingPrice,
           image: finalImageUrls[0] || "", // legacy support
           images: finalImageUrls,
           description,
@@ -544,7 +541,7 @@ export default function ProductsPage() {
                     <th className="py-4 px-6 text-xs font-extrabold text-slate-400 uppercase tracking-wider">Brand Partner</th>
                     <th className="py-4 px-6 text-xs font-extrabold text-slate-400 uppercase tracking-wider">Category</th>
                     <th className="py-4 px-6 text-xs font-extrabold text-slate-400 uppercase tracking-wider">M.R.P.</th>
-                    <th className="py-4 px-6 text-xs font-extrabold text-slate-400 uppercase tracking-wider">Selling Price</th>
+                    <th className="py-4 px-6 text-xs font-extrabold text-slate-400 uppercase tracking-wider">Price</th>
                     <th className="py-4 px-6 text-xs font-extrabold text-slate-400 uppercase tracking-wider text-right">Actions</th>
                   </tr>
                 </thead>
@@ -605,7 +602,7 @@ export default function ProductsPage() {
                         </td>
                         <td className="py-4 px-6">
                           <span className="text-lg font-black text-slate-900 select-all group-hover:text-rose-600 transition-colors">
-                            {product.selling_price || product.price}
+                            {product.price}
                           </span>
                         </td>
                         <td className="py-4 px-6 text-right">
@@ -739,12 +736,12 @@ export default function ProductsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Selling Price</label>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Price</label>
                     <input
                       type="text"
                       placeholder="e.g. ₹12999"
-                      value={sellingPrice}
-                      onChange={(e) => setSellingPrice(e.target.value)}
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
                       className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
                       required
                     />
@@ -895,12 +892,12 @@ export default function ProductsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Selling Price</label>
+                    <label className="block text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-2">Price</label>
                     <input
                       type="text"
                       placeholder="e.g. ₹12,999"
-                      value={sellingPrice}
-                      onChange={(e) => setSellingPrice(e.target.value)}
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
                       className="w-full h-11 px-3.5 rounded-md border border-slate-200 focus:outline-none focus:ring-2 focus:ring-rose-500/10 focus:border-rose-500 text-sm text-slate-800"
                       required
                     />
@@ -1001,25 +998,7 @@ export default function ProductsPage() {
         </div>
       )}
 
-      {/* Mobile Bottom Navigation Bar (Instagram style) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-200/80 h-16 shadow-lg z-50 px-6 flex items-center justify-around pb-safe">
-        <Link href="/" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-955 transition-colors">
-          <Home className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Dashboard</span>
-        </Link>
-        <Link href="/products" className="flex flex-col items-center gap-1 text-rose-600">
-          <Package className="w-5 h-5 text-rose-600" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Products</span>
-        </Link>
-        <Link href="/customers" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-955 transition-colors">
-          <Users className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Customers</span>
-        </Link>
-        <Link href="/service" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-950 transition-colors">
-          <Wrench className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Service</span>
-        </Link>
-      </div>
+
 
       {/* Floating Add Product Button */}
       <button

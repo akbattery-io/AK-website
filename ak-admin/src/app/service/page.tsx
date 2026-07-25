@@ -1180,25 +1180,6 @@ export default function ServicePage() {
         </div>
       )}
 
-      {/* Mobile Bottom Navigation Bar (Instagram style) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-200/80 h-16 shadow-lg z-50 px-6 flex items-center justify-around pb-safe">
-        <Link href="/" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-950 transition-colors">
-          <Home className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Dashboard</span>
-        </Link>
-        <Link href="/products" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-950 transition-colors">
-          <Package className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Products</span>
-        </Link>
-        <Link href="/customers" className="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-950 transition-colors">
-          <Users className="w-5 h-5 text-slate-400" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Customers</span>
-        </Link>
-        <Link href="/service" className="flex flex-col items-center gap-1 text-rose-600">
-          <Wrench className="w-5 h-5 text-rose-600" />
-          <span className="text-[10px] font-extrabold uppercase tracking-wider">Service</span>
-        </Link>
-      </div>
     </div>
   );
 }
