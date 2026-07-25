@@ -40,3 +40,8 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Hide Leaflet zoom control buttons cleanly without breaking container init */
+.leaflet-control-zoom {
+  display: none !important;
+}

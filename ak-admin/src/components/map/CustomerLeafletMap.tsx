@@ -67,7 +67,6 @@ export default function CustomerLeafletMap({
       <MapContainer
         center={defaultCenter}
         zoom={defaultZoom}
-        zoomControl={false}
         scrollWheelZoom={true}
         className="w-full h-full min-h-[520px]"
       >

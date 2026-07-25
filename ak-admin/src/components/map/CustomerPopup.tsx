@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
-import { MapPin, Phone, Calendar, Wrench, ExternalLink, Copy, Check, Eye, Edit } from "lucide-react";
+import { MapPin, Phone, Calendar, Wrench, ExternalLink, Copy, Check, MessageSquare } from "lucide-react";
 import { CustomerMapItem } from "@/types/customerMap";
 
 interface CustomerPopupProps {
@@ -23,6 +22,9 @@ export default function CustomerPopup({ customer }: CustomerPopupProps) {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const cleanPhone = customer.phone_number ? customer.phone_number.replace(/\D/g, "") : "";
+  const whatsappUrl = cleanPhone.length === 10 ? `https://wa.me/91${cleanPhone}` : `https://wa.me/${cleanPhone}`;
 
   const getStatusBadge = (status: CustomerMapItem["status"]) => {
     switch (status) {
@@ -77,21 +79,23 @@ export default function CustomerPopup({ customer }: CustomerPopupProps) {
 
       {/* Action Buttons */}
       <div className="pt-2 border-t border-slate-100 grid grid-cols-2 gap-1.5">
-        <Link
-          href={`/customers`}
-          className="h-8 px-2 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 rounded text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 transition-all"
+        <a
+          href={`tel:${customer.phone_number}`}
+          className="h-8 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 transition-all"
         >
-          <Eye className="w-3 h-3 text-slate-500" />
-          <span>View</span>
-        </Link>
+          <Phone className="w-3 h-3 text-emerald-600" />
+          <span>Call</span>
+        </a>
 
-        <Link
-          href={`/customers`}
-          className="h-8 px-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 transition-all"
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="h-8 px-2 bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 rounded text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 transition-all"
         >
-          <Edit className="w-3 h-3 text-rose-600" />
-          <span>Edit</span>
-        </Link>
+          <MessageSquare className="w-3 h-3 text-green-600" />
+          <span>WhatsApp</span>
+        </a>
 
         {hasCoords && (
           <>
@@ -99,16 +103,16 @@ export default function CustomerPopup({ customer }: CustomerPopupProps) {
               href={`https://www.google.com/maps?q=${lat},${lng}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="h-8 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 transition-all col-span-2 sm:col-span-1"
+              className="h-8 px-2 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 transition-all"
             >
-              <ExternalLink className="w-3 h-3 text-emerald-600" />
+              <ExternalLink className="w-3 h-3 text-blue-600" />
               <span>Google Maps</span>
             </a>
 
             <button
               type="button"
               onClick={handleCopyCoords}
-              className="h-8 px-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 transition-all col-span-2 sm:col-span-1"
+              className="h-8 px-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 rounded text-[10px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1 transition-all"
             >
               {copied ? (
                 <>
