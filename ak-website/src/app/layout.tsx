@@ -36,8 +36,15 @@ export const metadata: Metadata = {
   openGraph: {
     title: "AK Batteries & RO Solutions | Kannamangalam",
     description: "Fast, reliable sales, doorstep installation, maintenance and repair for batteries, inverters and RO water purifiers in Kannamangalam & surrounding areas.",
-    url: "https://akbattery.io",
     siteName: "AK Batteries & RO Solutions",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AK Batteries & RO Solutions Kannamangalam",
+      },
+    ],
     locale: "en_IN",
     type: "website",
   },
@@ -45,6 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AK Batteries & RO Solutions | Kannamangalam",
     description: "Fast, reliable sales & doorstep service for batteries, inverters & RO water purifiers in Kannamangalam.",
+    images: ["/images/og-image.png"],
   },
   icons: {
     icon: "/logo.svg",
