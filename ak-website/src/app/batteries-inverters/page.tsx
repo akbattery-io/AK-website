@@ -5,7 +5,7 @@ import { WorkContent } from "@/components/WorkContent";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
 
-export const revalidate = 3600; // ISR cache revalidation hourly
+export const revalidate = 0; // Real-time Vercel page updates without CDN cache delay
 
 export const metadata: Metadata = {
   title: "Inverter Batteries & UPS | AK Batteries & RO Solutions",
