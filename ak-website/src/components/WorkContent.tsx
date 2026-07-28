@@ -3,8 +3,9 @@
 import * as React from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, MapPin, ArrowUpRight, Tag, Search, Inbox, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, MapPin, ArrowUpRight, Tag, Search, Inbox, ChevronLeft, ChevronRight, Eye } from "lucide-react";
 import { Button } from "./ui/Button";
+import { ProductDetailModal } from "./ProductDetailModal";
 
 const formatPrice = (p: string | number) => {
   if (p === undefined || p === null || p === "") return "";
@@ -24,14 +25,13 @@ const calculateDiscount = (mrpVal?: string | number, sellVal?: string | number) 
   return `${pct}% OFF`;
 };
 
-function ProductCard({ project, idx }: { project: any; idx: number }) {
+function ProductCard({ project, idx, onSelectProduct }: { project: any; idx: number; onSelectProduct: (p: any) => void }) {
   const productImages = project.images && project.images.length > 0
     ? project.images
     : project.image
       ? [project.image]
       : [];
 
-  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
   const discountBadge = calculateDiscount(project.mrp, project.price);
 
   return (
@@ -39,107 +39,46 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
       initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.4, delay: Math.min(idx * 0.08, 0.4) }}
-      className="group bg-white rounded-2xl p-5 shadow-[0_4px_25px_rgba(15,23,42,0.03)] border border-slate-200/80 hover:shadow-[0_20px_50px_rgba(15,23,42,0.08)] hover:border-slate-300 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden"
+      transition={{ duration: 0.4, delay: Math.min(idx * 0.06, 0.4) }}
+      onClick={() => onSelectProduct(project)}
+      className="group bg-white rounded-2xl p-4 sm:p-5 shadow-[0_4px_25px_rgba(15,23,42,0.03)] border border-slate-200/80 hover:shadow-[0_20px_50px_rgba(15,23,42,0.08)] hover:border-rose-200 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full relative cursor-pointer overflow-hidden"
     >
-      {/* Product Image Frame (Uniform fixed aspect-ratio & soft bg frame) */}
-      <div className="bg-slate-50/80 rounded-xl aspect-[4/3] w-full overflow-hidden relative flex items-center justify-center p-3 border border-slate-100 mb-4 group-hover:bg-slate-100/60 transition-colors duration-300">
+      {/* Product Image Frame (Clean Amazon Style Viewport) */}
+      <div className="bg-slate-50/80 rounded-xl aspect-[4/3] w-full overflow-hidden relative flex items-center justify-center p-3 border border-slate-100 mb-3 group-hover:bg-slate-100/60 transition-colors duration-300">
         {productImages.length > 0 ? (
           <div className="relative w-full h-full select-none">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentImageIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="relative w-full h-full cursor-grab active:cursor-grabbing touch-pan-y"
-                {...(productImages.length > 1
-                  ? {
-                    drag: "x",
-                    dragConstraints: { left: 0, right: 0 },
-                    dragElastic: 0.6,
-                    onDragEnd: (_e, info) => {
-                      const swipeThreshold = 50;
-                      if (info.offset.x < -swipeThreshold) {
-                        setCurrentImageIndex((prev) => (prev === productImages.length - 1 ? 0 : prev + 1));
-                      } else if (info.offset.x > swipeThreshold) {
-                        setCurrentImageIndex((prev) => (prev === 0 ? productImages.length - 1 : prev - 1));
-                      }
-                    },
-                  }
-                  : {})}
-              >
-                <Image
-                  src={productImages[currentImageIndex]}
-                  alt={`${project.brandname} ${project.category} Product - Visual ${currentImageIndex + 1}`}
-                  fill
-                  priority
-                  loading="eager"
-                  className="object-contain drop-shadow-sm transition-transform duration-500 group-hover:scale-105 pointer-events-none"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  draggable={false}
-                />
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Navigation Arrows */}
-            {productImages.length > 1 && (
-              <>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setCurrentImageIndex((prev) => (prev === 0 ? productImages.length - 1 : prev - 1));
-                  }}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 hover:bg-white text-slate-800 flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 cursor-pointer"
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setCurrentImageIndex((prev) => (prev === productImages.length - 1 ? 0 : prev + 1));
-                  }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 hover:bg-white text-slate-800 flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 cursor-pointer"
-                  aria-label="Next image"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </>
-            )}
-
-            {/* Slide Dot Indicators */}
-            {productImages.length > 1 && (
-              <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 bg-slate-900/60 backdrop-blur-md px-2 py-0.5 rounded-full shadow-sm">
-                {productImages.map((_: string, i: number) => (
-                  <button
-                    key={i}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setCurrentImageIndex(i);
-                    }}
-                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${currentImageIndex === i ? "bg-rose-500 w-3.5" : "bg-white/50 hover:bg-white w-1.5"}`}
-                    aria-label={`Go to slide ${i + 1}`}
-                  />
-                ))}
-              </div>
-            )}
+            <Image
+              src={productImages[0]}
+              alt={`${project.brandname} ${project.category} Product`}
+              fill
+              priority
+              loading="eager"
+              className="object-contain drop-shadow-sm transition-transform duration-500 group-hover:scale-105 pointer-events-none"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
         ) : (
-          <span className="text-xs text-slate-400 font-semibold">No Image Available</span>
+          <span className="text-xs text-slate-400 font-semibold">No Image</span>
         )}
+
+        {discountBadge && (
+          <span className="absolute top-2.5 left-2.5 bg-emerald-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm select-none">
+            {discountBadge}
+          </span>
+        )}
+
+        <span className="absolute bottom-2.5 right-2.5 bg-white/90 backdrop-blur-sm text-slate-700 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+          <Eye className="w-3 h-3 text-rose-600" />
+          Quick View
+        </span>
       </div>
 
-      {/* Main Content Info Wrapper (flex-1 so bottom area stays aligned) */}
-      <div className="flex flex-col flex-1 justify-between">
-        <div className="space-y-3">
-          {/* Category Pill Tag */}
+      {/* Main Content Details */}
+      <div className="flex flex-col flex-1 justify-between gap-3">
+        <div className="space-y-2">
+          {/* Category Tag */}
           <div className="flex items-center justify-between">
-            <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border select-none ${
+            <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider border select-none ${
               project.category === "ups inventer & batteries"
                 ? "bg-amber-50 text-amber-700 border-amber-200/80"
                 : "bg-rose-50 text-rose-700 border-rose-200/80"
@@ -147,72 +86,42 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
               {project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"}
             </span>
 
-            <span className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-rose-50 group-hover:text-rose-600 transition-all duration-300 select-none">
+            <span className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-rose-50 group-hover:text-rose-600 transition-all duration-300 select-none">
               <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </div>
 
           {/* Product Brand Title */}
-          <h3 className="text-xl font-extrabold text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors line-clamp-1">
+          <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors line-clamp-2 leading-snug">
             {project.brandname}
           </h3>
-
-          {/* Product Feature Bullets */}
-          {project.description && (
-            <ul className="text-xs text-slate-600 font-medium leading-relaxed space-y-1.5 pt-1">
-              {project.description
-                .split(",")
-                .map((item: string) => item.trim())
-                .filter(Boolean)
-                .map((item: string, index: number) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5" />
-                    <span className="line-clamp-2">{item}</span>
-                  </li>
-                ))}
-            </ul>
-          )}
         </div>
 
-        {/* Pinned Bottom Footer: Price Tag & WhatsApp Button (ALWAYS ALIGNED) */}
-        <div className="mt-6 pt-4 border-t border-slate-100 space-y-3">
-          {/* Price Row */}
-          <div className="flex items-baseline justify-between gap-2">
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors">
-                {formatPrice(project.price)}
-              </span>
-              {project.mrp && (
-                <span className="text-xs font-semibold text-slate-400 line-through">
-                  M.R.P: {formatPrice(project.mrp)}
-                </span>
-              )}
-            </div>
-            {discountBadge && (
-              <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider select-none">
-                {discountBadge}
+        {/* Pinned Price & CTA Footer */}
+        <div className="mt-4 pt-3 border-t border-slate-100 space-y-3">
+          {/* Price Block */}
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <span className="text-2xl font-black text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors">
+              {formatPrice(project.price)}
+            </span>
+            {project.mrp && (
+              <span className="text-xs font-semibold text-slate-400 line-through">
+                M.R.P: {formatPrice(project.mrp)}
               </span>
             )}
           </div>
 
-          {/* WhatsApp Enquiry Button */}
-          <a
-            href={`https://wa.me/918870534049?text=${encodeURIComponent(
-              `Hello, I would like to enquire about the *${project.brandname}* (${project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"}) priced at *${formatPrice(project.price)}*.`
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white rounded-xl py-3 px-4 text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer select-none"
+          {/* View Details / Order Button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelectProduct(project);
+            }}
+            className="w-full bg-slate-900 hover:bg-slate-800 active:scale-[0.98] text-white rounded-xl py-2.5 px-4 text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-sm cursor-pointer"
           >
-            <svg
-              className="w-4 h-4 fill-current"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.458L0 24zm6.59-4.846c1.6.95 3.16 1.448 4.787 1.449 5.518 0 10.008-4.487 10.01-10.007.001-2.673-1.03-5.188-2.903-7.062C16.618 1.66 14.11 1.628 11.999 1.628 6.48 1.628 1.99 6.115 1.988 11.635c0 1.674.437 3.313 1.272 4.773L2.24 21.05l4.407-1.156zM17.07 14.04c-.274-.137-1.62-.8-1.87-.89-.25-.09-.43-.137-.61.137-.18.274-.69.89-.846 1.072-.156.18-.313.2-.587.06-.275-.135-1.16-.427-2.21-1.365-.817-.73-1.37-1.63-1.53-1.905-.16-.275-.016-.423.12-.56.124-.124.275-.32.413-.48.137-.16.183-.275.275-.457.09-.18.046-.34-.02-.48-.069-.137-.61-1.486-.838-2.036-.223-.53-.45-.457-.61-.465-.16-.008-.344-.01-.53-.01-.18 0-.477.067-.73.343-.25.274-.96.94-.96 2.29 0 1.35.98 2.65 1.117 2.83.137.18 1.93 2.946 4.675 4.13.654.28 1.164.448 1.56.574.657.21 1.256.18 1.73.1.527-.08 1.62-.66 1.85-1.3.23-.64.23-1.187.16-1.3-.07-.11-.253-.18-.527-.315z" />
-            </svg>
-            Enquire on WhatsApp
-          </a>
+            <Eye className="w-4 h-4 text-rose-400" />
+            View Details & Order
+          </button>
         </div>
       </div>
     </motion.div>
@@ -227,6 +136,7 @@ interface WorkContentProps {
 export function WorkContent({ initialProducts = [], showFilters = false }: WorkContentProps) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
+  const [selectedProductModal, setSelectedProductModal] = React.useState<any | null>(null);
 
   const searchInputRef = React.useRef<HTMLInputElement>(null);
   const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
@@ -250,24 +160,28 @@ export function WorkContent({ initialProducts = [], showFilters = false }: WorkC
 
   const conformedInitial = React.useMemo(() => {
     return initialProducts.map((item: any) => ({
-      ...item,
-      tagColor: item.category === "ups inventer & batteries"
-        ? "bg-amber-50 text-amber-700 border-amber-100/70"
-        : "bg-rose-50 text-rose-700 border-rose-100/70"
+      brandname: item.brandname || item.name || "Product",
+      category: (item.category || "").toLowerCase(),
+      description: item.description || "",
+      price: item.price || item.selling_price || 0,
+      mrp: item.mrp || 0,
+      images: Array.isArray(item.images) ? item.images : item.image ? [item.image] : [],
+      image: item.image || (Array.isArray(item.images) && item.images[0]) || "",
+      created_at: item.created_at
     }));
   }, [initialProducts]);
 
   // Memoized filter logic
   const filteredProjects = React.useMemo(() => {
-    return conformedInitial.filter((project) => {
+    return conformedInitial.filter((project: any) => {
       const matchesCategory =
         selectedCategory === "All" ||
-        (selectedCategory === "ups inventer & batteries" && project.category === "ups inventer & batteries") ||
-        (selectedCategory === "water purifier" && project.category === "water purifier");
+        project.category === selectedCategory.toLowerCase();
 
-      const matchesSearch = project.brandname
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+      const matchesSearch =
+        !searchQuery.trim() ||
+        project.brandname.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase());
 
       return matchesCategory && matchesSearch;
     });
@@ -319,7 +233,7 @@ export function WorkContent({ initialProducts = [], showFilters = false }: WorkC
                       : "bg-white text-slate-600 border-slate-200/50 hover:text-slate-900 hover:bg-slate-50 hover:border-slate-300"
                       }`}
                   >
-                    {cat === "All" ? "All Products" : cat === "ups inventer & batteries" ? "ups inventer & batteriess" : "water purifier"}
+                    {cat === "All" ? "All Products" : cat === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifiers"}
                   </button>
                 ))}
               </div>
@@ -360,11 +274,23 @@ export function WorkContent({ initialProducts = [], showFilters = false }: WorkC
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {filteredProjects.map((project, idx) => (
-              <ProductCard key={idx} project={project} idx={idx} />
+              <ProductCard
+                key={idx}
+                project={project}
+                idx={idx}
+                onSelectProduct={(p) => setSelectedProductModal(p)}
+              />
             ))}
           </div>
         )}
       </div>
+
+      {/* Amazon Style Product Detail Modal */}
+      <ProductDetailModal
+        product={selectedProductModal}
+        isOpen={!!selectedProductModal}
+        onClose={() => setSelectedProductModal(null)}
+      />
     </div>
   );
 }
