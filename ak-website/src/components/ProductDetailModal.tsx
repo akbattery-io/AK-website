@@ -92,11 +92,10 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
             {/* Header Close Button */}
             <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-white/90 backdrop-blur-md border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border select-none ${
-                  product.category === "ups inventer & batteries"
-                    ? "bg-amber-50 text-amber-700 border-amber-200"
-                    : "bg-rose-50 text-rose-700 border-rose-200"
-                }`}>
+                <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border select-none ${product.category === "ups inventer & batteries"
+                  ? "bg-amber-50 text-amber-700 border-amber-200"
+                  : "bg-rose-50 text-rose-700 border-rose-200"
+                  }`}>
                   {product.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"}
                 </span>
                 <span className="text-xs text-slate-400 font-semibold hidden sm:inline-block">
@@ -116,7 +115,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
             {/* Scrollable Body Content */}
             <div className="overflow-y-auto p-6 sm:p-8 flex-1">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
-                
+
                 {/* Left Column: Multi-Image Gallery */}
                 <div className="flex flex-col gap-4">
                   {/* Main Display Image */}
@@ -151,11 +150,10 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                         <button
                           key={idx}
                           onClick={() => setSelectedImageIndex(idx)}
-                          className={`relative w-16 h-16 rounded-xl border-2 overflow-hidden flex-shrink-0 bg-slate-50 transition-all duration-200 cursor-pointer ${
-                            selectedImageIndex === idx
-                              ? "border-rose-600 ring-2 ring-rose-500/20 scale-105"
-                              : "border-slate-200 hover:border-slate-300 opacity-70 hover:opacity-100"
-                          }`}
+                          className={`relative w-16 h-16 rounded-xl border-2 overflow-hidden flex-shrink-0 bg-slate-50 transition-all duration-200 cursor-pointer ${selectedImageIndex === idx
+                            ? "border-rose-600 ring-2 ring-rose-500/20 scale-105"
+                            : "border-slate-200 hover:border-slate-300 opacity-70 hover:opacity-100"
+                            }`}
                         >
                           <Image
                             src={img}
@@ -177,15 +175,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                     <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-tight">
                       {product.brandname}
                     </h2>
-                    <div className="flex items-center gap-2 mt-2">
-                      <div className="flex items-center text-amber-500">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-current" />
-                        ))}
-                      </div>
-                      <span className="text-xs font-bold text-slate-700">4.9</span>
-                      <span className="text-xs text-slate-400 font-medium">• Verified Product</span>
-                    </div>
+
                   </div>
 
                   {/* Price Box */}
@@ -241,40 +231,40 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                       </ul>
                     </div>
                   )}
-
-                  {/* CTA Actions */}
-                  <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100 mt-2">
-                    <a
-                      href={`https://wa.me/918870534049?text=${encodeURIComponent(
-                        `Hello, I would like to order the *${product.brandname}* (${
-                          product.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"
-                        }) priced at *${formatPrice(product.price)}*.`
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white rounded-xl py-3.5 px-5 text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
-                    >
-                      <svg
-                        className="w-4 h-4 fill-current"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.458L0 24zm6.59-4.846c1.6.95 3.16 1.448 4.787 1.449 5.518 0 10.008-4.487 10.01-10.007.001-2.673-1.03-5.188-2.903-7.062C16.618 1.66 14.11 1.628 11.999 1.628 6.48 1.628 1.99 6.115 1.988 11.635c0 1.674.437 3.313 1.272 4.773L2.24 21.05l4.407-1.156zM17.07 14.04c-.274-.137-1.62-.8-1.87-.89-.25-.09-.43-.137-.61.137-.18.274-.69.89-.846 1.072-.156.18-.313.2-.587.06-.275-.135-1.16-.427-2.21-1.365-.817-.73-1.37-1.63-1.53-1.905-.16-.275-.016-.423.12-.56.124-.124.275-.32.413-.48.137-.16.183-.275.275-.457.09-.18.046-.34-.02-.48-.069-.137-.61-1.486-.838-2.036-.223-.53-.45-.457-.61-.465-.16-.008-.344-.01-.53-.01-.18 0-.477.067-.73.343-.25.274-.96.94-.96 2.29 0 1.35.98 2.65 1.117 2.83.137.18 1.93 2.946 4.675 4.13.654.28 1.164.448 1.56.574.657.21 1.256.18 1.73.1.527-.08 1.62-.66 1.85-1.3.23-.64.23-1.187.16-1.3-.07-.11-.253-.18-.527-.315z" />
-                      </svg>
-                      Order on WhatsApp
-                    </a>
-
-                    <a
-                      href="tel:+918870534049"
-                      className="bg-slate-900 hover:bg-slate-800 text-white rounded-xl py-3.5 px-5 text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-md cursor-pointer"
-                    >
-                      <Phone className="w-4 h-4" />
-                      Call Technician
-                    </a>
-                  </div>
                 </div>
-
               </div>
+            </div>
+
+            {/* Sticky Bottom Footer CTA (2 Stacked Row Buttons) */}
+            <div className="sticky bottom-0 z-20 bg-white/95 backdrop-blur-md border-t border-slate-100 p-4 sm:px-8 flex flex-col gap-2.5 shadow-[0_-10px_25px_rgba(15,23,42,0.05)]">
+              {/* Row 1: Order on WhatsApp */}
+              <a
+                href={`https://wa.me/918870534049?text=${encodeURIComponent(
+                  `Hello, I would like to order the *${product.brandname}* (${product.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"
+                  }) priced at *${formatPrice(product.price)}*.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white rounded-xl py-3 px-5 text-xs sm:text-sm font-extrabold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer"
+              >
+                <svg
+                  className="w-4.5 h-4.5 fill-current"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.458L0 24zm6.59-4.846c1.6.95 3.16 1.448 4.787 1.449 5.518 0 10.008-4.487 10.01-10.007.001-2.673-1.03-5.188-2.903-7.062C16.618 1.66 14.11 1.628 11.999 1.628 6.48 1.628 1.99 6.115 1.988 11.635c0 1.674.437 3.313 1.272 4.773L2.24 21.05l4.407-1.156zM17.07 14.04c-.274-.137-1.62-.8-1.87-.89-.25-.09-.43-.137-.61.137-.18.274-.69.89-.846 1.072-.156.18-.313.2-.587.06-.275-.135-1.16-.427-2.21-1.365-.817-.73-1.37-1.63-1.53-1.905-.16-.275-.016-.423.12-.56.124-.124.275-.32.413-.48.137-.16.183-.275.275-.457.09-.18.046-.34-.02-.48-.069-.137-.61-1.486-.838-2.036-.223-.53-.45-.457-.61-.465-.16-.008-.344-.01-.53-.01-.18 0-.477.067-.73.343-.25.274-.96.94-.96 2.29 0 1.35.98 2.65 1.117 2.83.137.18 1.93 2.946 4.675 4.13.654.28 1.164.448 1.56.574.657.21 1.256.18 1.73.1.527-.08 1.62-.66 1.85-1.3.23-.64.23-1.187.16-1.3-.07-.11-.253-.18-.527-.315z" />
+                </svg>
+                Order on WhatsApp
+              </a>
+
+              {/* Row 2: Call Technician */}
+              <a
+                href="tel:+918870534049"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white rounded-xl py-3 px-5 text-xs sm:text-sm font-extrabold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all duration-300 shadow-sm cursor-pointer"
+              >
+                <Phone className="w-4 h-4 text-rose-400" />
+                Call Technician Now
+              </a>
             </div>
           </motion.div>
         </div>
