@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow internal API routes
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://ak-website-ashen.vercel.app/sitemap.xml
