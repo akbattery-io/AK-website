@@ -8,8 +8,9 @@ import { supabase } from "@/lib/supabase";
 export const revalidate = 0; // Real-time Vercel page updates without CDN cache delay
 
 export const metadata: Metadata = {
-  title: "Products & Pricing | AK Batteries & RO Solutions",
-  description: "Browse our premium product catalog including Exide, Amaron, and Luminous batteries and inverters, alongside Aquaguard, purosis, and Aqua Era RO water purifiers with transparent pricing.",
+  title: "Products & Pricing in Kannamangalam | AK Batteries & RO",
+  description: "Browse our complete catalog of Inverter Batteries, Home UPS & RO Water Purifiers in Kannamangalam, Tamil Nadu. Transparent prices, doorstep delivery & installation.",
+  keywords: ["Products Kannamangalam", "Battery Pricing Kannamangalam", "RO Price List Kannamangalam", "Exide Battery Price Kannamangalam"],
 };
 
 export default async function WorksPage() {

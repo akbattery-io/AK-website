@@ -54,8 +54,8 @@ export function FAQ() {
   return (
     <section className="py-20 sm:py-28 bg-[#FAFBFD] border-t border-slate-100 relative overflow-hidden">
       {/* Background decorations */}
-      <div className="absolute top-1/2 left-0 w-80 h-80 bg-rose-500/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute top-1/2 left-0 w-80 h-80 bg-rose-500/5 rounded-md blur-3xl -z-10"></div>
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-amber-500/5 rounded-md blur-3xl -z-10"></div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title */}
@@ -82,15 +82,15 @@ export function FAQ() {
                   className="w-full py-5 px-6 sm:px-8 flex items-center justify-between text-left focus:outline-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-serif text-base sm:text-lg font-bold text-slate-900 group-hover:text-rose-600 transition-colors pr-4">
+                  <span className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-rose-600 transition-colors pr-4">
                     {faq.question}
                   </span>
                   <motion.span
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className={`flex items-center justify-center w-8 h-8 rounded-full border shrink-0 ${isOpen
-                        ? "bg-rose-50 border-rose-100 text-rose-600"
-                        : "bg-slate-50 border-slate-200/60 text-slate-400"
+                    className={`flex items-center justify-center w-8 h-8 rounded-md border shrink-0 ${isOpen
+                      ? "bg-rose-50 border-rose-100 text-rose-600"
+                      : "bg-slate-50 border-slate-200/60 text-slate-400"
                       }`}
                   >
                     <ChevronDown className="w-4 h-4" />

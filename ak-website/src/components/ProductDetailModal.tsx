@@ -92,7 +92,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
             {/* Header Close Button */}
             <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-white/90 backdrop-blur-md border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border select-none ${product.category === "ups inventer & batteries"
+                <span className={`text-[10px] font-extrabold px-3 py-1 rounded-md uppercase tracking-wider border select-none ${product.category === "ups inventer & batteries"
                   ? "bg-amber-50 text-amber-700 border-amber-200"
                   : "bg-rose-50 text-rose-700 border-rose-200"
                   }`}>
@@ -105,7 +105,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
 
               <button
                 onClick={onClose}
-                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 flex items-center justify-center transition-colors duration-200 cursor-pointer"
+                className="w-9 h-9 rounded-md bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 flex items-center justify-center transition-colors duration-200 cursor-pointer"
                 aria-label="Close dialog"
               >
                 <X className="w-5 h-5" />
@@ -137,7 +137,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                     )}
 
                     {discountBadge && (
-                      <span className="absolute top-3 left-3 bg-emerald-600 text-white text-[11px] font-black px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                      <span className="absolute top-3 left-3 bg-emerald-600 text-white text-[11px] font-black px-3 py-1 rounded-md uppercase tracking-wider shadow-sm">
                         {discountBadge}
                       </span>
                     )}
@@ -190,7 +190,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                         </span>
                       )}
                       {discountBadge && (
-                        <span className="bg-emerald-100 text-emerald-800 text-xs font-black px-2.5 py-0.5 rounded-full uppercase">
+                        <span className="bg-emerald-100 text-emerald-800 text-xs font-black px-2.5 py-0.5 rounded-md uppercase">
                           Save {discountBadge}
                         </span>
                       )}
@@ -222,7 +222,7 @@ export function ProductDetailModal({ product, isOpen, onClose }: ProductDetailMo
                       <ul className="space-y-2">
                         {featuresList.map((item: string, idx: number) => (
                           <li key={idx} className="flex items-start gap-2.5 text-xs text-slate-700 font-medium leading-relaxed">
-                            <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                            <span className="w-4 h-4 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
                               <Check className="w-3 h-3 stroke-[3]" />
                             </span>
                             <span>{item}</span>

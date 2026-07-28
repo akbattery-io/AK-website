@@ -29,11 +29,10 @@ export default function CustomerCard({ customer, isSelected, onSelect }: Custome
   return (
     <div
       onClick={() => onSelect(customer)}
-      className={`p-4 rounded-md border transition-all duration-200 cursor-pointer ${
-        isSelected
+      className={`p-4 rounded-md border transition-all duration-200 cursor-pointer ${isSelected
           ? "bg-rose-50/50 border-rose-300 shadow-md ring-1 ring-rose-400/30"
           : "bg-white border-slate-100/90 hover:border-slate-200 hover:shadow-sm"
-      }`}
+        }`}
     >
       <div className="flex items-start justify-between gap-2">
         <div>
@@ -44,7 +43,7 @@ export default function CustomerCard({ customer, isSelected, onSelect }: Custome
           </div>
         </div>
         <span
-          className={`text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider border shrink-0 ${getStatusBadge(
+          className={`text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider border shrink-0 ${getStatusBadge(
             customer.status
           )}`}
         >

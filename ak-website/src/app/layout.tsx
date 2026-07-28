@@ -16,14 +16,76 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AK Batteries and RO Solutions",
-  description: "Established in 2025, AK Batteries & RO Solutions provides fast, reliable sales, installation, maintenance, and repair services for batteries, inverters, and RO water purifiers.",
-  keywords: ["AK Batteries kannamangalam", "RO Service kannamangalam", "Inverter Battery Sales kannamangalam", "Water Purifier Repair kannamangalam", "AK Batteries established 2025", "Battery installation doorstep"],
+  title: "AK Batteries & RO Solutions | Best Battery & RO Service in Kannamangalam",
+  description: "Top-rated Battery, Inverter & RO Water Purifier shop in Kannamangalam, Tamil Nadu. Authorized sales & doorstep service for Exide, Amaron, Purosis, Finpure in Kannamangalam, Arani & Vellore.",
+  keywords: [
+    "AK Batteries Kannamangalam",
+    "Battery Shop Kannamangalam",
+    "RO Service Kannamangalam",
+    "Inverter Battery Dealer Kannamangalam",
+    "Amaron Battery Kannamangalam",
+    "Exide Battery Shop Kannamangalam",
+    "Water Purifier Repair Kannamangalam",
+    "RO Filter Service Kannamangalam",
+    "Inverter Sales Kannamangalam",
+    "Battery Home Delivery Kannamangalam",
+    "Kannamangalam RO Water Purifier",
+    "Battery Service Centre Kannamangalam"
+  ],
+  openGraph: {
+    title: "AK Batteries & RO Solutions | Kannamangalam",
+    description: "Fast, reliable sales, doorstep installation, maintenance and repair for batteries, inverters and RO water purifiers in Kannamangalam & surrounding areas.",
+    url: "https://akbattery.io",
+    siteName: "AK Batteries & RO Solutions",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AK Batteries & RO Solutions | Kannamangalam",
+    description: "Fast, reliable sales & doorstep service for batteries, inverters & RO water purifiers in Kannamangalam.",
+  },
   icons: {
     icon: "/logo.svg",
     shortcut: "/logo.svg",
     apple: "/logo.svg",
   },
+};
+
+const jsonLdSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "AK Batteries & RO Solutions",
+  "image": "https://akbattery.io/logo.svg",
+  "telephone": "+918870534049",
+  "email": "akbattery.ro@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Main Road",
+    "addressLocality": "Kannamangalam",
+    "addressRegion": "Tamil Nadu",
+    "postalCode": "632311",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "12.7533",
+    "longitude": "79.1557"
+  },
+  "url": "https://akbattery.io",
+  "priceRange": "₹₹",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "08:00",
+    "closes": "21:00"
+  },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Kannamangalam" },
+    { "@type": "AdministrativeArea", "name": "Arani" },
+    { "@type": "AdministrativeArea", "name": "Vellore" },
+    { "@type": "AdministrativeArea", "name": "Polur" }
+  ]
 };
 
 export default function RootLayout({
@@ -37,6 +99,12 @@ export default function RootLayout({
       className={`${plusJakarta.variable} ${playfair.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSchema) }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-[#FAFBFD] text-slate-900 font-sans selection:bg-rose-500 selection:text-white">
         {children}
         <WhatsAppButton />

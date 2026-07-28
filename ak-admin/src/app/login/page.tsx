@@ -45,7 +45,7 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-mesh-gradient">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-md animate-spin"></div>
           <p className="text-slate-500 text-sm font-semibold animate-pulse">Checking credentials...</p>
         </div>
       </div>
@@ -57,8 +57,8 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-mesh-gradient px-4 py-12 relative overflow-hidden">
       {/* Background glowing elements */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-500/5 rounded-full blur-3xl -z-10 animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl -z-10 animate-pulse delay-700"></div>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-500/5 rounded-md blur-3xl -z-10 animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/5 rounded-md blur-3xl -z-10 animate-pulse delay-700"></div>
 
       <div className="max-w-md w-full bg-white/70 backdrop-blur-xl border border-slate-100/80 rounded-md p-8 sm:p-10 shadow-[0_10px_50px_rgba(15,23,42,0.04)] hover:shadow-[0_20px_60px_rgba(220,38,38,0.06)] transition-all duration-500">
         <div className="text-center mb-8">

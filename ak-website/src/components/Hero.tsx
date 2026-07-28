@@ -104,13 +104,13 @@ export function Hero() {
           >
             {/* <div className="flex flex-wrap items-center justify-center gap-2.5">
         
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-50/60 border border-rose-100/50 shadow-[0_2px_10px_rgba(225,29,72,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-rose-600">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-rose-50/60 border border-rose-100/50 shadow-[0_2px_10px_rgba(225,29,72,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-rose-600">
                 <Wrench className="w-3.5 h-3.5 text-rose-500 shrink-0" />
                 <span>1000+ Services Completed</span>
               </div>
 
               
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-50/80 border border-slate-200/60 shadow-[0_2px_10px_rgba(15,23,42,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-slate-600">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-slate-50/80 border border-slate-200/60 shadow-[0_2px_10px_rgba(15,23,42,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-slate-600">
                 <BadgeCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
                 <span>5-6 Installations Daily</span>
               </div>
@@ -159,7 +159,7 @@ export function Hero() {
                 }}
                 className="group shadow-sm hover:shadow-md w-full sm:w-auto bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white border-transparent transition-all text-xs sm:text-sm h-11"
               >
-                Place Order
+                Enquire now
                 <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
               </Button>
             </motion.div>

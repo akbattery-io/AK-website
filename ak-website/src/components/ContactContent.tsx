@@ -51,9 +51,9 @@ export function ContactContent() {
     {
       icon: <MapPin className="w-5 h-5 text-rose-600" />,
       title: "Service Center",
-      value: "Shop No. 5, Main Sector Rd",
-      sub: "AK Battery Zone, Delhi NCR",
-      href: "https://maps.google.com",
+      value: "Main Road, Kannamangalam",
+      sub: "Tiruvannamalai DT, Tamil Nadu - 632311",
+      href: "https://maps.google.com/?q=Kannamangalam+Tamil+Nadu",
     },
     {
       icon: <Clock className="w-5 h-5 text-rose-600" />,
@@ -69,7 +69,7 @@ export function ContactContent() {
 
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-bold text-rose-600 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-full border border-rose-100 inline-block mb-4">
+          <span className="text-xs font-bold text-rose-600 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-md border border-rose-100 inline-block mb-4">
             Get In Touch
           </span>
           <h1 className="text-gradient text-4xl sm:text-5xl font-extrabold tracking-tight mb-6">

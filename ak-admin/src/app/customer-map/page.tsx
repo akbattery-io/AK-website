@@ -130,7 +130,7 @@ export default function CustomerMapPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-rose-500 border-t-transparent rounded-md animate-spin"></div>
           <p className="text-slate-500 text-xs font-semibold uppercase tracking-wider">Authenticating Admin Access...</p>
         </div>
       </div>

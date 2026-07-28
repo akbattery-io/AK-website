@@ -31,7 +31,7 @@ export function WhatsAppButton() {
             exit={{ opacity: 0, x: 20, scale: 0.9 }}
             className="hidden sm:flex items-center gap-2 bg-white text-slate-800 px-4 py-2.5 rounded-md shadow-[0_4px_20px_rgba(15,23,42,0.08)] border border-slate-100 font-semibold text-sm whitespace-nowrap"
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-2.5 h-2.5 rounded-md bg-emerald-500 animate-pulse" />
             <span>Need help? Chat with us!</span>
             <button
               onClick={(e) => {
@@ -61,7 +61,7 @@ export function WhatsAppButton() {
         onClick={() => setHasNewMessage(false)}
       >
         {/* Pulse ring animation */}
-        <span className="absolute inset-0 rounded-full bg-[#25D366]/35 animate-ping pointer-events-none" />
+        <span className="absolute inset-0 rounded-full bg-[#25D366]/25 animate-ping pointer-events-none" />
 
         {/* WhatsApp SVG Icon */}
         <svg className="w-7 h-7 relative z-10 fill-current" viewBox="0 0 24 24">
@@ -70,7 +70,7 @@ export function WhatsAppButton() {
 
         {/* Small interactive notification-like red dot */}
         {hasNewMessage && (
-          <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-full z-20 animate-pulse" />
+          <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-md z-20 animate-pulse" />
         )}
       </motion.a>
     </div>

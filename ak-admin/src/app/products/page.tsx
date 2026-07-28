@@ -426,7 +426,7 @@ export default function ProductsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-mesh-gradient">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-md animate-spin"></div>
           <p className="text-slate-500 text-sm font-semibold">Authenticating...</p>
         </div>
       </div>
@@ -508,12 +508,12 @@ export default function ProductsPage() {
         <section className="bg-white rounded-md border border-slate-100 shadow-sm overflow-hidden">
           {productsLoading ? (
             <div className="p-16 flex flex-col items-center justify-center gap-3">
-              <div className="w-8 h-8 border-3 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-8 h-8 border-3 border-rose-500 border-t-transparent rounded-md animate-spin"></div>
               <p className="text-slate-400 text-xs font-semibold">Loading product database...</p>
             </div>
           ) : filteredProducts.length === 0 ? (
             <div className="text-center py-20 px-4 max-w-md mx-auto">
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-slate-50 border border-slate-100 text-slate-400 mb-4">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-md bg-slate-50 border border-slate-100 text-slate-400 mb-4">
                 <Inbox className="w-6 h-6" />
               </div>
               <h3 className="font-serif text-lg font-bold text-slate-900 mb-1">
@@ -588,7 +588,7 @@ export default function ProductsPage() {
                           </div>
                         </td>
                         <td className="py-4 px-6">
-                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border ${product.category === "ups inventer & batteries"
+                          <span className={`text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider border ${product.category === "ups inventer & batteries"
                             ? "bg-amber-50 text-amber-700 border-amber-100/70"
                             : "bg-rose-50 text-rose-700 border-rose-100/70"
                             }`}>
@@ -681,7 +681,7 @@ export default function ProductsPage() {
           <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsAddModalOpen(false)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-950 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-950 transition-colors w-8 h-8 rounded-md border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
@@ -809,7 +809,7 @@ export default function ProductsPage() {
                 >
                   {formSubmitting ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-md animate-spin"></div>
                       <span>Saving...</span>
                     </>
                   ) : (
@@ -834,7 +834,7 @@ export default function ProductsPage() {
                 setIsEditModalOpen(false);
                 setSelectedProduct(null);
               }}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-955 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-955 transition-colors w-8 h-8 rounded-md border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
@@ -983,7 +983,7 @@ export default function ProductsPage() {
                 >
                   {formSubmitting ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-md animate-spin"></div>
                       <span>Updating...</span>
                     </>
                   ) : (
@@ -1006,7 +1006,7 @@ export default function ProductsPage() {
           resetForm();
           setIsAddModalOpen(true);
         }}
-        className="fixed bottom-20 right-6 lg:bottom-8 lg:right-8 z-[60] h-14 w-14 lg:h-14 lg:w-auto lg:px-6 bg-rose-600 hover:bg-rose-500 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-rose-500/30 hover:scale-105"
+        className="fixed bottom-20 right-6 lg:bottom-8 lg:right-8 z-[60] h-14 w-14 lg:h-14 lg:w-auto lg:px-6 bg-rose-600 hover:bg-rose-500 text-white rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-rose-500/30 hover:scale-105"
         title="Add new product"
       >
         <Plus className="w-5 h-5 shrink-0" />

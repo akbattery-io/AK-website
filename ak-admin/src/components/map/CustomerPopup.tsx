@@ -53,7 +53,7 @@ export default function CustomerPopup({ customer }: CustomerPopupProps) {
             </a>
           </div>
         </div>
-        <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider border shrink-0 ${getStatusBadge(customer.status)}`}>
+        <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider border shrink-0 ${getStatusBadge(customer.status)}`}>
           {customer.status}
         </span>
       </div>

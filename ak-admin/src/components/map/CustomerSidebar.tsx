@@ -26,7 +26,7 @@ export default function CustomerSidebar({
           <Users className="w-4.5 h-4.5 text-slate-500" />
           <h3 className="font-serif text-base font-black text-slate-900 tracking-tight">Customer Directory</h3>
         </div>
-        <span className="bg-slate-100 text-slate-700 text-xs font-extrabold px-2.5 py-0.5 rounded-full">
+        <span className="bg-slate-100 text-slate-700 text-xs font-extrabold px-2.5 py-0.5 rounded-md">
           {customers.length}
         </span>
       </div>

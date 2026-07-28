@@ -71,7 +71,7 @@ export function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
             {/* Close Button */}
             <button
               onClick={handleClose}
-              className="absolute top-4 right-4 p-1.5 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors"
+              className="absolute top-4 right-4 p-1.5 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -186,7 +186,7 @@ export function EnquiryModal({ isOpen, onClose }: EnquiryModalProps) {
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-6"
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-500 mb-4">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-md bg-emerald-50 border border-emerald-100 text-emerald-500 mb-4">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <h3 className="font-serif text-2xl font-bold text-slate-900 mb-2">

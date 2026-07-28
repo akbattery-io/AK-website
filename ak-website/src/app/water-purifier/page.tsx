@@ -8,8 +8,9 @@ import { supabase } from "@/lib/supabase";
 export const revalidate = 0; // Real-time Vercel page updates without CDN cache delay
 
 export const metadata: Metadata = {
-  title: "RO Water Purifiers | AK Batteries & RO Solutions",
-  description: "Browse our premium RO water purifiers, including Aquaguard, purosis, and Aqua Era water purifiers with door-step installation and services.",
+  title: "RO Water Purifier Sales & Service in Kannamangalam | AK Solutions",
+  description: "Best RO Water Purifier sales, filter service & repair in Kannamangalam, Tamil Nadu. Authorized dealer for Purosis, Finpure, Aquaguard with free installation & doorstep technician support.",
+  keywords: ["RO Water Purifier Kannamangalam", "RO Service Kannamangalam", "Water Filter Repair Kannamangalam", "Purosis RO Kannamangalam", "RO Technician Kannamangalam"],
 };
 
 export default async function WaterPurifierPage() {

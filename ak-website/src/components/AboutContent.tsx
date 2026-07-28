@@ -46,7 +46,7 @@ export function AboutContent() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-xs font-bold text-rose-600 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-full border border-rose-100 inline-block mb-4">
+            <span className="text-xs font-bold text-rose-600 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-md border border-rose-100 inline-block mb-4">
               Our Journey
             </span>
             <h1 className="text-gradient text-4xl sm:text-5xl font-extrabold tracking-tight mb-6 leading-tight">

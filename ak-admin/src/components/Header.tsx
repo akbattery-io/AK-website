@@ -77,8 +77,8 @@ export default function Header() {
               <Link
                 href="/"
                 className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "home"
-                    ? "text-rose-600 border-rose-600"
-                    : "text-slate-400 hover:text-slate-950"
+                  ? "text-rose-600 border-rose-600"
+                  : "text-slate-400 hover:text-slate-950"
                   }`}
               >
                 Home
@@ -86,8 +86,8 @@ export default function Header() {
               <Link
                 href="/products"
                 className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "products"
-                    ? "text-rose-600 border-rose-600"
-                    : "text-slate-400 hover:text-slate-955"
+                  ? "text-rose-600 border-rose-600"
+                  : "text-slate-400 hover:text-slate-955"
                   }`}
               >
                 Products
@@ -95,8 +95,8 @@ export default function Header() {
               <Link
                 href="/customers"
                 className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "customers"
-                    ? "text-rose-600 border-rose-600"
-                    : "text-slate-400 hover:text-slate-955"
+                  ? "text-rose-600 border-rose-600"
+                  : "text-slate-400 hover:text-slate-955"
                   }`}
               >
                 Customers
@@ -104,8 +104,8 @@ export default function Header() {
               <Link
                 href="/customer-map"
                 className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "customer-map"
-                    ? "text-rose-600 border-rose-600"
-                    : "text-slate-400 hover:text-slate-955"
+                  ? "text-rose-600 border-rose-600"
+                  : "text-slate-400 hover:text-slate-955"
                   }`}
               >
                 Customer Map
@@ -113,8 +113,8 @@ export default function Header() {
               <Link
                 href="/service"
                 className={`text-xs font-bold uppercase tracking-wider transition-colors ${activeTab === "service"
-                    ? "text-rose-600 border-rose-600"
-                    : "text-slate-400 hover:text-slate-955"
+                  ? "text-rose-600 border-rose-600"
+                  : "text-slate-400 hover:text-slate-955"
                   }`}
               >
                 Service
@@ -131,13 +131,13 @@ export default function Header() {
             >
               <div
                 className={`w-10 h-10 rounded-md border flex items-center justify-center transition-all duration-300 ${inactiveCount > 0
-                    ? "bg-rose-50 border-rose-100 text-rose-600 shadow-md shadow-rose-100/50 cursor-pointer"
-                    : "bg-white border-slate-200/80 text-slate-400 cursor-pointer"
+                  ? "bg-rose-50 border-rose-100 text-rose-600 shadow-md shadow-rose-100/50 cursor-pointer"
+                  : "bg-white border-slate-200/80 text-slate-400 cursor-pointer"
                   }`}
               >
                 <Bell className={`w-5 h-5 ${inactiveCount > 0 ? "animate-pulse" : ""}`} />
                 {inactiveCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4.5 h-4.5 bg-rose-600 text-white text-[9px] font-black rounded-full flex items-center justify-center leading-none">
+                  <span className="absolute -top-1 -right-1 w-4.5 h-4.5 bg-rose-600 text-white text-[9px] font-black rounded-md flex items-center justify-center leading-none">
                     {inactiveCount}
                   </span>
                 )}

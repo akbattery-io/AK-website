@@ -19,7 +19,7 @@ export default function Footer() {
                                 alt="AK Batteries Logo"
                                 width={36}
                                 height={36}
-                                className="w-9 h-9 object-contain bg-white rounded-full p-0.5"
+                                className="w-9 h-9 object-contain bg-white rounded-md p-0.5"
                             />
                             <h3 className="text-xl font-bold text-white">
                                 AK Batteries & RO Solutions
@@ -74,9 +74,9 @@ export default function Footer() {
                         <div className="space-y-4 text-sm">
 
                             <div className="flex items-start gap-3">
-                                <Pin className="w-5 h-5 mt-0.5" />
+                                <Pin className="w-5 h-5 mt-0.5 text-rose-500 shrink-0" />
                                 <span className="leading-6">
-                                    Your Business Address
+                                    Main Road, Kannamangalam, Tiruvannamalai DT, Tamil Nadu - 632311
                                 </span>
                             </div>
 

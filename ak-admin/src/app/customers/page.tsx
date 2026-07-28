@@ -389,7 +389,7 @@ export default function CustomersPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-mesh-gradient">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-md animate-spin"></div>
           <p className="text-slate-500 text-sm font-semibold">Authenticating...</p>
         </div>
       </div>
@@ -464,7 +464,7 @@ export default function CustomersPage() {
         <section className="bg-white rounded-md border border-slate-100 shadow-sm overflow-hidden">
           {customersLoading ? (
             <div className="py-24 flex flex-col items-center justify-center gap-4">
-              <div className="w-10 h-10 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-10 h-10 border-4 border-rose-500 border-t-transparent rounded-md animate-spin"></div>
               <p className="text-slate-400 text-xs font-semibold">Loading customers directory...</p>
             </div>
           ) : customers.length === 0 ? (
@@ -500,11 +500,10 @@ export default function CustomersPage() {
                       return (
                         <tr
                           key={customer.id}
-                          className={`transition-colors ${
-                            isInactive
+                          className={`transition-colors ${isInactive
                               ? "bg-slate-50/70 text-slate-505 hover:bg-slate-100/50"
                               : "hover:bg-slate-50/30"
-                          }`}
+                            }`}
                         >
                           <td className={`py-4 px-6 font-bold ${isInactive ? "text-slate-700" : "text-slate-900"}`}>{customer.customer_name}</td>
                           <td className={`py-4 px-6 font-semibold ${isInactive ? "text-slate-500" : "text-slate-650"}`}>{customer.phone_number}</td>
@@ -514,11 +513,10 @@ export default function CustomersPage() {
                           <td className="py-4 px-6 font-semibold">{customer.maintenance_period} Months</td>
                           <td className="py-4 px-6">
                             <span
-                              className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
-                                isInactive
+                              className={`inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wide border ${isInactive
                                   ? "bg-rose-50 border-rose-100 text-rose-700"
                                   : "bg-emerald-50 border-emerald-100 text-emerald-700"
-                              }`}
+                                }`}
                             >
                               {customer.status}
                             </span>
@@ -581,11 +579,10 @@ export default function CustomersPage() {
                   return (
                     <div
                       key={customer.id}
-                      className={`p-5 flex flex-col gap-4 border-l-4 transition-all duration-300 ${
-                        isInactive
+                      className={`p-5 flex flex-col gap-4 border-l-4 transition-all duration-300 ${isInactive
                           ? "bg-slate-50/70 border-slate-300 text-slate-500 opacity-90"
                           : "bg-white border-emerald-500"
-                      }`}
+                        }`}
                     >
                       <div className="flex items-start justify-between">
                         <div>
@@ -595,11 +592,10 @@ export default function CustomersPage() {
                           <p className="text-slate-400 text-xs font-semibold mt-0.5">{customer.product_name}</p>
                         </div>
                         <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide border ${
-                            isInactive
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide border ${isInactive
                               ? "bg-rose-50 border-rose-100 text-rose-700"
                               : "bg-emerald-50 border-emerald-100 text-emerald-700"
-                          }`}
+                            }`}
                         >
                           {customer.status}
                         </span>
@@ -722,7 +718,7 @@ export default function CustomersPage() {
           <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsAddModalOpen(false)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-md border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
@@ -815,7 +811,7 @@ export default function CustomersPage() {
                     >
                       {gettingLocation ? (
                         <>
-                          <div className="w-3 h-3 border-2 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
+                          <div className="w-3 h-3 border-2 border-rose-600 border-t-transparent rounded-md animate-spin"></div>
                           <span>Acquiring...</span>
                         </>
                       ) : (
@@ -889,7 +885,7 @@ export default function CustomersPage() {
                 >
                   {formSubmitting ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-md animate-spin"></div>
                       <span>Saving...</span>
                     </>
                   ) : (
@@ -911,7 +907,7 @@ export default function CustomersPage() {
           <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsEditModalOpen(false)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-md border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
@@ -1003,7 +999,7 @@ export default function CustomersPage() {
                     >
                       {gettingLocation ? (
                         <>
-                          <div className="w-3 h-3 border-2 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
+                          <div className="w-3 h-3 border-2 border-rose-600 border-t-transparent rounded-md animate-spin"></div>
                           <span>Acquiring...</span>
                         </>
                       ) : (
@@ -1077,7 +1073,7 @@ export default function CustomersPage() {
                 >
                   {formSubmitting ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-md animate-spin"></div>
                       <span>Updating...</span>
                     </>
                   ) : (
@@ -1099,7 +1095,7 @@ export default function CustomersPage() {
           <div className="bg-white rounded-md border border-slate-100 max-w-lg w-full p-5 sm:p-8 shadow-2xl relative max-h-[calc(100vh-2.5rem)] sm:max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-300">
             <button
               onClick={() => setIsViewModalOpen(false)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-full border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-md border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
             >
               <X className="w-4 h-4" />
             </button>
@@ -1187,7 +1183,7 @@ export default function CustomersPage() {
       {/* Floating Add Customer Button */}
       <button
         onClick={openAddModal}
-        className="fixed bottom-20 right-6 lg:bottom-8 lg:right-8 z-[60] h-14 w-14 lg:h-14 lg:w-auto lg:px-6 bg-rose-600 hover:bg-rose-500 text-white rounded-full text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-rose-500/30 hover:scale-105"
+        className="fixed bottom-20 right-6 lg:bottom-8 lg:right-8 z-[60] h-14 w-14 lg:h-14 lg:w-auto lg:px-6 bg-rose-600 hover:bg-rose-500 text-white rounded-md text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-rose-500/30 hover:scale-105"
         title="Add new customer"
       >
         <Plus className="w-5 h-5 shrink-0" />

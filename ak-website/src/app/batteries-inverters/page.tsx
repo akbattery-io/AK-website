@@ -8,8 +8,9 @@ import { supabase } from "@/lib/supabase";
 export const revalidate = 0; // Real-time Vercel page updates without CDN cache delay
 
 export const metadata: Metadata = {
-  title: "Inverter Batteries & UPS | AK Batteries & RO Solutions",
-  description: "Explore our premium range of genuine Exide, Amaron, and Luminous batteries and home power backup systems with transparent pricing.",
+  title: "Inverter Batteries & UPS Sales in Kannamangalam | AK Batteries",
+  description: "Buy genuine Exide, Amaron & Luminous Inverter Batteries & Home UPS in Kannamangalam, Tamil Nadu. Best prices, free doorstep delivery & installation in Kannamangalam, Arani & Vellore.",
+  keywords: ["Inverter Battery Kannamangalam", "UPS Battery Kannamangalam", "Amaron Battery Kannamangalam", "Exide Battery Kannamangalam", "Inverter Installation Kannamangalam"],
 };
 
 export default async function BatteriesInvertersPage() {
