@@ -3,9 +3,11 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, ArrowUpRight, Tag, Search, Inbox, ChevronLeft, ChevronRight, Eye, ArrowUpDown } from "lucide-react";
 import { Button } from "./ui/Button";
+import { PageLoader } from "./PageLoader";
 
 const formatPrice = (p: string | number) => {
   if (p === undefined || p === null || p === "") return "";
@@ -31,7 +33,7 @@ const calculateDiscount = (mrpVal?: string | number, sellVal?: string | number) 
   return `${pct}% OFF`;
 };
 
-function ProductCard({ project, idx }: { project: any; idx: number }) {
+function ProductCard({ project, idx, onNavigate }: { project: any; idx: number; onNavigate: (url: string) => void }) {
   const productImages = project.images && project.images.length > 0
     ? project.images
     : project.image
@@ -41,6 +43,11 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
   const discountBadge = calculateDiscount(project.mrp, project.price);
   const productUrl = `/product/${project.id || encodeURIComponent(project.brandname)}`;
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onNavigate(productUrl);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -48,8 +55,8 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.35, delay: Math.min(idx * 0.05, 0.3) }}
     >
-      <Link
-        href={productUrl}
+      <div
+        onClick={handleClick}
         className="group bg-white rounded-xl p-3.5 sm:p-4 shadow-[0_4px_20px_rgba(15,23,42,0.03)] border border-slate-200/80 hover:shadow-[0_14px_35px_rgba(15,23,42,0.08)] hover:border-rose-200 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full relative cursor-pointer overflow-hidden block"
       >
         {/* Product Image Frame (Fixed Height Viewport) */}
@@ -88,8 +95,8 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
             {/* Category Tag */}
             <div className="flex items-center justify-between">
               <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider border select-none ${project.category === "ups inventer & batteries"
-                  ? "bg-amber-50 text-amber-700 border-amber-200/80"
-                  : "bg-rose-50 text-rose-700 border-rose-200/80"
+                ? "bg-amber-50 text-amber-700 border-amber-200/80"
+                : "bg-rose-50 text-rose-700 border-rose-200/80"
                 }`}>
                 {project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"}
               </span>
@@ -120,13 +127,16 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
             </div>
 
             {/* View Details / Order Button */}
-            <div className="w-full bg-slate-900 group-hover:bg-slate-800 text-white rounded-lg py-2 px-3 text-[11px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 shadow-sm">
+            <button
+              onClick={handleClick}
+              className="w-full bg-slate-900 group-hover:bg-slate-800 text-white rounded-lg py-2 px-3 text-[11px] font-extrabold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 shadow-sm cursor-pointer"
+            >
               <Eye className="w-3.5 h-3.5 text-rose-400" />
               View Details & Order
-            </div>
+            </button>
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }
@@ -140,9 +150,16 @@ export function WorkContent({ initialProducts = [], showFilters = false }: WorkC
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
   const [sortBy, setSortBy] = React.useState("default");
+  const [isNavigating, setIsNavigating] = React.useState(false);
 
+  const router = useRouter();
   const searchInputRef = React.useRef<HTMLInputElement>(null);
   const debounceTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleNavigate = (url: string) => {
+    setIsNavigating(true);
+    router.push(url);
+  };
 
   const handleSearchChange = (value: string) => {
     if (debounceTimeoutRef.current) {
@@ -202,6 +219,9 @@ export function WorkContent({ initialProducts = [], showFilters = false }: WorkC
 
   return (
     <div className="py-16 sm:py-24 bg-mesh-gradient min-h-screen">
+      {/* Full-screen spinning logo loader overlay during navigation */}
+      {isNavigating && <PageLoader />}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -308,6 +328,7 @@ export function WorkContent({ initialProducts = [], showFilters = false }: WorkC
                 key={idx}
                 project={project}
                 idx={idx}
+                onNavigate={handleNavigate}
               />
             ))}
           </div>
