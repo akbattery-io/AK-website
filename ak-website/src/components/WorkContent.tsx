@@ -39,11 +39,11 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
       initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: idx * 0.1 }}
-      className="group bg-white rounded-md p-5 shadow-[0_4px_30px_rgba(15,23,42,0.01)] border border-slate-100/80 hover:shadow-[0_20px_50px_rgba(225,29,72,0.06)] hover:border-rose-100/70 hover:-translate-y-1.5 transition-all duration-500 flex flex-col gap-5 justify-between relative overflow-hidden"
+      transition={{ duration: 0.4, delay: Math.min(idx * 0.08, 0.4) }}
+      className="group bg-white rounded-2xl p-5 shadow-[0_4px_25px_rgba(15,23,42,0.03)] border border-slate-200/80 hover:shadow-[0_20px_50px_rgba(15,23,42,0.08)] hover:border-slate-300 hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden"
     >
-      {/* Product Visual Container (FIRST) */}
-      <div className="bg-slate-50/60 rounded-md aspect-[4/3] w-full overflow-hidden relative flex items-center justify-center p-3 border border-slate-100/30">
+      {/* Product Image Frame (Uniform fixed aspect-ratio & soft bg frame) */}
+      <div className="bg-slate-50/80 rounded-xl aspect-[4/3] w-full overflow-hidden relative flex items-center justify-center p-3 border border-slate-100 mb-4 group-hover:bg-slate-100/60 transition-colors duration-300">
         {productImages.length > 0 ? (
           <div className="relative w-full h-full select-none">
             <AnimatePresence mode="wait">
@@ -52,7 +52,7 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
+                transition={{ duration: 0.2 }}
                 className="relative w-full h-full cursor-grab active:cursor-grabbing touch-pan-y"
                 {...(productImages.length > 1
                   ? {
@@ -76,14 +76,14 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                   fill
                   priority
                   loading="eager"
-                  className="object-contain transition-transform duration-700 group-hover:scale-105 pointer-events-none"
+                  className="object-contain drop-shadow-sm transition-transform duration-500 group-hover:scale-105 pointer-events-none"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   draggable={false}
                 />
               </motion.div>
             </AnimatePresence>
 
-            {/* Slide Arrows for navigation */}
+            {/* Navigation Arrows */}
             {productImages.length > 1 && (
               <>
                 <button
@@ -92,10 +92,10 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                     e.stopPropagation();
                     setCurrentImageIndex((prev) => (prev === 0 ? productImages.length - 1 : prev - 1));
                   }}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/75 backdrop-blur-sm border border-white/40 hover:bg-white text-slate-800 flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 cursor-pointer focus:outline-none"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 hover:bg-white text-slate-800 flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 cursor-pointer"
                   aria-label="Previous image"
                 >
-                  <ChevronLeft className="w-4.5 h-4.5" />
+                  <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={(e) => {
@@ -103,17 +103,17 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                     e.stopPropagation();
                     setCurrentImageIndex((prev) => (prev === productImages.length - 1 ? 0 : prev + 1));
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/75 backdrop-blur-sm border border-white/40 hover:bg-white text-slate-800 flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 z-10 cursor-pointer focus:outline-none"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm border border-slate-200 hover:bg-white text-slate-800 flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-200 z-10 cursor-pointer"
                   aria-label="Next image"
                 >
-                  <ChevronRight className="w-4.5 h-4.5" />
+                  <ChevronRight className="w-4 h-4" />
                 </button>
               </>
             )}
 
             {/* Slide Dot Indicators */}
             {productImages.length > 1 && (
-              <div className="absolute bottom-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 bg-slate-900/60 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm">
+              <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10 bg-slate-900/60 backdrop-blur-md px-2 py-0.5 rounded-full shadow-sm">
                 {productImages.map((_: string, i: number) => (
                   <button
                     key={i}
@@ -122,8 +122,7 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                       e.stopPropagation();
                       setCurrentImageIndex(i);
                     }}
-                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${currentImageIndex === i ? "bg-rose-500 w-3.5" : "bg-white/40 hover:bg-white/80 w-1.5"
-                      }`}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${currentImageIndex === i ? "bg-rose-500 w-3.5" : "bg-white/50 hover:bg-white w-1.5"}`}
                     aria-label={`Go to slide ${i + 1}`}
                   />
                 ))}
@@ -131,76 +130,79 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
             )}
           </div>
         ) : (
-          <span className="text-xs text-slate-400 font-semibold">No Image</span>
+          <span className="text-xs text-slate-400 font-semibold">No Image Available</span>
         )}
       </div>
 
-      {/* Content Details (SECOND) */}
-      <div className="flex flex-col flex-grow justify-between gap-4">
+      {/* Main Content Info Wrapper (flex-1 so bottom area stays aligned) */}
+      <div className="flex flex-col flex-1 justify-between">
         <div className="space-y-3">
-          {/* Upper row: Category */}
-          <div>
-            <span className={`text-[9px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border select-none ${project.category === "ups inventer & batteries"
-              ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
-              : "bg-rose-500/10 text-rose-600 border-rose-500/20"
-              }`}>
+          {/* Category Pill Tag */}
+          <div className="flex items-center justify-between">
+            <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider border select-none ${
+              project.category === "ups inventer & batteries"
+                ? "bg-amber-50 text-amber-700 border-amber-200/80"
+                : "bg-rose-50 text-rose-700 border-rose-200/80"
+            }`}>
               {project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"}
             </span>
-          </div>
 
-          {/* Brand header */}
-          <div className="flex items-start justify-between gap-4">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors select-all line-clamp-1">
-              {project.brandname}
-            </h3>
-            <span className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-rose-50 group-hover:text-rose-600 transition-all duration-300 select-none">
-              <ArrowUpRight className="w-4 h-4" />
+            <span className="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-rose-50 group-hover:text-rose-600 transition-all duration-300 select-none">
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
           </div>
 
-          {/* Product Description */}
+          {/* Product Brand Title */}
+          <h3 className="text-xl font-extrabold text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors line-clamp-1">
+            {project.brandname}
+          </h3>
+
+          {/* Product Feature Bullets */}
           {project.description && (
-            <ul className="text-xs text-slate-500 font-medium leading-relaxed select-all min-h-[54px] list-disc pl-4 space-y-1">
+            <ul className="text-xs text-slate-600 font-medium leading-relaxed space-y-1.5 pt-1">
               {project.description
                 .split(",")
                 .map((item: string) => item.trim())
                 .filter(Boolean)
                 .map((item: string, index: number) => (
-                  <li key={index}>{item}</li>
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 mt-1.5" />
+                    <span className="line-clamp-2">{item}</span>
+                  </li>
                 ))}
             </ul>
           )}
+        </div>
 
-          {/* Price Tag with MRP, Price, and Discount Badge */}
-          <div className="flex items-center gap-2.5 flex-wrap pt-1.5 select-all">
-            <div className="flex items-baseline gap-1">
-              <span className="text-3xl font-black text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors duration-300">
+        {/* Pinned Bottom Footer: Price Tag & WhatsApp Button (ALWAYS ALIGNED) */}
+        <div className="mt-6 pt-4 border-t border-slate-100 space-y-3">
+          {/* Price Row */}
+          <div className="flex items-baseline justify-between gap-2">
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-slate-900 tracking-tight group-hover:text-rose-600 transition-colors">
                 {formatPrice(project.price)}
               </span>
+              {project.mrp && (
+                <span className="text-xs font-semibold text-slate-400 line-through">
+                  M.R.P: {formatPrice(project.mrp)}
+                </span>
+              )}
             </div>
-            {project.mrp && (
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                M.R.P: <span className="line-through">{formatPrice(project.mrp)}</span>
-              </div>
-            )}
             {discountBadge && (
-              <span className="bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider shadow-sm select-none">
+              <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider select-none">
                 {discountBadge}
               </span>
             )}
           </div>
-        </div>
 
-        {/* WhatsApp Enquiry Button */}
-        <div className="pt-2 border-t border-slate-100/60">
+          {/* WhatsApp Enquiry Button */}
           <a
             href={`https://wa.me/918870534049?text=${encodeURIComponent(
-              `Hello, I would like to enquire about the *${project.brandname}* (${project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"
-              }) priced at *${formatPrice(project.price)}*.`
+              `Hello, I would like to enquire about the *${project.brandname}* (${project.category === "ups inventer & batteries" ? "UPS & Batteries" : "Water Purifier"}) priced at *${formatPrice(project.price)}*.`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-md py-3 px-4 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all duration-300 shadow-[0_4px_12px_rgba(16,185,129,0.12)] hover:shadow-[0_8px_20px_rgba(16,185,129,0.24)] cursor-pointer select-none"
+            className="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white rounded-xl py-3 px-4 text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer select-none"
           >
             <svg
               className="w-4 h-4 fill-current"

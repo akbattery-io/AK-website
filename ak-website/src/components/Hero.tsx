@@ -167,128 +167,52 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Desktop Product Showcase Layout */}
-        <div className="mt-16 md:mt-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 lg:gap-12 items-center max-w-6xl mx-auto">
-
-            {/* Battery Showcase Card (Left) */}
-            <motion.div
-              initial={{ opacity: 0, x: -30, y: 0 }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                y: [0, -10, 0]
-              }}
-              transition={{
-                opacity: { duration: 0.7, delay: 0.4 },
-                x: { duration: 0.7, delay: 0.4 },
-                y: {
-                  repeat: Infinity,
-                  duration: 5,
-                  ease: "easeInOut"
-                }
-              }}
-              className="order-2 md:order-1 flex justify-center md:justify-end"
-            >
-              <div className="relative group rounded-md p-6 ">
-                {/* Floating badge */}
-                <span className="absolute top-4 left-4 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                  Power Backup
-                </span>
-                <Image
-                  src="/images/battery.webp"
-                  alt="Inverter & Battery Power Backup System"
-                  width={280}
-                  height={280}
-                  priority
-                  loading="eager"
-                  className="object-contain w-auto h-auto max-h-[220px] group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            </motion.div>
-
-            {/* Social Proof Middle Element (Center) */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="order-1 md:order-2 flex flex-col items-center justify-center py-6 px-6 bg-white/80 md:bg-transparent rounded-md border border-slate-200/50 md:border-transparent shadow-[0_4px_30px_rgba(15,23,42,0.02)] backdrop-blur-md max-w-[280px] w-full mx-auto mb-8 md:mb-0"
-            >
-              {/* Avatar Overlap */}
-              <div className="flex -space-x-3 mb-3">
-                {avatars.map((avatar, idx) => (
-                  <motion.div
-                    key={idx}
-                    whileHover={{ scale: 1.15, y: -4 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    className={`w-10 h-10 rounded-full border-2 border-white ${avatar.bg} bg-gradient-to-tr ${avatar.grad} flex items-center justify-center text-white text-[11px] font-bold shadow-sm select-none cursor-pointer relative hover:z-10`}
-                  >
-                    {avatar.label}
-                  </motion.div>
-                ))}
+        {/* Centered Social Proof Review Card */}
+        <div className="mt-12 sm:mt-16 flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-col items-center justify-center py-6 px-6 bg-white/80 rounded-md border border-slate-200/50 shadow-[0_4px_30px_rgba(15,23,42,0.02)] backdrop-blur-md max-w-[280px] w-full mx-auto"
+          >
+            {/* Avatar Overlap */}
+            <div className="flex -space-x-3 mb-3">
+              {avatars.map((avatar, idx) => (
                 <motion.div
+                  key={idx}
                   whileHover={{ scale: 1.15, y: -4 }}
                   transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                  className="w-10 h-10 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-white text-[11px] font-bold shadow-sm cursor-pointer relative hover:z-10"
+                  className={`w-10 h-10 rounded-full border-2 border-white ${avatar.bg} bg-gradient-to-tr ${avatar.grad} flex items-center justify-center text-white text-[11px] font-bold shadow-sm select-none cursor-pointer relative hover:z-10`}
                 >
-                  +1000
+                  {avatar.label}
                 </motion.div>
-              </div>
+              ))}
+              <motion.div
+                whileHover={{ scale: 1.15, y: -4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                className="w-10 h-10 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-white text-[11px] font-bold shadow-sm cursor-pointer relative hover:z-10"
+              >
+                +1000
+              </motion.div>
+            </div>
 
-              {/* Trust Text */}
-              <div className="text-center">
-                <span className="block text-slate-800 font-extrabold text-base leading-tight">
-                  1000+ Happy Customers
-                </span>
-                <div className="flex items-center justify-center gap-0.5 mt-1.5 mb-1.5 text-amber-500">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <span className="text-slate-400 text-[10px] uppercase font-bold tracking-widest block">
-                  Verified Local Reviews
-                </span>
+            {/* Trust Text */}
+            <div className="text-center">
+              <span className="block text-slate-800 font-extrabold text-base leading-tight">
+                1000+ Happy Customers
+              </span>
+              <div className="flex items-center justify-center gap-0.5 mt-1.5 mb-1.5 text-amber-500">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
               </div>
-            </motion.div>
-
-            {/* Purifier Showcase Card (Right) */}
-            <motion.div
-              initial={{ opacity: 0, x: 30, y: 0 }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                y: [0, -10, 0]
-              }}
-              transition={{
-                opacity: { duration: 0.7, delay: 0.4 },
-                x: { duration: 0.7, delay: 0.4 },
-                y: {
-                  repeat: Infinity,
-                  duration: 5.5,
-                  ease: "easeInOut"
-                }
-              }}
-              className="order-3 flex justify-center md:justify-start"
-            >
-              <div className="relative group p-6 ">
-                {/* Floating badge */}
-                <span className="absolute top-4 left-4 bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                  Pure Water
-                </span>
-                <Image
-                  src="/images/purifier.webp"
-                  alt="Modern RO Water Purifier System"
-                  width={280}
-                  height={280}
-                  priority
-                  loading="eager"
-                  className="object-contain w-auto h-auto max-h-[220px] group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            </motion.div>
-          </div>
+              <span className="text-slate-400 text-[10px] uppercase font-bold tracking-widest block">
+                Verified Local Reviews
+              </span>
+            </div>
+          </motion.div>
         </div>
 
         {/* Unified Trusted Partners Section at the bottom of Hero */}
