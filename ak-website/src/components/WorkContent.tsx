@@ -74,6 +74,8 @@ function ProductCard({ project, idx }: { project: any; idx: number }) {
                   src={productImages[currentImageIndex]}
                   alt={`${project.brandname} ${project.category} Product - Visual ${currentImageIndex + 1}`}
                   fill
+                  priority
+                  loading="eager"
                   className="object-contain transition-transform duration-700 group-hover:scale-105 pointer-events-none"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   draggable={false}

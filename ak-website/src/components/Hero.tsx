@@ -102,19 +102,19 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.05 }}
             className="mb-8 flex items-center justify-center px-4"
           >
-            <div className="flex flex-wrap items-center justify-center gap-2.5">
-              {/* Tag 1: Services */}
+            {/* <div className="flex flex-wrap items-center justify-center gap-2.5">
+        
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-rose-50/60 border border-rose-100/50 shadow-[0_2px_10px_rgba(225,29,72,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-rose-600">
                 <Wrench className="w-3.5 h-3.5 text-rose-500 shrink-0" />
                 <span>1000+ Services Completed</span>
               </div>
 
-              {/* Tag 2: Installations */}
+              
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-50/80 border border-slate-200/60 shadow-[0_2px_10px_rgba(15,23,42,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-slate-600">
                 <BadgeCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
                 <span>5-6 Installations Daily</span>
               </div>
-            </div>
+            </div> */}
           </motion.div>
 
           {/* Main Title Heading */}
@@ -165,49 +165,6 @@ export function Hero() {
             </motion.div>
 
           </motion.div>
-
-          {/* Feature Marquee */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="w-full max-w-5xl mt-20 overflow-hidden relative border-y border-slate-200/50 py-3.5 bg-white/40 backdrop-blur-[2px]"
-          >
-            {/* Gradient masks for smooth fading edges */}
-            <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#FAFBFD] to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#FAFBFD] to-transparent z-10 pointer-events-none" />
-
-            <div className="animate-marquee flex w-max items-center gap-16 whitespace-nowrap">
-              {/* First list of items */}
-              {features.map((feature, index) => (
-                <React.Fragment key={index}>
-                  <motion.div
-                    whileHover={{ scale: 1.06, y: -2 }}
-                    className="flex items-center gap-2.5 text-slate-700 hover:text-rose-600 transition-colors duration-200 font-semibold text-xs sm:text-sm tracking-wide cursor-pointer select-none"
-                  >
-                    <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color} transition-colors duration-200`}>
-                      <feature.Icon className="w-3 h-3" />
-                    </span>
-                    <span>{feature.text}</span>
-                  </motion.div>
-                </React.Fragment>
-              ))}
-              {/* Duplicate list for seamless loop */}
-              {features.map((feature, index) => (
-                <React.Fragment key={`dup-${index}`}>
-                  <motion.div
-                    whileHover={{ scale: 1.06, y: -2 }}
-                    className="flex items-center gap-2.5 text-slate-700 hover:text-rose-600 transition-colors duration-200 font-semibold text-xs sm:text-sm tracking-wide cursor-pointer select-none"
-                  >
-                    <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color} transition-colors duration-200`}>
-                      <feature.Icon className="w-3 h-3" />
-                    </span>
-                    <span>{feature.text}</span>
-                  </motion.div>
-                </React.Fragment>
-              ))}
-            </div>
-          </motion.div>
         </div>
 
         {/* Desktop Product Showcase Layout */}
@@ -244,6 +201,7 @@ export function Hero() {
                   width={280}
                   height={280}
                   priority
+                  loading="eager"
                   className="object-contain w-auto h-auto max-h-[220px] group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -325,6 +283,7 @@ export function Hero() {
                   width={280}
                   height={280}
                   priority
+                  loading="eager"
                   className="object-contain w-auto h-auto max-h-[220px] group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

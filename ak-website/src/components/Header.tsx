@@ -4,9 +4,19 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, PhoneCall, ChevronDown } from "lucide-react";
+import { Menu, X, PhoneCall, ChevronDown, BadgeCheck, Wrench, UserCheck, ShieldCheck, Tag, Zap, MapPin } from "lucide-react";
 import { Button } from "./ui/Button";
 import { EnquiryModal } from "./EnquiryModal";
+
+const marqueeFeatures = [
+  { text: "Genuine Products", Icon: BadgeCheck, color: "text-blue-600 bg-blue-50 border-blue-100" },
+  { text: "Doorstep Installation", Icon: Wrench, color: "text-amber-600 bg-amber-50 border-amber-100" },
+  { text: "Expert Technicians", Icon: UserCheck, color: "text-purple-600 bg-purple-50 border-purple-100" },
+  { text: "Warranty Support", Icon: ShieldCheck, color: "text-emerald-600 bg-emerald-50 border-emerald-100" },
+  { text: "Affordable Pricing", Icon: Tag, color: "text-rose-600 bg-rose-50 border-rose-100" },
+  { text: "Fast Response", Icon: Zap, color: "text-yellow-600 bg-yellow-50 border-yellow-100" },
+  { text: "Trusted Local Service", Icon: MapPin, color: "text-indigo-600 bg-indigo-50 border-indigo-100" },
+];
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -51,12 +61,39 @@ export function Header() {
   };
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${scrolled
-        ? "bg-white/80 backdrop-blur-md shadow-[0_2px_20px_rgba(15,23,42,0.03)] border-b border-slate-100"
-        : "bg-transparent border-b border-transparent"
-        }`}
-    >
+    <div className="sticky top-0 z-50 w-full">
+      {/* Top Announcement Marquee Bar at Very Top of Website - Light Theme */}
+      <div className="w-full bg-white/90 backdrop-blur-md border-b border-slate-200/60 py-2 overflow-hidden relative select-none">
+        {/* Gradient edge masks */}
+        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#FAFBFD] via-[#FAFBFD]/80 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#FAFBFD] via-[#FAFBFD]/80 to-transparent z-10 pointer-events-none" />
+
+        <div className="animate-marquee flex w-max items-center gap-12 whitespace-nowrap">
+          {marqueeFeatures.map((feature, index) => (
+            <div key={index} className="flex items-center gap-2 text-slate-700 font-semibold text-xs tracking-wide">
+              <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color}`}>
+                <feature.Icon className="w-3 h-3" />
+              </span>
+              <span>{feature.text}</span>
+            </div>
+          ))}
+          {marqueeFeatures.map((feature, index) => (
+            <div key={`dup-${index}`} className="flex items-center gap-2 text-slate-700 font-semibold text-xs tracking-wide">
+              <span className={`flex items-center justify-center w-5 h-5 rounded-full border ${feature.color}`}>
+                <feature.Icon className="w-3 h-3" />
+              </span>
+              <span>{feature.text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <header
+        className={`w-full transition-all duration-300 ${scrolled
+          ? "bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(15,23,42,0.06)] border-b border-slate-200/80"
+          : "bg-white/80 backdrop-blur-sm border-b border-slate-100/60"
+          }`}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
@@ -72,6 +109,7 @@ export function Header() {
                 height={36}
                 className="w-9 h-9 object-contain"
                 priority
+                loading="eager"
               />
             </Link>
           </div>
@@ -207,5 +245,7 @@ export function Header() {
 
       <EnquiryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </header>
+    </div>
   );
 }
+
