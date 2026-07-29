@@ -17,7 +17,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "AK Batteries & RO Solutions | Kannamangalam",
+  title: "AK Batteries & RO Solutions kannamangalam",
   description: "Battery, Inverter & RO Water Purifier shop in Kannamangalam. Doorstep service for Exide, Amaron, Purosis in Kannamangalam & Vellore.",
   keywords: [
     "AK Batteries Kannamangalam",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     "Battery Service Centre Kannamangalam"
   ],
   openGraph: {
-    title: "AK Batteries & RO Solutions | Kannamangalam",
+    title: "AK Batteries & RO Solutions kannamangalam",
     description: "Doorstep sales, installation & service for batteries, inverters & RO water purifiers in Kannamangalam.",
     siteName: "AK Batteries & RO Solutions",
     images: [
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AK Batteries & RO Solutions | Kannamangalam",
+    title: "AK Batteries & RO Solutions kannamangalam",
     description: "Doorstep sales, installation & service for batteries, inverters & RO water purifiers in Kannamangalam.",
     images: ["/images/og-image.png"],
   },

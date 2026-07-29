@@ -23,6 +23,11 @@ import {
   Package,
   Users,
   Wrench,
+  ChevronLeft,
+  ChevronRight,
+  Phone,
+  PhoneCall,
+  MessageSquare,
   Home
 } from "lucide-react";
 
@@ -85,11 +90,41 @@ export default function CustomersPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
+  // Checkbox selection state
+  const [selectedCustomerIds, setSelectedCustomerIds] = useState<string[]>([]);
+
   // Modals open states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [contactCustomer, setContactCustomer] = useState<Customer | null>(null);
+  const [whatsappMsg, setWhatsappMsg] = useState("");
+
+  const openContactModal = (customer: Customer) => {
+    setContactCustomer(customer);
+    const formattedDate = formatInstallationDate(customer.installation_date);
+    const defaultMsg = `Hi ${customer.customer_name}
+This is AK Batteries. Your ${customer.product_name}, installed on ${formattedDate}, is due for maintenance service. 
+Please let us know a convenient date and time for the service. 
+Thank you!`;
+    setWhatsappMsg(defaultMsg);
+    setIsContactModalOpen(true);
+  };
+
+  const handleWhatsAppClick = () => {
+    if (!contactCustomer) return;
+    const rawDigits = contactCustomer.phone_number.replace(/[^0-9]/g, "");
+    const formattedPhone = rawDigits.length === 10 ? `91${rawDigits}` : rawDigits;
+    const url = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(whatsappMsg)}`;
+    window.open(url, "_blank");
+  };
+
+  const handleCallClick = () => {
+    if (!contactCustomer) return;
+    window.location.href = `tel:${contactCustomer.phone_number.trim()}`;
+  };
 
   // Form field states
   const [customerName, setCustomerName] = useState("");
@@ -120,9 +155,10 @@ export default function CustomersPage() {
     };
   }, [searchQuery]);
 
-  // Reset page when search or filters change
+  // Reset page and selection when search or filters change
   useEffect(() => {
     setCurrentPage(1);
+    setSelectedCustomerIds([]);
   }, [debouncedSearchQuery, statusFilter]);
 
   // Fetch customers from Supabase
@@ -377,10 +413,51 @@ export default function CustomersPage() {
     try {
       const { error } = await supabase.from("customers").delete().eq("id", id);
       if (error) throw error;
+      setSelectedCustomerIds((prev) => prev.filter((item) => item !== id));
       fetchCustomers();
+      refetchInactiveCount();
     } catch (err: any) {
       console.error("Error deleting customer:", err);
       alert(err.message || "Failed to delete customer registration.");
+    }
+  };
+
+  // Selection handlers
+  const toggleSelectCustomer = (id: string) => {
+    setSelectedCustomerIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const toggleSelectAll = () => {
+    const currentPageIds = customers.map((c) => c.id);
+    const allSelected = currentPageIds.length > 0 && currentPageIds.every((id) => selectedCustomerIds.includes(id));
+
+    if (allSelected) {
+      setSelectedCustomerIds((prev) => prev.filter((id) => !currentPageIds.includes(id)));
+    } else {
+      setSelectedCustomerIds((prev) => Array.from(new Set([...prev, ...currentPageIds])));
+    }
+  };
+
+  // Bulk delete handler
+  const handleBulkDelete = async () => {
+    if (selectedCustomerIds.length === 0) return;
+    const count = selectedCustomerIds.length;
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete ${count} selected customer registration${count > 1 ? "s" : ""}? This action cannot be undone.`
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const { error } = await supabase.from("customers").delete().in("id", selectedCustomerIds);
+      if (error) throw error;
+      setSelectedCustomerIds([]);
+      fetchCustomers();
+      refetchInactiveCount();
+    } catch (err: any) {
+      console.error("Error deleting selected customers:", err);
+      alert(err.message || "Failed to delete selected customers.");
     }
   };
 
@@ -389,7 +466,7 @@ export default function CustomersPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-mesh-gradient">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-md animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-slate-500 text-sm font-semibold">Authenticating...</p>
         </div>
       </div>
@@ -453,6 +530,25 @@ export default function CustomersPage() {
           </div>
         </section>
 
+        {/* Selected Customers Action Bar */}
+        {selectedCustomerIds.length > 0 && (
+          <div className="bg-rose-50 border border-rose-200 rounded-md p-4 mb-6 flex items-center justify-between animate-in fade-in duration-200 shadow-xs">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-600 animate-pulse"></span>
+              <span className="text-xs font-bold text-rose-900">
+                {selectedCustomerIds.length} customer{selectedCustomerIds.length > 1 ? "s" : ""} selected
+              </span>
+            </div>
+            <button
+              onClick={handleBulkDelete}
+              className="h-9 px-4 bg-rose-600 hover:bg-rose-700 text-white rounded-md text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-sm shadow-rose-200"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span>Delete Selected ({selectedCustomerIds.length})</span>
+            </button>
+          </div>
+        )}
+
         {/* Database Action Status Alerts */}
         {dbError && (
           <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-700 rounded-md text-xs font-semibold leading-relaxed">
@@ -479,90 +575,114 @@ export default function CustomersPage() {
             </div>
           ) : (
             <>
-              {/* Responsive Table for large screens */}
-              <div className="hidden lg:block overflow-x-auto">
-                <table className="w-full text-left border-collapse">
+              {/* Table View for all screen sizes */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse min-w-[780px]">
                   <thead>
                     <tr className="bg-slate-50/80 border-b border-slate-100/80 text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">
-                      <th className="py-4.5 px-6">Customer Name</th>
-                      <th className="py-4.5 px-6">Phone Number</th>
-                      <th className="py-4.5 px-6">Place</th>
-                      <th className="py-4.5 px-6">Product Name</th>
-                      <th className="py-4.5 px-6">Installation Date</th>
-                      <th className="py-4.5 px-6">Maintenance</th>
-                      <th className="py-4.5 px-6">Status</th>
-                      <th className="py-4.5 px-6 text-right">Actions</th>
+                      <th className="py-4.5 px-4 text-center w-12">
+                        <input
+                          type="checkbox"
+                          checked={customers.length > 0 && customers.every((c) => selectedCustomerIds.includes(c.id))}
+                          onChange={toggleSelectAll}
+                          className="w-4 h-4 rounded border-slate-300 text-rose-600 focus:ring-rose-500 cursor-pointer accent-rose-600"
+                          title="Select All"
+                        />
+                      </th>
+                      <th className="py-4.5 px-6 text-center">Customer Name</th>
+                      <th className="py-4.5 px-6 text-center">Phone Number</th>
+                      <th className="py-4.5 px-6 text-center">Place</th>
+                      <th className="py-4.5 px-6 text-center">Product Name</th>
+                      <th className="py-4.5 px-6 text-center">Installation Date</th>
+                      <th className="py-4.5 px-6 text-center">Status</th>
+                      <th className="py-4.5 px-6">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 text-xs text-slate-800">
                     {customers.map((customer) => {
                       const isInactive = customer.status === "Inactive";
+                      const isSelected = selectedCustomerIds.includes(customer.id);
                       return (
                         <tr
                           key={customer.id}
-                          className={`transition-colors ${isInactive
+                          className={`transition-colors ${isSelected
+                            ? "bg-rose-50/50 hover:bg-rose-50/70"
+                            : isInactive
                               ? "bg-slate-50/70 text-slate-505 hover:bg-slate-100/50"
                               : "hover:bg-slate-50/30"
                             }`}
                         >
+                          <td className="py-4 px-4 text-center">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => toggleSelectCustomer(customer.id)}
+                              className="w-4 h-4 rounded border-slate-300 text-rose-600 focus:ring-rose-500 cursor-pointer accent-rose-600"
+                            />
+                          </td>
                           <td className={`py-4 px-6 font-bold ${isInactive ? "text-slate-700" : "text-slate-900"}`}>{customer.customer_name}</td>
-                          <td className={`py-4 px-6 font-semibold ${isInactive ? "text-slate-500" : "text-slate-650"}`}>{customer.phone_number}</td>
-                          <td className="py-4 px-6 font-semibold">{customer.place}</td>
+                          <td className="py-4 px-6 font-semibold">
+                            <button
+                              type="button"
+                              onClick={() => openContactModal(customer)}
+                              className={`inline-flex items-center gap-1.5 font-semibold group transition-colors underline-offset-2 hover:underline cursor-pointer ${isInactive ? "text-slate-500 hover:text-rose-600" : "text-slate-700 hover:text-rose-600"
+                                }`}
+                              title="Click to Call or WhatsApp"
+                            >
+                              <Phone className="w-3.5 h-3.5 text-rose-500 opacity-75 group-hover:opacity-100 transition-opacity shrink-0" />
+                              <span>{customer.phone_number}</span>
+                            </button>
+                          </td>
+                          <td className="py-4 px-6 font-semibold">
+                            {customer.place ? (
+                              <a
+                                href={
+                                  customer.latitude !== null && customer.latitude !== undefined && customer.longitude !== null && customer.longitude !== undefined
+                                    ? `https://www.google.com/maps?q=${customer.latitude},${customer.longitude}`
+                                    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(customer.place)}`
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 text-slate-800 hover:text-rose-600 font-semibold group transition-colors underline-offset-2 hover:underline"
+                                title="Open place in Google Maps"
+                              >
+                                <span>{customer.place}</span>
+                              </a>
+                            ) : (
+                              "―"
+                            )}
+                          </td>
                           <td className="py-4 px-6 font-medium text-slate-550">{customer.product_name}</td>
                           <td className="py-4 px-6 font-semibold">{formatInstallationDate(customer.installation_date)}</td>
-                          <td className="py-4 px-6 font-semibold">{customer.maintenance_period} Months</td>
                           <td className="py-4 px-6">
                             <span
                               className={`inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wide border ${isInactive
-                                  ? "bg-rose-50 border-rose-100 text-rose-700"
-                                  : "bg-emerald-50 border-emerald-100 text-emerald-700"
+                                ? "bg-rose-50 border-rose-100 text-rose-700"
+                                : "bg-emerald-50 border-emerald-100 text-emerald-700"
                                 }`}
                             >
                               {customer.status}
                             </span>
                           </td>
                           <td className="py-3 px-6 text-right">
-                            <div className="inline-flex items-center gap-1">
+                            <div className="inline-flex items-center gap-2 justify-end">
                               <button
                                 onClick={() => openViewModal(customer)}
                                 title="View Details"
-                                className="w-9 h-9 border border-slate-150 hover:border-slate-350 hover:bg-slate-50 rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-800 transition-all bg-white"
+                                className="h-8 px-3 border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-md flex items-center gap-1.5 text-xs font-bold transition-all bg-white"
                               >
-                                <Eye className="w-4 h-4" />
+                                <Eye className="w-3.5 h-3.5 text-slate-500" />
+                                <span>View</span>
                               </button>
                               <button
                                 onClick={() => openEditModal(customer)}
                                 title="Edit Customer"
-                                className="w-9 h-9 border border-slate-150 hover:border-rose-200 hover:bg-rose-50/30 rounded-lg flex items-center justify-center text-slate-500 hover:text-rose-600 transition-all bg-white"
+                                className="h-8 px-3 border border-slate-200 text-slate-700 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50/40 rounded-md flex items-center gap-1.5 text-xs font-bold transition-all bg-white"
                               >
-                                <Edit className="w-4 h-4" />
+                                <Edit className="w-3.5 h-3.5 text-slate-500" />
+                                <span>Edit</span>
                               </button>
-                              <button
-                                onClick={() => handleDeleteCustomer(customer.id, customer.customer_name)}
-                                title="Delete Customer"
-                                className="w-9 h-9 border border-slate-150 hover:border-red-200 hover:bg-red-50 rounded-lg flex items-center justify-center text-slate-500 hover:text-red-655 transition-all bg-white"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </button>
-                              {customer.latitude !== null && customer.latitude !== undefined && customer.longitude !== null && customer.longitude !== undefined ? (
-                                <a
-                                  href={`https://www.google.com/maps?q=${customer.latitude},${customer.longitude}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  title="Open in Google Maps"
-                                  className="w-9 h-9 border border-slate-150 hover:border-amber-200 hover:bg-amber-50 rounded-lg flex items-center justify-center text-slate-500 hover:text-amber-600 transition-all bg-white"
-                                >
-                                  <MapPin className="w-4 h-4" />
-                                </a>
-                              ) : (
-                                <button
-                                  disabled
-                                  title="Location Coordinates Not Available"
-                                  className="w-9 h-9 border border-slate-100 rounded-lg flex items-center justify-center text-slate-200 cursor-not-allowed bg-white"
-                                >
-                                  <MapPin className="w-4 h-4" />
-                                </button>
-                              )}
+
                             </div>
                           </td>
                         </tr>
@@ -570,100 +690,6 @@ export default function CustomersPage() {
                     })}
                   </tbody>
                 </table>
-              </div>
-
-              {/* Card view for mobile/tablet screens */}
-              <div className="block lg:hidden divide-y divide-slate-100">
-                {customers.map((customer) => {
-                  const isInactive = customer.status === "Inactive";
-                  return (
-                    <div
-                      key={customer.id}
-                      className={`p-5 flex flex-col gap-4 border-l-4 transition-all duration-300 ${isInactive
-                          ? "bg-slate-50/70 border-slate-300 text-slate-500 opacity-90"
-                          : "bg-white border-emerald-500"
-                        }`}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h4 className={`text-sm font-bold ${isInactive ? "text-slate-650" : "text-slate-900"}`}>
-                            {customer.customer_name}
-                          </h4>
-                          <p className="text-slate-400 text-xs font-semibold mt-0.5">{customer.product_name}</p>
-                        </div>
-                        <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide border ${isInactive
-                              ? "bg-rose-50 border-rose-100 text-rose-700"
-                              : "bg-emerald-50 border-emerald-100 text-emerald-700"
-                            }`}
-                        >
-                          {customer.status}
-                        </span>
-                      </div>
-
-                      <div className={`grid grid-cols-2 gap-3 text-xs border-y py-3 ${isInactive ? "border-slate-200/60" : "border-slate-50"}`}>
-                        <div>
-                          <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Phone Number</p>
-                          <p className={`font-semibold mt-0.5 ${isInactive ? "text-slate-500" : "text-slate-700"}`}>{customer.phone_number}</p>
-                        </div>
-                        <div>
-                          <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Place</p>
-                          <p className={`font-semibold mt-0.5 ${isInactive ? "text-slate-500" : "text-slate-700"}`}>{customer.place}</p>
-                        </div>
-                        <div>
-                          <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Maintenance</p>
-                          <p className={`font-semibold mt-0.5 ${isInactive ? "text-slate-500" : "text-slate-700"}`}>{customer.maintenance_period} Months</p>
-                        </div>
-                        <div>
-                          <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Install Date</p>
-                          <p className={`font-semibold mt-0.5 ${isInactive ? "text-slate-400" : "text-slate-500"}`}>{formatInstallationDate(customer.installation_date)}</p>
-                        </div>
-                      </div>                      <div className="grid grid-cols-2 gap-2 w-full">
-                        <button
-                          onClick={() => openViewModal(customer)}
-                          className="h-9 w-full border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-white"
-                        >
-                          <Eye className="w-3.5 h-3.5" />
-                          <span>View</span>
-                        </button>
-                        <button
-                          onClick={() => openEditModal(customer)}
-                          className="h-9 w-full border border-slate-200 text-slate-600 hover:bg-slate-50 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-white"
-                        >
-                          <Edit className="w-3.5 h-3.5" />
-                          <span>Edit</span>
-                        </button>
-                        <button
-                          onClick={() => handleDeleteCustomer(customer.id, customer.customer_name)}
-                          className="h-9 w-full border border-slate-200 text-red-650 hover:bg-red-50 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 bg-white"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                          <span>Delete</span>
-                        </button>
-                        {customer.latitude && customer.longitude ? (
-                          <a
-                            href={`https://www.google.com/maps?q=${customer.latitude},${customer.longitude}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="h-9 w-full bg-amber-50 hover:bg-amber-100/80 border border-amber-100 text-amber-700 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 animate-in fade-in"
-                          >
-                            <MapPin className="w-3.5 h-3.5" />
-                            <span>Maps</span>
-                          </a>
-                        ) : (
-                          <button
-                            disabled
-                            title="Location Coordinates Not Available"
-                            className="h-9 w-full border border-slate-100 text-slate-350 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 bg-slate-50 cursor-not-allowed"
-                          >
-                            <MapPin className="w-3.5 h-3.5" />
-                            <span>Maps</span>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
               </div>
 
               {/* Pagination Controls */}
@@ -685,27 +711,27 @@ export default function CustomersPage() {
                   <span>Entries</span>
                 </div>
 
-                {totalPages > 1 && (
-                  <div className="flex items-center gap-4">
-                    <button
-                      disabled={currentPage === 1}
-                      onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                      className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-xs font-bold uppercase tracking-wider transition-all"
-                    >
-                      Previous
-                    </button>
-                    <span className="text-xs font-semibold">
-                      Page {currentPage} of {totalPages}
-                    </span>
-                    <button
-                      disabled={currentPage === totalPages}
-                      onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                      className="h-9 px-4 border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed rounded-md text-xs font-bold uppercase tracking-wider transition-all"
-                    >
-                      Next
-                    </button>
-                  </div>
-                )}
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <button
+                    disabled={currentPage <= 1}
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                    className="h-9 px-4 border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 disabled:opacity-40 disabled:cursor-not-allowed rounded-md text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-xs"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Previous</span>
+                  </button>
+                  <span className="text-xs font-semibold text-slate-600 min-w-[90px] text-center">
+                    Page {currentPage} of {totalPages || 1}
+                  </span>
+                  <button
+                    disabled={currentPage >= totalPages}
+                    onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                    className="h-9 px-4 border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 disabled:opacity-40 disabled:cursor-not-allowed rounded-md text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-xs"
+                  >
+                    <span>Next</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                  </button>
+                </div>
               </div>
             </>
           )}
@@ -1107,19 +1133,57 @@ export default function CustomersPage() {
 
             <div className="space-y-4 sm:space-y-5 text-sm overflow-y-auto flex-1 pr-1">
               <div className="bg-slate-50/50 p-5 border border-slate-100 rounded-md space-y-4">
-                <div>
-                  <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Customer Name</span>
-                  <span className="text-slate-900 font-bold text-base mt-0.5 block">{selectedCustomer.customer_name}</span>
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Customer Name</span>
+                    <span className="text-slate-900 font-bold text-base mt-0.5 block">{selectedCustomer.customer_name}</span>
+                  </div>
+                  <span
+                    className={`inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wide border shrink-0 ${selectedCustomer.status === "Inactive"
+                      ? "bg-rose-50 border-rose-100 text-rose-700"
+                      : "bg-emerald-50 border-emerald-100 text-emerald-700"
+                      }`}
+                  >
+                    {selectedCustomer.status}
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Phone Number</span>
-                    <span className="text-slate-800 font-semibold mt-0.5 block">{selectedCustomer.phone_number}</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsViewModalOpen(false);
+                        openContactModal(selectedCustomer);
+                      }}
+                      className="text-slate-800 hover:text-rose-600 font-semibold mt-0.5 inline-flex items-center gap-1.5 group transition-colors underline-offset-2 hover:underline cursor-pointer"
+                      title="Click to Call or WhatsApp"
+                    >
+                      <Phone className="w-3.5 h-3.5 text-rose-500 opacity-75 group-hover:opacity-100 transition-opacity shrink-0" />
+                      <span>{selectedCustomer.phone_number}</span>
+                    </button>
                   </div>
                   <div>
                     <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Place / Location</span>
-                    <span className="text-slate-800 font-semibold mt-0.5 block">{selectedCustomer.place}</span>
+                    {selectedCustomer.place ? (
+                      <a
+                        href={
+                          selectedCustomer.latitude !== null && selectedCustomer.latitude !== undefined && selectedCustomer.longitude !== null && selectedCustomer.longitude !== undefined
+                            ? `https://www.google.com/maps?q=${selectedCustomer.latitude},${selectedCustomer.longitude}`
+                            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(selectedCustomer.place)}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-800 hover:text-rose-600 font-semibold mt-0.5 inline-flex items-center gap-1.5 group transition-colors underline-offset-2 hover:underline"
+                        title="Open place in Google Maps"
+                      >
+                        <span>{selectedCustomer.place}</span>
+                        <MapPin className="w-3.5 h-3.5 text-rose-500 opacity-75 group-hover:opacity-100 transition-opacity shrink-0" />
+                      </a>
+                    ) : (
+                      <span className="text-slate-800 font-semibold mt-0.5 block">―</span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1136,12 +1200,17 @@ export default function CustomersPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 pt-2 border-t border-slate-50">
-
+                <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-50">
                   <div>
-                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Maintenance</span>
+                    <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Maintenance Period</span>
                     <span className="text-slate-700 font-semibold mt-0.5 block">{selectedCustomer.maintenance_period} Months</span>
                   </div>
+                  {selectedCustomer.latitude && selectedCustomer.longitude && (
+                    <div>
+                      <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block">Coordinates</span>
+                      <span className="text-slate-700 font-semibold mt-0.5 block text-xs">{selectedCustomer.latitude}, {selectedCustomer.longitude}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -1173,6 +1242,66 @@ export default function CustomersPage() {
                   Close
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= CONTACT CUSTOMER MODAL ================= */}
+      {isContactModalOpen && contactCustomer && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-white rounded-md border border-slate-100 max-w-md w-full p-5 sm:p-7 shadow-2xl relative animate-in zoom-in-95 duration-300">
+            <button
+              onClick={() => setIsContactModalOpen(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 transition-colors w-8 h-8 rounded-md border border-slate-100 flex items-center justify-center bg-slate-50 z-50"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="mb-5 shrink-0">
+              <h2 className="font-serif text-xl font-black text-slate-900 tracking-tight">Contact Customer</h2>
+              <p className="text-xs text-slate-400 font-extrabold uppercase tracking-wider mt-1">
+                {contactCustomer.customer_name} • {contactCustomer.phone_number}
+              </p>
+            </div>
+
+            <div className="space-y-4 text-sm">
+              {/* Direct Phone Call Button */}
+              <button
+                onClick={handleCallClick}
+                className="w-full h-12 bg-slate-900 hover:bg-slate-800 text-white rounded-md font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-md shadow-slate-200"
+              >
+                <PhoneCall className="w-4 h-4 text-emerald-400" />
+                <span>Call ({contactCustomer.phone_number})</span>
+              </button>
+
+              <div className="relative flex py-1 items-center">
+                <div className="flex-grow border-t border-slate-200"></div>
+                <span className="flex-shrink mx-3 text-slate-400 text-[10px] font-extrabold uppercase tracking-widest">OR WHATSAPP</span>
+                <div className="flex-grow border-t border-slate-200"></div>
+              </div>
+
+              {/* Editable Maintenance WhatsApp Message */}
+              <div>
+                <label className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-1.5">
+                  Maintenance WhatsApp Message
+                </label>
+                <textarea
+                  rows={4}
+                  value={whatsappMsg}
+                  onChange={(e) => setWhatsappMsg(e.target.value)}
+                  className="w-full p-3 rounded-md border border-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 leading-relaxed bg-slate-50/50"
+                ></textarea>
+              </div>
+
+              {/* Send WhatsApp Message Button */}
+              <button
+                onClick={handleWhatsAppClick}
+                className="w-full h-12 bg-emerald-600 hover:bg-emerald-500 text-white rounded-md font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2.5 shadow-md shadow-emerald-200"
+              >
+                <MessageSquare className="w-4.5 h-4.5" />
+                <span>Send WhatsApp Message</span>
+              </button>
             </div>
           </div>
         </div>

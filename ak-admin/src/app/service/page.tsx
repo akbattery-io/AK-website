@@ -463,7 +463,7 @@ export default function ServicePage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-mesh-gradient">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-md animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-rose-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-slate-500 text-sm font-semibold">Authenticating...</p>
         </div>
       </div>
@@ -578,8 +578,8 @@ export default function ServicePage() {
                         <td className="py-4 px-6">
                           <span
                             className={`inline-flex items-center px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wide border ${customer.status === "Active"
-                                ? "bg-emerald-50 border-emerald-100 text-emerald-700"
-                                : "bg-rose-50 border-rose-100 text-rose-700"
+                              ? "bg-emerald-50 border-emerald-100 text-emerald-700"
+                              : "bg-rose-50 border-rose-100 text-rose-700"
                               }`}
                           >
                             {customer.status}
@@ -649,8 +649,8 @@ export default function ServicePage() {
                       </div>
                       <span
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide border ${customer.status === "Active"
-                            ? "bg-emerald-50 border-emerald-100 text-emerald-700"
-                            : "bg-rose-50 border-rose-100 text-rose-700"
+                          ? "bg-emerald-50 border-emerald-100 text-emerald-700"
+                          : "bg-rose-50 border-rose-100 text-rose-700"
                           }`}
                       >
                         {customer.status}
