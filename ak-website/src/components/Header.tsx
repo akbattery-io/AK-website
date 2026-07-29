@@ -9,13 +9,13 @@ import { Button } from "./ui/Button";
 import { EnquiryModal } from "./EnquiryModal";
 
 const marqueeFeatures = [
-  { text: "Genuine Products", Icon: BadgeCheck, color: "text-rose-600 bg-rose-50 border-rose-100" },
-  { text: "Doorstep Installation", Icon: Wrench, color: "text-rose-600 bg-rose-50 border-rose-100" },
-  { text: "Expert Technicians", Icon: UserCheck, color: "text-rose-600 bg-rose-50 border-rose-100" },
-  { text: "Warranty Support", Icon: ShieldCheck, color: "text-rose-600 bg-rose-50 border-rose-100" },
-  { text: "Affordable Pricing", Icon: Tag, color: "text-rose-600 bg-rose-50 border-rose-100" },
-  { text: "Fast Response", Icon: Zap, color: "text-rose-600 bg-rose-50 border-rose-100" },
-  { text: "Trusted Local Service", Icon: MapPin, color: "text-rose-600 bg-rose-50 border-rose-100" },
+  { text: "Genuine Products", Icon: BadgeCheck, color: "text-[#0D9488] bg-[#14B8A6]/10 border-[#14B8A6]/20" },
+  { text: "Doorstep Installation", Icon: Wrench, color: "text-[#0D9488] bg-[#14B8A6]/10 border-[#14B8A6]/20" },
+  { text: "Expert Technicians", Icon: UserCheck, color: "text-[#0D9488] bg-[#14B8A6]/10 border-[#14B8A6]/20" },
+  { text: "Warranty Support", Icon: ShieldCheck, color: "text-[#0D9488] bg-[#14B8A6]/10 border-[#14B8A6]/20" },
+  { text: "Affordable Pricing", Icon: Tag, color: "text-[#0D9488] bg-[#14B8A6]/10 border-[#14B8A6]/20" },
+  { text: "Fast Response", Icon: Zap, color: "text-[#0D9488] bg-[#14B8A6]/10 border-[#14B8A6]/20" },
+  { text: "Trusted Local Service", Icon: MapPin, color: "text-[#0D9488] bg-[#14B8A6]/10 border-[#14B8A6]/20" },
 ];
 
 export function Header() {
@@ -38,8 +38,8 @@ export function Header() {
       name: "Products",
       href: "/works",
       dropdown: [
-        { name: "RO Purifiers", href: "/water-purifier" },
-        { name: "Batteries & Inverters", href: "/batteries-inverters" },
+        { name: "RO Water Purifier", href: "/water-purifier" },
+        { name: "UPS Inverters & Batteries", href: "/batteries-inverters" },
       ],
     },
     { name: "About us", href: "/about" },
@@ -97,7 +97,7 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 flex items-center">
               <Link
                 href="/"
                 className="flex items-center gap-2 select-none transition-transform hover:scale-105"
@@ -105,9 +105,9 @@ export function Header() {
                 <Image
                   src="/logo.svg"
                   alt="AK Batteries Logo"
-                  width={36}
-                  height={36}
-                  className="w-9 h-9 object-contain"
+                  width={44}
+                  height={44}
+                  className="w-10 h-10 sm:w-11 sm:h-11 object-contain"
                   priority
                   loading="eager"
                 />

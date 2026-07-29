@@ -2,9 +2,10 @@
 
 import * as React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight, BadgeCheck, Wrench, UserCheck, ShieldCheck, Tag, Zap, MapPin, ShoppingCart } from "lucide-react";
+import { Sparkles, ArrowRight, BadgeCheck, Wrench, UserCheck, ShieldCheck, Tag, Zap, MapPin, ShoppingCart, Droplets, BatteryCharging, ChevronRight, PhoneCall } from "lucide-react";
 import { Button } from "./ui/Button";
 import { Badge } from "./ui/Badge";
 
@@ -88,167 +89,192 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative pt-12 pb-20 md:pt-16 md:pb-24 lg:pt-20 lg:pb-32 overflow-hidden"
+      className="relative overflow-hidden bg-[#F9FAFB]"
     >
+      {/* 100vh Vertically Centered Hero Section */}
+      <div className="min-h-[calc(100dvh-5.5rem)] flex flex-col items-center justify-center py-6 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center text-center w-full my-auto">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center text-center">
-
-
-          {/* Social Proof Group */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.05 }}
-            className="mb-8 flex items-center justify-center px-4"
-          >
-            {/* <div className="flex flex-wrap items-center justify-center gap-2.5">
-        
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-rose-50/60 border border-rose-100/50 shadow-[0_2px_10px_rgba(225,29,72,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-rose-600">
-                <Wrench className="w-3.5 h-3.5 text-rose-500 shrink-0" />
-                <span>1000+ Services Completed</span>
-              </div>
-
-              
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-slate-50/80 border border-slate-200/60 shadow-[0_2px_10px_rgba(15,23,42,0.01)] backdrop-blur-[1px] select-none text-xs font-bold text-slate-600">
-                <BadgeCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                <span>5-6 Installations Daily</span>
-              </div>
-            </div> */}
-          </motion.div>
-
-          {/* Main Title Heading */}
+          {/* Headline (Navy #0B1B3A, Bold 28px/mobile) */}
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-slate-900 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold tracking-tight max-w-4xl leading-[1.2] md:leading-[1.25]"
+            className="text-[#0B1B3A] text-[28px] sm:text-5xl md:text-6xl lg:text-7xl font-serif font-extrabold tracking-tight max-w-4xl leading-tight"
             style={{ fontFamily: "system-ui" }}
           >
             AK BATTERIES <br />
-            <span className="block mt-4 text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold tracking-wider bg-gradient-to-r from-rose-600 to-rose-500 bg-clip-text text-transparent">
+            {/* Subheadline (Teal #14B8A6 accent, 16px semibold/bold, letter-spacing) */}
+            <span className="block mt-2.5 sm:mt-4 text-base sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-wider text-[#14B8A6]">
               RO WATER PURIFIERS & BATTERIES
             </span>
           </motion.h1>
 
-          {/* Service Areas Description */}
+          {/* Service Area Body (Medium Gray #6B7280, 14px regular) */}
           <motion.p
             initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 0.7, y: 0 }}
+            animate={{ opacity: 0.9, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-8 text-slate-600 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed font-medium"
+            className="mt-4 sm:mt-6 text-[#6B7280] text-sm sm:text-base md:text-lg max-w-sm sm:max-w-xl mx-auto leading-relaxed font-normal"
           >
-            Providing doorstep sales, installation, and services across{" "}
-            <span className="text-slate-900 font-bold ">Kannamangalam</span>,{" "}
-            <span className="text-slate-900 font-semibold">Vellore</span>, and surrounding areas.
+            Doorstep sales, installation & service across Kannamangalam, Vellore and nearby areas.
           </motion.p>
 
-          {/* Call To Action Buttons */}
+          {/* Single Primary Action: Call Now for Installation (Max Content Width) */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-8 flex flex-row justify-center gap-3 w-full sm:w-auto px-4 sm:px-0"
+            className="mt-6 sm:mt-8 flex justify-center w-full px-2 sm:px-0"
           >
-            <motion.div whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }} className="flex-1 sm:flex-initial">
-              <Button
-                variant="primary"
-                size="md"
-                onClick={() => {
-                  window.open("https://wa.me/918870534049?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20Battery%20and%20RO%20services.", "_blank", "noopener,noreferrer");
-                }}
-                className="group shadow-sm hover:shadow-md w-full sm:w-auto bg-gradient-to-r from-rose-600 to-rose-500 hover:from-rose-500 hover:to-rose-600 text-white border-transparent transition-all text-xs sm:text-sm h-11"
-              >
-                Enquire now
-                <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
-              </Button>
-            </motion.div>
-
-          </motion.div>
-        </div>
-
-        {/* Centered Social Proof Review Card */}
-        <div className="mt-12 sm:mt-16 flex justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col items-center justify-center py-6 px-6 bg-white/80 rounded-md border border-slate-200/50 shadow-[0_4px_30px_rgba(15,23,42,0.02)] backdrop-blur-md max-w-[280px] w-full mx-auto"
-          >
-            {/* Avatar Overlap */}
-            <div className="flex -space-x-3 mb-3">
-              {avatars.map((avatar, idx) => (
-                <motion.div
-                  key={idx}
-                  whileHover={{ scale: 1.15, y: -4 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                  className={`w-10 h-10 rounded-full border-2 border-white ${avatar.bg} bg-gradient-to-tr ${avatar.grad} flex items-center justify-center text-white text-[11px] font-bold shadow-sm select-none cursor-pointer relative hover:z-10`}
+            <motion.div whileHover={{ scale: 1.02, y: -1 }} whileTap={{ scale: 0.98 }} className="w-auto">
+              <a href="tel:+918870534049" className="inline-block w-auto">
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="group shadow-md hover:shadow-lg active:scale-[0.99] w-auto max-w-max bg-[#0B1B3A] hover:bg-[#07132B] text-white hover:text-white border-transparent transition-all text-xs sm:text-base h-12 min-h-[48px] px-6 font-extrabold inline-flex items-center justify-center gap-2.5 rounded-full cursor-pointer whitespace-nowrap"
                 >
-                  {avatar.label}
-                </motion.div>
-              ))}
-              <motion.div
-                whileHover={{ scale: 1.15, y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                className="w-10 h-10 rounded-full border-2 border-white bg-slate-950 flex items-center justify-center text-white text-[11px] font-bold shadow-sm cursor-pointer relative hover:z-10"
-              >
-                +1000
-              </motion.div>
-            </div>
+                  <PhoneCall className="w-4 h-4 sm:w-5 sm:h-5 text-[#14B8A6] group-hover:scale-110 transition-transform shrink-0" />
+                  <span className="text-white">Call Now for Installation</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform shrink-0 ml-1 text-white" />
+                </Button>
+              </a>
+            </motion.div>
+          </motion.div>
 
-            {/* Trust Text */}
-            <div className="text-center">
-              <span className="block text-slate-800 font-extrabold text-base leading-tight">
+          {/* Section 4: Trust/Stats Card - Single Clean Card */}
+          <div className="mt-8 sm:mt-10 flex justify-center w-full">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col items-center justify-center py-5 px-6 bg-white rounded-2xl border border-slate-200/80 shadow-md max-w-[290px] sm:max-w-[320px] w-full mx-auto text-center"
+            >
+              {/* Evenly spaced avatar row */}
+              <div className="flex -space-x-2.5 mb-3">
+                {avatars.map((avatar, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-9 h-9 rounded-full border-2 border-white ${avatar.bg} bg-gradient-to-tr ${avatar.grad} flex items-center justify-center text-white text-[11px] font-bold shadow-sm select-none relative`}
+                  >
+                    {avatar.label}
+                  </div>
+                ))}
+                <div className="w-9 h-9 rounded-full border-2 border-white bg-[#0B1B3A] flex items-center justify-center text-white text-[11px] font-bold shadow-sm relative">
+                  +1K
+                </div>
+              </div>
+
+              {/* "1000+ Happy Customers" — Bold */}
+              <span className="block text-[#0B1B3A] font-extrabold text-base sm:text-lg leading-tight">
                 1000+ Happy Customers
               </span>
-              <div className="flex items-center justify-center gap-0.5 mt-1.5 mb-1.5 text-amber-500">
+
+              {/* Star rating on its own line below in Teal accent color */}
+              <div className="flex items-center justify-center gap-1 mt-2 text-[#14B8A6]">
                 {[...Array(5)].map((_, i) => (
-                  <svg key={i} className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                  <svg key={i} className="w-4 h-4 fill-[#14B8A6]" viewBox="0 0 20 20">
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 ))}
               </div>
-              <span className="text-slate-400 text-[10px] uppercase font-bold tracking-widest block">
-                Verified Local Reviews
-              </span>
+            </motion.div>
+          </div>
+
+        </div>
+      </div>
+
+        {/* Section 5: Category Cards (Repeatable Component) */}
+        <div className="mt-12 sm:mt-16 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 px-2">
+          {/* Card 1: Batteries & Inverters */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="group bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                {/* 40-48px circular badge top-left */}
+                <div className="w-11 h-11 rounded-full bg-[#14B8A6]/10 text-[#14B8A6] flex items-center justify-center font-bold">
+                  <BatteryCharging className="w-5 h-5" />
+                </div>
+                {/* Accent-tinted tag top-right */}
+                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#14B8A6]/10 text-[#0D9488]">
+                  Popular Category
+                </span>
+              </div>
+              {/* Title (Bold, 18px) */}
+              <h3 className="text-lg font-bold text-[#0B1B3A] mb-2 group-hover:text-[#14B8A6] transition-colors">
+                Batteries & Inverters
+              </h3>
+              {/* Description (Gray, 13px, 2-3 lines) */}
+              <p className="text-[#6B7280] text-xs sm:text-sm leading-relaxed mb-4">
+                Genuine Exide, Amaron & Luminous batteries for home UPS, inverters, and vehicles with free doorstep delivery and expert installation.
+              </p>
+            </div>
+
+            {/* Max-content CTA button at bottom: Solid Navy, rounded-full */}
+            <div className="pt-4 border-t border-slate-100 flex justify-center">
+              <Link href="/batteries-inverters" className="inline-block">
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="w-auto max-w-max bg-[#0B1B3A] hover:bg-[#07132B] text-white hover:text-white font-bold text-xs uppercase tracking-wider h-11 px-6 rounded-full inline-flex items-center justify-center gap-1.5 transition-all shadow-sm whitespace-nowrap"
+                >
+                  <span className="text-white">Explore Batteries & Inverters</span>
+                  <ChevronRight className="w-4 h-4 text-white" />
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* Card 2: RO Water Purifiers */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="group bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                {/* 40-48px circular badge top-left */}
+                <div className="w-11 h-11 rounded-full bg-[#14B8A6]/10 text-[#14B8A6] flex items-center justify-center font-bold">
+                  <Droplets className="w-5 h-5" />
+                </div>
+                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#14B8A6]/10 text-[#0D9488]">
+                  Pure Water
+                </span>
+              </div>
+              {/* Title (Bold, 18px) */}
+              <h3 className="text-lg font-bold text-[#0B1B3A] mb-2 group-hover:text-[#14B8A6] transition-colors">
+                RO Water Purifiers
+              </h3>
+              {/* Description (Gray, 13px, 2-3 lines) */}
+              <p className="text-[#6B7280] text-xs sm:text-sm leading-relaxed mb-4">
+                Top brand RO purifiers (Purosis, Aquaguard, Aqua Era), filter replacements, periodic maintenance, and rapid technician support.
+              </p>
+            </div>
+
+            {/* Max-content CTA button at bottom: Solid Navy, rounded-full */}
+            <div className="pt-4 border-t border-slate-100 flex justify-center">
+              <Link href="/water-purifier" className="inline-block">
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="w-auto max-w-max bg-[#0B1B3A] hover:bg-[#07132B] text-white hover:text-white font-bold text-xs uppercase tracking-wider h-11 px-6 rounded-full inline-flex items-center justify-center gap-1.5 transition-all shadow-sm whitespace-nowrap"
+                >
+                  <span className="text-white">Explore RO Water Purifiers</span>
+                  <ChevronRight className="w-4 h-4 text-white" />
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
 
         {/* Unified Trusted Partners Section at the bottom of Hero */}
-        {/* <div className="mt-20 md:mt-28 pt-12 border-t border-slate-100/70">
-          <h2 className="text-center text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-8">
-            Our Trusted Partners
-          </h2>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6 sm:gap-x-12 md:gap-x-16 lg:gap-x-20">
-            {partners.map((partner, idx) => (
-              <motion.div
-                key={partner.name}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className="h-7 sm:h-9 flex items-center justify-center grayscale opacity-45 hover:opacity-90 hover:grayscale-0 transition-all duration-500 cursor-pointer select-none"
-                title={partner.name}
-              >
-                {partner.src ? (
-                  <Image
-                    src={partner.src}
-                    alt={partner.name}
-                    width={partner.width}
-                    height={partner.height}
-                    className="max-h-full max-w-[120px] w-auto h-auto object-contain"
-                  />
-                ) : (
-                  <div className="h-6 sm:h-7 text-slate-500 hover:text-rose-600 transition-colors flex items-center justify-center">
-                    {partner.logo}
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div> */}
-      </div>
     </section>
   );
 }

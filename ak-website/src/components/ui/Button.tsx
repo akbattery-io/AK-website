@@ -25,9 +25,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       primary:
-        "bg-slate-900 text-white hover:bg-accent-brand hover:shadow-[0_6px_24px_rgba(220,38,38,0.25)] border border-transparent shadow-sm",
+        "bg-slate-900 text-white hover:bg-slate-800 hover:text-white border border-transparent shadow-sm",
       secondary:
-        "bg-white text-slate-800 border border-slate-200/80 hover:bg-slate-50 hover:border-slate-300/80 shadow-sm",
+        "bg-white text-slate-900 border border-slate-200/80 hover:bg-slate-50 hover:text-slate-900 shadow-sm",
       outline:
         "border-2 border-slate-900 text-slate-900 bg-transparent hover:bg-slate-900 hover:text-white",
       ghost:

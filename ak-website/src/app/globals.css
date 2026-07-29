@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FAFBFD;
-  --foreground: #0F172A;
+  --background: #F9FAFB;
+  --foreground: #1A1A1A;
   
-  /* Brand color tokens */
-  --color-brand-primary: #FAFBFD;
-  --color-brand-secondary: #FFFFFF;
-  --color-brand-accent: #DC2626; /* Crimson Red */
-  --color-brand-accent-hover: #E11D48;
+  /* Brand color tokens: Navy + Teal */
+  --color-brand-navy: #0B1B3A;
+  --color-brand-teal: #14B8A6;
+  --color-brand-teal-dark: #0D9488;
 }
 
 @theme inline {

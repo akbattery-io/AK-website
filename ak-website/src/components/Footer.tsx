@@ -43,8 +43,18 @@ export default function Footer() {
                                 </Link>
                             </li>
                             <li>
+                                <Link href="/batteries-inverters" className="hover:text-rose-400 transition-colors flex items-center gap-1.5 font-medium">
+                                    UPS Inverters & Batteries
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/water-purifier" className="hover:text-cyan-400 transition-colors flex items-center gap-1.5 font-medium">
+                                    RO Water Purifier
+                                </Link>
+                            </li>
+                            <li>
                                 <Link href="/works" className="hover:text-white transition-colors">
-                                    Products
+                                    All Products
                                 </Link>
                             </li>
                             <li>
