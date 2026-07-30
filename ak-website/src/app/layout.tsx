@@ -18,6 +18,17 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ak-website-ashen.vercel.app"),
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   title: "AK Batteries & RO Solutions kannamangalam",
   description: "Battery, Inverter & RO Water Purifier shop in Kannamangalam. Doorstep service for Exide, Amaron, Purosis in Kannamangalam & Vellore.",
   keywords: [

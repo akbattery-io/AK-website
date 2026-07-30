@@ -11,6 +11,15 @@ export const metadata: Metadata = {
   title: "Inverter Batteries & UPS Sales in Kannamangalam | AK Batteries",
   description: "Buy genuine Exide, Amaron & Luminous Inverter Batteries & Home UPS in Kannamangalam, Tamil Nadu. Best prices, free doorstep delivery & installation in Kannamangalam, Arani & Vellore.",
   keywords: ["Inverter Battery Kannamangalam", "UPS Battery Kannamangalam", "Amaron Battery Kannamangalam", "Exide Battery Kannamangalam", "Inverter Installation Kannamangalam"],
+  alternates: {
+    canonical: "https://ak-website-ashen.vercel.app/batteries-inverters",
+  },
+  openGraph: {
+    title: "Inverter Batteries & UPS Sales in Kannamangalam | AK Batteries",
+    description: "Buy genuine Exide, Amaron & Luminous Inverter Batteries & Home UPS in Kannamangalam, Tamil Nadu. Best prices, free doorstep delivery & installation.",
+    url: "https://ak-website-ashen.vercel.app/batteries-inverters",
+    type: "website",
+  },
 };
 
 export default async function BatteriesInvertersPage() {
