@@ -91,16 +91,6 @@ export function Hero() {
       id="home"
       className="relative overflow-hidden bg-[#F9FAFB] text-[#0B1B3A] min-h-[calc(100dvh-5.5rem)] flex flex-col justify-between py-10 sm:py-16"
     >
-      {/* Giant Background Watermark Text - Positioned high behind headline on mobile */}
-      <div className="absolute inset-x-0 top-16 sm:top-24 lg:top-1/3 flex items-center justify-center overflow-hidden pointer-events-none select-none opacity-10 sm:opacity-[0.12] z-0">
-        <span className="text-[14vw] sm:text-8xl md:text-[12vw] lg:text-[14vw] font-black tracking-tighter text-[#0B1B3A] uppercase text-center whitespace-nowrap leading-none">
-          AK BATTERIES
-        </span>
-      </div>
-
-      {/* Radial Glow Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-rose-500/5 via-transparent to-transparent pointer-events-none z-0" />
-
       {/* Main Content Container */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-auto w-full">
         <div className="flex flex-col items-center text-center space-y-6 sm:space-y-8">
@@ -163,7 +153,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-3xl pt-6"
+            className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-3xl pt-6 pb-12 sm:pb-0"
           >
             {features.slice(0, 5).map((feature, idx) => {
               const IconComp = feature.Icon;
