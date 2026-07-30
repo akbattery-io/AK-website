@@ -100,7 +100,7 @@ export function Header() {
             <div className="flex-shrink-0 flex items-center">
               <Link
                 href="/"
-                className="flex items-center gap-2 select-none transition-transform hover:scale-105"
+                className="flex items-center gap-2.5 select-none transition-transform hover:scale-105"
               >
                 <Image
                   src="/logo.svg"
@@ -111,6 +111,9 @@ export function Header() {
                   priority
                   loading="eager"
                 />
+                <span className="font-extrabold text-base sm:text-lg md:text-xl text-[#0B1B3A] tracking-tight uppercase whitespace-nowrap">
+                  AK BATTERIES
+                </span>
               </Link>
             </div>
 
