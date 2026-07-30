@@ -144,9 +144,11 @@ function ProductCard({ project, idx, onNavigate }: { project: any; idx: number; 
 interface WorkContentProps {
   initialProducts: any[];
   showFilters?: boolean;
+  pageTitle?: string;
+  pageSubtitle?: string;
 }
 
-export function WorkContent({ initialProducts = [], showFilters = false }: WorkContentProps) {
+export function WorkContent({ initialProducts = [], showFilters = false, pageTitle, pageSubtitle }: WorkContentProps) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
   const [sortBy, setSortBy] = React.useState("default");
@@ -224,16 +226,20 @@ export function WorkContent({ initialProducts = [], showFilters = false }: WorkC
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Header */}
-        <div className=" max-w-3xl mb-12 md:mb-16">
+        <div className="max-w-3xl mb-12 md:mb-16">
           <motion.h1
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-gradient text-4xl sm:text-4xl font-extrabold tracking-tight mb-6"
+            className="text-gradient text-3xl sm:text-4xl font-extrabold tracking-tight mb-3"
           >
-            Products & Pricing
+            {pageTitle || "Products & Pricing"}
           </motion.h1>
+          {pageSubtitle && (
+            <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-medium">
+              {pageSubtitle}
+            </p>
+          )}
         </div>
 
         {/* Filters & Sorting Panel */}

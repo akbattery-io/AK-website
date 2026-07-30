@@ -173,43 +173,55 @@ export function Hero() {
       </div>
 
       {/* Section 5: Category Cards (Repeatable Component) */}
-      <div className="mt-12 sm:mt-16 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 px-2">
+      <div className="mt-12 sm:mt-16 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 px-4 sm:px-6">
         {/* Card 1: Batteries & Inverters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="group bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+          className="group bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
         >
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              {/* 40-48px circular badge top-left */}
-              <div className="w-11 h-11 rounded-full bg-[#14B8A6]/10 text-rose-600 flex items-center justify-center font-bold">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between mb-2">
+              <div className="w-11 h-11 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center font-bold border border-rose-100">
                 <BatteryCharging className="w-5 h-5" />
               </div>
-              {/* Accent-tinted tag top-right */}
-              <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#14B8A6]/10 text-[#0D9488]">
-                Popular Category
+              <span className="text-[11px] font-extrabold px-3 py-1 rounded-full bg-rose-50 text-rose-700 uppercase tracking-wider border border-rose-100">
+                Inverters & Power Backup
               </span>
             </div>
-            {/* Title (Bold, 18px) */}
-            <h3 className="text-lg font-bold text-[#0B1B3A] mb-2 group-hover:text-rose-600 transition-colors">
-              Batteries & Inverters
-            </h3>
-            {/* Description (Gray, 13px, 2-3 lines) */}
-            <p className="text-[#6B7280] text-xs sm:text-sm leading-relaxed mb-4">
-              Genuine Exide, Amaron & Luminous batteries for home UPS, inverters, and vehicles with free doorstep delivery and expert installation.
+
+            <h2 className="text-xl sm:text-2xl font-black text-[#0B1B3A] tracking-tight group-hover:text-rose-600 transition-colors">
+              Inverter Batteries & Home UPS Systems in Kannamangalam
+            </h2>
+
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              Heavy-duty tall tubular batteries and pure sine wave inverters engineered for continuous power backup across Kannamangalam, Arani, and Vellore.
             </p>
+
+            <ul className="grid grid-cols-1 gap-2 pt-1 text-xs text-slate-700 font-medium">
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
+                <span><strong>Exide, Amaron & Luminous:</strong> 100% factory warranty & genuine units.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
+                <span><strong>Tall Tubular & Pure Sine Wave:</strong> Silent, long backup duration.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
+                <span><strong>Doorstep Support:</strong> Free installation & old battery buyback discounts.</span>
+              </li>
+            </ul>
           </div>
 
-          {/* Max-content CTA button at bottom: Solid Navy, rounded-full */}
-          <div className="pt-4 border-t border-slate-100 flex justify-center">
-            <Link href="/batteries-inverters" className="inline-block">
+          <div className="pt-5 mt-4 border-t border-slate-100 flex justify-center">
+            <Link href="/batteries-inverters" className="inline-block w-full">
               <Button
                 variant="primary"
                 size="md"
-                className="w-auto max-w-max bg-[#0B1B3A] hover:bg-[#07132B] text-white hover:text-white font-bold text-xs uppercase tracking-wider h-11 px-6 rounded-full inline-flex items-center justify-center gap-1.5 transition-all shadow-sm whitespace-nowrap"
+                className="w-full bg-[#0B1B3A] hover:bg-[#07132B] text-white hover:text-white font-bold text-xs uppercase tracking-wider h-11 px-6 rounded-full inline-flex items-center justify-center gap-1.5 transition-all shadow-sm whitespace-nowrap"
               >
                 <span className="text-white">Explore Batteries & Inverters</span>
                 <ChevronRight className="w-4 h-4 text-white" />
@@ -224,35 +236,48 @@ export function Hero() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="group bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+          className="group bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/80 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
         >
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              {/* 40-48px circular badge top-left */}
-              <div className="w-11 h-11 rounded-full bg-[#14B8A6]/10 text-rose-600 flex items-center justify-center font-bold">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between mb-2">
+              <div className="w-11 h-11 rounded-full bg-cyan-50 text-cyan-700 flex items-center justify-center font-bold border border-cyan-100">
                 <Droplets className="w-5 h-5" />
               </div>
-              <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#14B8A6]/10 text-[#0D9488]">
-                Pure Water
+              <span className="text-[11px] font-extrabold px-3 py-1 rounded-full bg-cyan-50 text-cyan-700 uppercase tracking-wider border border-cyan-100">
+                Pure Drinking Water
               </span>
             </div>
-            {/* Title (Bold, 18px) */}
-            <h3 className="text-lg font-bold text-[#0B1B3A] mb-2 group-hover:text-rose-600 transition-colors">
-              RO Water Purifiers
-            </h3>
-            {/* Description (Gray, 13px, 2-3 lines) */}
-            <p className="text-[#6B7280] text-xs sm:text-sm leading-relaxed mb-4">
-              Top brand RO purifiers (Purosis, Aquaguard, Aqua Era), filter replacements, periodic maintenance, and rapid technician support.
+
+            <h2 className="text-xl sm:text-2xl font-black text-[#0B1B3A] tracking-tight group-hover:text-rose-600 transition-colors">
+              RO Water Purifier Sales, Service & Filter Repair in Kannamangalam
+            </h2>
+
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+              Multi-stage RO+UV+UF+Alkaline water purifiers that eliminate heavy metals, high TDS, and bacterial impurities for safe drinking water.
             </p>
+
+            <ul className="grid grid-cols-1 gap-2 pt-1 text-xs text-slate-700 font-medium">
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-600 shrink-0" />
+                <span><strong>Purosis & Finpure Brands:</strong> Advanced mineral alkaline purification.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-600 shrink-0" />
+                <span><strong>High-TDS RO Membranes:</strong> Filters borewell water up to 2000+ ppm.</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-600 shrink-0" />
+                <span><strong>Doorstep Repairs:</strong> Filter service, membrane change & technician support.</span>
+              </li>
+            </ul>
           </div>
 
-          {/* Max-content CTA button at bottom: Solid Navy, rounded-full */}
-          <div className="pt-4 border-t border-slate-100 flex justify-center">
-            <Link href="/water-purifier" className="inline-block">
+          <div className="pt-5 mt-4 border-t border-slate-100 flex justify-center">
+            <Link href="/water-purifier" className="inline-block w-full">
               <Button
                 variant="primary"
                 size="md"
-                className="w-auto max-w-max bg-[#0B1B3A] hover:bg-[#07132B] text-white hover:text-white font-bold text-xs uppercase tracking-wider h-11 px-6 rounded-full inline-flex items-center justify-center gap-1.5 transition-all shadow-sm whitespace-nowrap"
+                className="w-full bg-[#0B1B3A] hover:bg-[#07132B] text-white hover:text-white font-bold text-xs uppercase tracking-wider h-11 px-6 rounded-full inline-flex items-center justify-center gap-1.5 transition-all shadow-sm whitespace-nowrap"
               >
                 <span className="text-white">Explore RO Water Purifiers</span>
                 <ChevronRight className="w-4 h-4 text-white" />

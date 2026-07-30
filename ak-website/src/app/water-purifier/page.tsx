@@ -41,7 +41,12 @@ export default async function WaterPurifierPage() {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-grow">
-        <WorkContent initialProducts={products} showFilters={false} />
+        <WorkContent
+          initialProducts={products}
+          showFilters={false}
+          pageTitle="RO Water Purifier Sales, Service & Filter Repair in Kannamangalam"
+          pageSubtitle="Discover advanced multi-stage RO+UV+UF+Alkaline purification systems with free doorstep installation and expert filter maintenance."
+        />
       </main>
       <Footer />
     </div>
