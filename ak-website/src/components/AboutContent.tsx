@@ -49,10 +49,13 @@ export function AboutContent() {
             <span className="text-xs font-bold text-rose-600 uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-md border border-rose-100 inline-block mb-4">
               Our Journey
             </span>
-            <h1 className="text-gradient text-4xl sm:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
+            <h1 className="text-gradient text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
               Powering Homes, <br />
               Purifying Life
             </h1>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-800 mb-4">
+              Home Power Backups & Pure Drinking Water Solutions in Kannamangalam
+            </h2>
             <p className="text-slate-600 text-base sm:text-lg leading-relaxed mb-6">
               Established in 2025, AK Batteries & RO Solutions was founded on a simple mission: to bridge the gap between premium home utility sales and highly reliable doorstep services.
             </p>
@@ -66,18 +69,23 @@ export function AboutContent() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="grid grid-cols-2 gap-4 sm:gap-6 bg-white rounded-md p-6 sm:p-8 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80"
+            className="flex flex-col gap-4"
           >
-            {stats.map((stat, idx) => (
-              <div key={idx} className="bg-slate-50 rounded-md p-4 sm:p-6 border border-slate-100 flex flex-col justify-center">
-                <span className="block text-rose-600 font-extrabold text-3xl sm:text-4xl tracking-tight mb-1 select-none">
-                  {stat.value}
-                </span>
-                <span className="text-slate-500 text-xs font-bold uppercase tracking-wider">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
+            <h2 className="text-sm font-bold text-slate-500 uppercase tracking-wider text-center lg:text-left">
+              Service Performance & Local Trust
+            </h2>
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 bg-white rounded-md p-6 sm:p-8 shadow-[0_4px_30px_rgba(15,23,42,0.02)] border border-slate-100/80">
+              {stats.map((stat, idx) => (
+                <div key={idx} className="bg-slate-50 rounded-md p-4 sm:p-6 border border-slate-100 flex flex-col justify-center">
+                  <span className="block text-rose-600 font-extrabold text-3xl sm:text-4xl tracking-tight mb-1 select-none">
+                    {stat.value}
+                  </span>
+                  <span className="text-slate-500 text-xs font-bold uppercase tracking-wider">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
 
@@ -85,7 +93,7 @@ export function AboutContent() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-gradient text-3xl font-extrabold tracking-tight mb-4">
-              Our Core Promises
+              Our Core Quality Guarantees & Doorstep Support Promises
             </h2>
             <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
               Every sales inquiry, inspection call, and emergency filter replacement is backed by our key business tenets.

@@ -143,7 +143,7 @@ export function Hero() {
             <Link href="/batteries-inverters" className="w-full sm:w-72">
               <button className="w-full py-4 px-6 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 active:scale-[0.99] text-[#0B1B3A] font-black text-sm sm:text-base uppercase tracking-wider flex items-center justify-center gap-3 shadow-xs hover:shadow-md transition-all cursor-pointer">
                 <BatteryCharging className="w-5 h-5 text-rose-600 shrink-0" />
-                <span>EXPLORE BATTERIES</span>
+                <span>UPS INVERTERS & BATTERIES</span>
               </button>
             </Link>
           </motion.div>

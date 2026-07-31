@@ -61,7 +61,7 @@ export function FAQ() {
         {/* Title */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-gradient text-3xl sm:text-4xl font-extrabold tracking-tight font-serif mb-4">
-            Frequently Asked Questions
+            Frequently Asked Questions — Batteries, Inverters & RO Servicing
           </h2>
           <p className="text-slate-500 text-sm sm:text-base font-semibold leading-relaxed">
             Find answers to common questions about our battery inverter backups, RO water purifiers, and doorstep maintenance services.

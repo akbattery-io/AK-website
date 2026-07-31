@@ -4,6 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { Clock, Mail, Phone, Pin } from "lucide-react";
 
+function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            {...props}
+        >
+            <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+        </svg>
+    );
+}
 
 export default function Footer() {
     return (
@@ -29,6 +46,20 @@ export default function Footer() {
                             Your trusted partner for premium batteries, RO water purifiers,
                             genuine spare parts, installation, and maintenance services.
                         </p>
+
+                        {/* Social Links */}
+                        <div className="flex items-center gap-3 mt-5">
+                            <a
+                                href="https://www.instagram.com/kaviprasath_269"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Follow AK Batteries on Instagram"
+                                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-slate-800/90 hover:bg-rose-950/40 text-slate-300 hover:text-rose-400 border border-slate-700/80 hover:border-rose-500/40 transition-all duration-300 text-xs font-semibold group shadow-xs"
+                            >
+                                <InstagramIcon className="w-4 h-4 text-rose-500 group-hover:scale-110 transition-transform duration-300" />
+                                <span>Follow on Instagram</span>
+                            </a>
+                        </div>
                     </div>
 
                     {/* Quick Links */}
