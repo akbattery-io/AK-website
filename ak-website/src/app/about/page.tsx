@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "About Us | AK Batteries & RO Solutions",
   description: "Learn more about our journey, core values, expert doorstep installation, and maintenance services for battery inverters and RO water purifiers in Kannamangalam & Vellore.",
   alternates: {
-    canonical: "https://ak-website-ashen.vercel.app/about",
+    canonical: "https://akbattery.in/about",
   },
 };
 

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Contact Us | AK Batteries & RO Solutions",
   description: "Get in touch with AK Batteries & RO Solutions for doorstep sales, installation, maintenance, and repair of water purifiers and battery inverters in Kannamangalam, Vellore, and surrounding areas.",
   alternates: {
-    canonical: "https://ak-website-ashen.vercel.app/contact",
+    canonical: "https://akbattery.in/contact",
   },
 };
 

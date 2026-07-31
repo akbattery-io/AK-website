@@ -12,12 +12,12 @@ export const metadata: Metadata = {
   description: "Best RO Water Purifier sales, filter service & repair in Kannamangalam, Tamil Nadu. Authorized dealer for Purosis, Finpure, Aquaguard with free installation & doorstep technician support.",
   keywords: ["RO Water Purifier Kannamangalam", "RO Service Kannamangalam", "Water Filter Repair Kannamangalam", "Purosis RO Kannamangalam", "RO Technician Kannamangalam"],
   alternates: {
-    canonical: "https://ak-website-ashen.vercel.app/water-purifier",
+    canonical: "https://akbattery.in/water-purifier",
   },
   openGraph: {
     title: "RO Water Purifier Sales & Service in Kannamangalam | AK Solutions",
     description: "Best RO Water Purifier sales, filter service & repair in Kannamangalam, Tamil Nadu.",
-    url: "https://ak-website-ashen.vercel.app/water-purifier",
+    url: "https://akbattery.in/water-purifier",
     type: "website",
   },
 };

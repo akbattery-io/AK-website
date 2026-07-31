@@ -18,7 +18,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ak-website-ashen.vercel.app"),
+  metadataBase: new URL("https://akbattery.in"),
   alternates: {
     canonical: "./",
   },
@@ -80,6 +80,7 @@ const jsonLdSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "AK Batteries & RO Solutions",
+  "url": "https://akbattery.in",
   "telephone": "+918870534049",
   "email": "akbattery.ro@gmail.com",
   "address": {

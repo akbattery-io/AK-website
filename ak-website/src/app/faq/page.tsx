@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Get answers to common queries about battery selection, backups, maintenance periods, and RO water purifier servicing.",
   keywords: ["RO purifier FAQ", "Battery selection help", "Inverter backup questions", "AK Batteries service questions", "TDS water purifier questions"],
   alternates: {
-    canonical: "https://ak-website-ashen.vercel.app/faq",
+    canonical: "https://akbattery.in/faq",
   },
 };
 

@@ -6,4 +6,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://ak-website-ashen.vercel.app/sitemap.xml
+Sitemap: https://akbattery.in/sitemap.xml

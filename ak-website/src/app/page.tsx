@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "AK Batteries & RO Solutions Kannamangalam | Doorstep Battery, Inverter & Water Purifier Service",
   description: "Best Battery, Inverter & RO Water Purifier shop in Kannamangalam. Doorstep sales, installation and repair for Exide, Amaron, Purosis across Kannamangalam & Vellore.",
   alternates: {
-    canonical: "https://ak-website-ashen.vercel.app",
+    canonical: "https://akbattery.in",
   },
 };
 

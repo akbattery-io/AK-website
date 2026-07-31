@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase";
 export const revalidate = 3600; // Revalidate sitemap every hour
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://ak-website-ashen.vercel.app";
+  const baseUrl = "https://akbattery.in";
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
