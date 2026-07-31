@@ -73,6 +73,9 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
     description: product.description
       ? `${product.brandname}: ${product.description.slice(0, 150)}...`
       : `Buy ${product.brandname} with doorstep delivery and warranty support across Kannamangalam and Vellore.`,
+    alternates: {
+      canonical: `https://ak-website-ashen.vercel.app/product/${encodeURIComponent(id)}`,
+    },
   };
 }
 

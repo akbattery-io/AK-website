@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: "Frequently Asked Questions | AK Batteries & RO Solutions",
   description: "Get answers to common queries about battery selection, backups, maintenance periods, and RO water purifier servicing.",
   keywords: ["RO purifier FAQ", "Battery selection help", "Inverter backup questions", "AK Batteries service questions", "TDS water purifier questions"],
+  alternates: {
+    canonical: "https://ak-website-ashen.vercel.app/faq",
+  },
 };
 
 export default function FAQPage() {

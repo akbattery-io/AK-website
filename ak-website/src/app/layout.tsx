@@ -19,6 +19,9 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ak-website-ashen.vercel.app"),
+  alternates: {
+    canonical: "./",
+  },
   robots: {
     index: true,
     follow: true,

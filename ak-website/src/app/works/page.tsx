@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Products & Pricing in Kannamangalam | AK Batteries & RO",
   description: "Browse our complete catalog of Inverter Batteries, Home UPS & RO Water Purifiers in Kannamangalam, Tamil Nadu. Transparent prices, doorstep delivery & installation.",
   keywords: ["Products Kannamangalam", "Battery Pricing Kannamangalam", "RO Price List Kannamangalam", "Exide Battery Price Kannamangalam"],
+  alternates: {
+    canonical: "https://ak-website-ashen.vercel.app/works",
+  },
 };
 
 export default async function WorksPage() {
