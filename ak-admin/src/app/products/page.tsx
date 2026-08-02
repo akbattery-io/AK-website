@@ -123,6 +123,7 @@ export default function ProductsPage() {
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [existingImageUrls, setExistingImageUrls] = useState<string[]>([]);
+  const [deletingImageIndex, setDeletingImageIndex] = useState<number | null>(null);
 
   const [formSubmitting, setFormSubmitting] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -184,12 +185,65 @@ export default function ProductsPage() {
   };
 
   const removePendingImage = (index: number) => {
+    if (!window.confirm("Are you sure you want to remove this image?")) return;
     setImageFiles((prev) => prev.filter((_, i) => i !== index));
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const removeExistingImage = (index: number) => {
-    setExistingImageUrls((prev) => prev.filter((_, i) => i !== index));
+  const removeExistingImage = async (index: number) => {
+    const imageUrl = existingImageUrls[index];
+    if (!imageUrl) return;
+
+    if (!window.confirm("Are you sure you want to delete this image? This action will permanently remove it from Cloudinary.")) return;
+
+    setDeletingImageIndex(index);
+
+    try {
+      if (imageUrl.includes("cloudinary.com")) {
+        const publicId = getPublicIdFromUrl(imageUrl);
+        if (publicId) {
+          const res = await fetch(`/api/upload?publicId=${encodeURIComponent(publicId)}`, {
+            method: "DELETE",
+          });
+
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(errData.error || "Failed to delete image from Cloudinary");
+          }
+        }
+      }
+
+      const updatedUrls = existingImageUrls.filter((_, i) => i !== index);
+      setExistingImageUrls(updatedUrls);
+
+      if (selectedProduct) {
+        const { error } = await supabase
+          .from("products")
+          .update({
+            images: updatedUrls,
+            image: updatedUrls[0] || "",
+          })
+          .eq("id", selectedProduct.id);
+
+        if (error) {
+          console.error("Error updating product in Supabase after image deletion:", error);
+        } else {
+          setSelectedProduct({
+            ...selectedProduct,
+            images: updatedUrls,
+            image: updatedUrls[0] || "",
+          });
+          fetchProducts();
+        }
+      }
+
+      toast.success("Image deleted successfully from Cloudinary!");
+    } catch (err: any) {
+      console.error("Error deleting image from Cloudinary:", err);
+      toast.error(err.message || "Failed to delete image.");
+    } finally {
+      setDeletingImageIndex(null);
+    }
   };
 
   // Upload image to Cloudinary via server route
@@ -926,9 +980,12 @@ export default function ProductsPage() {
                           <button
                             type="button"
                             onClick={() => removeExistingImage(index)}
-                            className="absolute inset-0 bg-slate-900/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white text-[10px] font-bold"
+                            disabled={deletingImageIndex === index}
+                            className={`absolute inset-0 bg-slate-900/60 flex items-center justify-center transition-opacity text-white text-[10px] font-bold ${
+                              deletingImageIndex === index ? "opacity-100 cursor-not-allowed" : "opacity-0 group-hover:opacity-100"
+                            }`}
                           >
-                            Delete
+                            {deletingImageIndex === index ? "Deleting..." : "Delete"}
                           </button>
                           <span className="absolute top-0.5 left-0.5 bg-emerald-500 text-white text-[8px] font-extrabold px-1 rounded">Saved</span>
                         </div>
